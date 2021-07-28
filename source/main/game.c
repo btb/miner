@@ -379,8 +379,7 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #endif
 
 //#define _MARK_ON 1
-//#include <wsample.h>            //should come after inferno.h to get mark setting
-//Above file is missing in the release version of the source. -KRB
+#include <wsample.h>            //should come after inferno.h to get mark setting
 
 int	Speedtest_on = 0;
 
@@ -2698,7 +2697,7 @@ void game()
 	//keyd_repeat = 0;                // Don't allow repeat in game
 	keyd_repeat = 1;                // Do allow repeat in game
 
-	//_MARK_("start of game");Commented out -KRB
+	_MARK_("start of game");
 
 	#ifdef EDITOR
 		if (Segments[ConsoleObject->segnum].segnum == -1)      //segment no longer exists
@@ -2820,7 +2819,7 @@ void game()
 	//@@	scores_maybe_add_player(Game_aborted);
 	//@@}
 
-	//_MARK_("end of game");//Commented out -KRB
+	_MARK_("end of game");
 
 	clear_warn_func(game_show_warning);     //don't use this func anymore
 

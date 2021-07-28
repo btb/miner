@@ -225,7 +225,7 @@ static char rcsid[] = "$Id: med.c 2.3 1995/03/06 18:23:52 john Exp $";
 #include "newmenu.h"
 
 //#define _MARK_ON 1
-//#include <wsample.h>		//should come after inferno.h to get mark setting //Not included here.
+#include <wsample.h>		//should come after inferno.h to get mark setting
 
 #define COMPRESS_INTERVAL	5			// seconds
 
@@ -1148,7 +1148,7 @@ void editor(void)
 
 	keyd_repeat = 1;		// Allow repeat in editor
 
-//	_MARK_("start of editor");//Nuked to compile -KRB
+	_MARK_("start of editor");
 
 	ui_mouse_hide();
 
@@ -1500,7 +1500,7 @@ void editor(void)
 
 	}
 
-//	_MARK_("end of editor");//Nuked to compile -KRB
+	_MARK_("end of editor");
 
 	clear_warn_func(med_show_warning);
 
@@ -1581,7 +1581,7 @@ int MarkStart(void)
 {
 	char mystr[30];
 	sprintf(mystr,"mark %i start",Mark_count);
-//	_MARK_(mystr);//Nuked to compile -KRB
+	_MARK_(mystr);
 
 	return 1;
 }
@@ -1591,7 +1591,7 @@ int MarkEnd(void)
 	char mystr[30];
 	sprintf(mystr,"mark %i end",Mark_count);
 	Mark_count++;
-//	_MARK_(mystr);//Nuked to compile -KRB
+	_MARK_(mystr);
 
 	return 1;
 }
