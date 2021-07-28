@@ -231,7 +231,7 @@ static char rcsid[] = "$Id: endlevel.c 2.2 1995/03/21 14:40:14 john Exp $";
 //#define _MARK_ON
 
 #include <stdlib.h>
-//#include <wsample.h> //This file not included in public domain release -KRB
+#include <wsample.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -825,7 +825,7 @@ do_endlevel_frame()
 
 				ConsoleObject->control_type = endlevel_camera->control_type = CT_NONE;
 
-				//_MARK_("Starting outside");//Commented out by KRB
+				_MARK_("Starting outside");
 
 #ifdef SLEW_ON
  slew_obj = endlevel_camera;
@@ -934,7 +934,7 @@ do_endlevel_frame()
 
 				Endlevel_sequence = EL_CHASING;
 
-				//_MARK_("Done outside");//Commented out -KRB
+				_MARK_("Done outside");
 
 				vm_vec_normalized_dir_quick(&tvec,&station_pos,&ConsoleObject->pos);
 				vm_vector_2_matrix(&ConsoleObject->orient,&tvec,&surface_orient.uvec,NULL);
