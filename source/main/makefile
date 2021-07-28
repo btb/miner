@@ -2,6 +2,10 @@
 # Makefile for DESCENT execuable
 #
 
+# Where to find libraries we didn't write
+EXTLIB_DIR = $(MINER)/extlib
+EXTLIBS = $(if $(USE_SOS),$(EXTLIB_DIR)/sos,)
+
 # What programs to make
 GAMES = $(if $(BUILD_EDITOR),editor,\
 		  $(if $(SHAREWARE),dcntshr,\
@@ -13,7 +17,7 @@ descent_SRCS = inferno.c game.c gauges.c mglobal.c \
 			 scores.c object.c laser.c physics.c bm.c \
  			 menu.c gamesave.c switch.c effects.c texmerge.c polyobj.c \
 			 gamemine.c fireball.c ai.c aipath.c hostage.c \
-			 powerup.c fuelcen.c digi.c render.c hash.c piggy.c args.c \
+			 powerup.c fuelcen.c render.c hash.c piggy.c args.c \
 			 gameseg.c wall.c collide.c lighting.c \
 			 robot.c morph.c vclip.c weapon.c fvi.c newdemo.c titles.c \
 			 vfx.c gameseq.c controls.c automap.c text.c \
@@ -21,14 +25,15 @@ descent_SRCS = inferno.c game.c gauges.c mglobal.c \
 			 gamefont.c joydefs.c hud.c playsave.c \
 			 endlevel.c terrain.c kconfig.c modem.c  \
 			 multi.c cntrlcen.c credits.c config.c soscodec.c kmatrix.c	\
-			 paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c nocomlib.c slew.c dumpmine.c 
+			 paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c nocomlib.c slew.c dumpmine.c \
+			 $(if $(USE_SOS),digi.c,nodigi.c)
 #demo.c garage.c radar.c coindev.c serial.c vfxread.c victor.c
 
 descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
-				div0.lib misc.lib texmap.lib
-#		sosdigi.lib #sosmidi.lib
+				div0.lib misc.lib texmap.lib \
+				$(if $(USE_SOS),sosdigi.lib sosmidi.lib,)
 		#iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
 
@@ -89,7 +94,7 @@ $(OBJDIR)/collide.obj: collide.c 3d.h ai.h aistruct.h bm.h cntrlcen.h collide.h 
 $(OBJDIR)/config.obj: config.c aistruct.h args.h digi.h fix.h game.h gameseg.h gr.h inferno.h joy.h kconfig.h mission.h object.h palette.h piggy.h player.h segment.h settings.h sounds.h types.h vecmat.h weapon.h
 $(OBJDIR)/controls.obj: controls.c 3d.h aistruct.h args.h controls.h digi.h error.h fix.h game.h gameseg.h gr.h inferno.h joy.h joydefs.h kconfig.h key.h mono.h mouse.h object.h palette.h piggy.h player.h render.h segment.h settings.h sounds.h timer.h types.h vecmat.h victor.h weapon.h
 $(OBJDIR)/credits.obj: credits.c aistruct.h cfile.h compbit.h digi.h error.h fix.h game.h gamefont.h gameseg.h gameseq.h gr.h iff.h inferno.h joy.h key.h mem.h mission.h mono.h mouse.h multi.h network.h newmenu.h object.h palette.h pcx.h piggy.h player.h screens.h segment.h settings.h songs.h sounds.h timer.h types.h vecmat.h vfx.h weapon.h
-$(OBJDIR)/digi.obj: digi.c aistruct.h args.h cfile.h digi.h dpmi.h error.h fix.h game.h gameseg.h gr.h inferno.h joy.h kconfig.h key.h mono.h newdemo.h no_sos.h object.h piggy.h segment.h settings.h sounds.h text.h timer.h types.h vecmat.h wall.h
+$(OBJDIR)/digi.obj: digi.c aistruct.h args.h cfile.h digi.h dpmi.h error.h fix.h game.h gameseg.h gr.h inferno.h joy.h kconfig.h key.h mono.h newdemo.h object.h piggy.h segment.h settings.h sounds.h text.h timer.h types.h vecmat.h wall.h
 $(OBJDIR)/dumpmine.obj: dumpmine.c 3d.h aistruct.h bm.h digi.h error.h fix.h fuelcen.h game.h gamemine.h gamesave.h gameseg.h gameseq.h gr.h hostage.h inferno.h key.h menu.h mission.h mono.h newmenu.h object.h palette.h piggy.h player.h polyobj.h powerup.h robot.h segment.h settings.h sounds.h switch.h textures.h types.h vclip.h vecmat.h wall.h weapon.h
 $(OBJDIR)/effects.obj: effects.c aistruct.h bm.h digi.h effects.h error.h fix.h fuelcen.h game.h gameseg.h gr.h inferno.h mem.h mono.h object.h piggy.h segment.h settings.h sounds.h switch.h textures.h types.h vclip.h vecmat.h
 $(OBJDIR)/endlevel.obj: endlevel.c 3d.h aistruct.h bm.h cfile.h compbit.h digi.h endlevel.h error.h fireball.h fix.h fvi.h game.h gameseg.h gameseq.h gauges.h gr.h iff.h inferno.h joy.h key.h mem.h mission.h mono.h multi.h network.h newdemo.h object.h palette.h piggy.h player.h polyobj.h robot.h segment.h settings.h songs.h sounds.h terrain.h texmap.h text.h types.h vclip.h vecmat.h wall.h weapon.h
@@ -125,10 +130,11 @@ $(OBJDIR)/network.obj: network.c aistruct.h args.h bm.h digi.h effects.h endleve
 $(OBJDIR)/newdemo.obj: newdemo.c 3d.h ai.h aistruct.h args.h bm.h cntrlcen.h collide.h digi.h error.h fireball.h fix.h fuelcen.h fvi.h game.h gamemine.h gamesave.h gameseg.h gameseq.h gauges.h gr.h hostage.h inferno.h key.h laser.h lighting.h mission.h mono.h morph.h multi.h network.h newdemo.h newmenu.h object.h palette.h physics.h piggy.h player.h polyobj.h powerup.h render.h robot.h segment.h settings.h slew.h sounds.h switch.h texmap.h text.h types.h vclip.h vecmat.h wall.h weapon.h
 $(OBJDIR)/newmenu.obj: newmenu.c aistruct.h digi.h endlevel.h error.h fix.h game.h gamefont.h gameseg.h gameseq.h gr.h iff.h inferno.h joy.h kconfig.h key.h mem.h mission.h mono.h mouse.h multi.h network.h newmenu.h object.h palette.h pcx.h piggy.h player.h screens.h segment.h settings.h sounds.h text.h timer.h types.h vecmat.h vfx.h weapon.h
 $(OBJDIR)/nocomlib.obj: nocomlib.c nocomlib.h settings.h
+$(OBJDIR)/nodigi.obj: nodigi.c fix.h settings.h types.h vecmat.h
 $(OBJDIR)/object.obj: object.c 3d.h ai.h aistruct.h arcade.h args.h bm.h cntrlcen.h collide.h digi.h error.h fireball.h fix.h fuelcen.h fvi.h game.h gameseg.h gameseq.h gauges.h gr.h hostage.h inferno.h key.h laser.h lighting.h menu.h mission.h mono.h morph.h multi.h network.h newdemo.h newmenu.h object.h physics.h piggy.h player.h polyobj.h powerup.h render.h robot.h segment.h settings.h slew.h sounds.h switch.h texmap.h text.h textures.h types.h vclip.h vecmat.h wall.h weapon.h
 $(OBJDIR)/paging.obj: paging.c 3d.h aistruct.h bm.h cntrlcen.h digi.h effects.h error.h fireball.h fix.h fuelcen.h game.h gamemine.h gameseg.h gauges.h gr.h inferno.h mono.h object.h palette.h piggy.h polyobj.h powerup.h robot.h segment.h settings.h sounds.h switch.h texmerge.h text.h textures.h timer.h types.h vclip.h vecmat.h wall.h weapon.h
 $(OBJDIR)/physics.obj: physics.c ai.h aistruct.h collide.h digi.h error.h fix.h fvi.h game.h gameseg.h gr.h inferno.h joy.h key.h laser.h mono.h newdemo.h object.h physics.h piggy.h segment.h settings.h sounds.h timer.h types.h vecmat.h wall.h
-$(OBJDIR)/piggy.obj: piggy.c aistruct.h args.h bm.h cfile.h cflib.h digi.h dpmi.h error.h fix.h game.h gamefont.h gameseg.h gr.h hash.h inferno.h mono.h newmenu.h no_sos.h object.h paging.h palette.h piggy.h rle.h screens.h segment.h settings.h sounds.h texmerge.h text.h types.h vecmat.h
+$(OBJDIR)/piggy.obj: piggy.c aistruct.h args.h bm.h cfile.h cflib.h digi.h dpmi.h error.h fix.h game.h gamefont.h gameseg.h gr.h hash.h inferno.h mono.h newmenu.h object.h paging.h palette.h piggy.h rle.h screens.h segment.h settings.h sounds.h texmerge.h text.h types.h vecmat.h
 $(OBJDIR)/playsave.obj: playsave.c aistruct.h config.h digi.h error.h fix.h game.h gameseg.h gameseq.h gr.h inferno.h joy.h joydefs.h kconfig.h menu.h mission.h mono.h multi.h newmenu.h object.h palette.h piggy.h player.h playsave.h segment.h settings.h sounds.h state.h text.h types.h vecmat.h weapon.h
 $(OBJDIR)/polyobj.obj: polyobj.c 3d.h aistruct.h args.h bm.h cfile.h digi.h error.h fix.h game.h gameseg.h gr.h inferno.h lighting.h mem.h mono.h object.h piggy.h polyobj.h robot.h segment.h settings.h sounds.h texmap.h textures.h types.h vecmat.h
 $(OBJDIR)/powerup.obj: powerup.c 3d.h aistruct.h digi.h fireball.h fix.h game.h gameseg.h gameseq.h gauges.h gr.h inferno.h laser.h mission.h mono.h multi.h newdemo.h object.h piggy.h player.h powerup.h scores.h segment.h settings.h sounds.h text.h types.h vclip.h vecmat.h wall.h weapon.h

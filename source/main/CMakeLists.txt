@@ -3,7 +3,7 @@
 #
 
 if(USE_SOS)
-	set(SOS_DIR ${PROJECT_SOURCE_DIR}/../sos)
+	set(SOS_DIR ${PROJECT_SOURCE_DIR}/extlib/sos)
 	include_directories(${SOS_DIR})
 	add_library(sosdigi STATIC IMPORTED GLOBAL)
 	set_target_properties(sosdigi PROPERTIES
