@@ -75,14 +75,14 @@ void Int3();
 //void Int3(void);									//generate int3
 #pragma aux Int3 = "int 3h";
 
-//#define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
+#define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
 
 //make error do int3, then call func
 #pragma aux Error aborts = \
 	"int	3"	\
 	"jmp Error";
 
-//#pragma aux Error aborts;
+#pragma aux Error aborts;
 
 //make assert do int3 (if expr false), then call func
 #pragma aux _Assert parm [eax] [edx] [ebx] [ecx] = \
