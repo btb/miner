@@ -116,7 +116,9 @@ void _Assert(int expr,char *expr_text,char *filename,int linenum)
 	if (!(expr)) Error("Assertion failed: %s, file %s, line %d",expr_text,filename,linenum);
 
 }
-//#ifdef NDEBUG		//macros for debugging
+
+#ifdef KRB
+#ifdef NDEBUG		//macros for debugging
 //Assert and Int3 Added by KRB because I couldn't get the macros to link 
 void Assert(int my_expr)
 {
@@ -128,7 +130,8 @@ void Int3()
 {
 	return;
 }
-//#endif
+#endif
+#endif
 
 void print_exit_message()
 {
