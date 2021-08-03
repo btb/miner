@@ -31,7 +31,6 @@ TESTP_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib bm.lib iff.lib readfile.lib
 iff.exe: iff.obj
 	wcl386 /l=dos4g iff.c
 iff.obj: iff.c
-	wcc386 /l=dos4g $(CCFLAGS) iff.c
 iff15bpp.obj: 
 
 testp.obj: 

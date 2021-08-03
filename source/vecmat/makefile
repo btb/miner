@@ -7,19 +7,14 @@
 # Makefile for vector/matrix library
 #
 
-LIBDIR = ..\main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 # What to install
 INSTALL_TARGS = vecmat.lib vecmat.h vecmat.inc
 
 # What libs to build
 LIBS = vecmat
 
-# What objs in the lib
-VECMAT_OBJS = vecmat.obj
+# What sources in the lib
+vecmat_SRCS = vecmat.asm
 
 # What to clean
 CLEAN_TARGS = $(OBJDIR)\*.obj
@@ -28,12 +23,8 @@ CLEAN_TARGS = $(OBJDIR)\*.obj
 TEST_PROGS = vectest 
 
 # What object files and libs for the test programs
-VECTEST_SRCS = vectest.c
-VECTEST_LIBS = vecmat.lib io.lib fix.lib
-vecmat.lib: $(VECMAT_OBJS)
-	wlib vecmat.lib $(VECMAT_OBJS)
-	copy *.lib $(LIBDIR)
-vecmat.obj: vecmat.inc vecmat.asm
-	masm vecmat.asm;
+vectest_SRCS = vectest.c
+vectest_LIBS = vecmat.lib io.lib fix.lib
 
-vectest.obj: fix.h stdio.h types.h vecmat.h
+#rules and targets common to all Miner makefiles
+include $(INIT)\makefile.def

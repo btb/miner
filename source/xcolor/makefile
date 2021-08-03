@@ -17,4 +17,3 @@ XCOLOR_LFLAGS = option stack=150k
 xcolor.exe: xcolor.obj
 	wl386 xcolor.c 
 xcolor.obj: xcolor.c
-	wcc386 xcolor.c

@@ -7,11 +7,6 @@
 # Makefile for fixed-point library
 #
 
-LIBDIR = ..\main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 # What to install, and where to install it
 INSTALL_TARGS = fix.lib fix.h fix.inc
 
@@ -25,19 +20,22 @@ LIBS = fix
 TEST_PROGS = fixtest
 
 # What object files for the lib
-FIX_OBJS = fix.obj
+fix_OBJS = fix.obj
 
 # What object files and libs for the test programs
-FIXTEST_SRCS = fixtest.c
-FIXTEST_LIBS = fix.lib io.lib
+fixtest_SRCS = fixtest.c
+fixtest_LIBS = fix.lib io.lib
 
-fix.lib: $(FIX_OBJS)
-	wlib fix.lib $(FIX_OBJS)
-	copy *.lib $(LIBDIR)
+#rules and targets common to all Miner makefiles
+include $(INIT)\makefile.def
+
+# fix.lib: $(FIX_OBJS)
+# 	wlib fix.lib $(FIX_OBJS)
+# 	copy *.lib $(LIBDIR)
+
 asingen.obj: math.h stdio.h
 
 fix.obj: fix.inc fix.asm
-	masm fix.asm
 
 fixtest.obj: conio.h fix.h graph.h stdio.h stdlib.h types.h
 

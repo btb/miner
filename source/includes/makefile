@@ -7,11 +7,6 @@
 # Makefile for macro and header files
 #
 
-LIBDIR = ..\main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 # What to install
 INSTALL_TARGS = types.h types.inc psmacros.inc
 
@@ -22,8 +17,11 @@ CLEAN_TARGS = $(OBJDIR)\*.obj
 TEST_PROGS = test
 
 # What object files and libs for the test programs
-TEST_SRCS = test.c mactest.c
-TEST_LIBS = io.lib
+test_SRCS = test.c mactest.c
+test_LIBS = io.lib
+
+#rules and targets common to all Miner makefiles
+include $(INIT)\makefile.def
 
 
 mactest.obj: psmacros.inc

@@ -16,5 +16,11 @@ SUBTARGETS = clean optimize no_mono no_debug linstall
 CLEAN_TARGS = 
 #lib\*.lib lib\*.h lib\*.inc
 
+default:
+	$(MAKE) $(MAKEFLAGS) -C bios linstallh
+	$(foreach subsystem,$(SUBSYSTEMS),\
+		$(shell $(MAKE) -C $(subsystem) $(MAKEFLAGS) all)\
+	)
+
 #all Miner makefiles should include this
-%include $(INIT)\makefile.def
+include $(INIT)\makefile.def

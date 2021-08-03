@@ -7,11 +7,6 @@
 # Makefile for bios functions
 #
 
-LIBDIR = ..\main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 # What to install, and where to install it
 INSTALL_TARGS = div0.lib div0.h div0.inc
 
@@ -25,16 +20,19 @@ LIBS = div0
 TEST_PROGS = testd
 
 # What object files for the lib
-DIV0_OBJS =  div0.obj
+div0_OBJS =  div0.obj
 
 # What object files and libs for the test programs
-TESTD_SRCS = testd.c testda.asm
-TESTD_LIBS = div0.lib
+testd_SRCS = testd.c testda.asm
+testd_LIBS = div0.lib
 
-div0.lib: $(DIV0_OBJS)
-	wlib div0.lib $(DIV0_OBJS)
-	copy *.lib $(LIBDIR)
+#rules and targets common to all Miner makefiles
+include $(INIT)\makefile.def
+
+# div0.lib: $(DIV0_OBJS)
+# 	wlib div0.lib $(DIV0_OBJS)
+# 	copy *.lib $(LIBDIR)
+
 div0.obj: div0.asm
-	masm div0.asm
 
 testd.obj: 
