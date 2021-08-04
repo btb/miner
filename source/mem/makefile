@@ -11,18 +11,12 @@
 INSTALL_TARGS = mem.lib mem.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = mem
 
-mem_OBJS = mem.obj
+mem_SRCS = mem.c
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
-
-# mem.lib: $(MEM_OBJS)
-# 	wlib mem.lib $(MEM_OBJS)
-# 	copy *.lib $(LIBDIR)
-
-mem.obj: mem.h mem.c
+include $(MINER)/init/makefile.def

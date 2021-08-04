@@ -17,14 +17,14 @@ LIBS = vecmat
 vecmat_SRCS = vecmat.asm
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What test programs to make
 TEST_PROGS = vectest 
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 vectest_SRCS = vectest.c
 vectest_LIBS = vecmat.lib io.lib fix.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
+include $(MINER)/init/makefile.def

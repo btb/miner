@@ -7,7 +7,7 @@
 # Makefile for user-interface functions
 #
 
-LIBDIR = ..\main
+LIBDIR = ../main
 #
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
@@ -17,7 +17,7 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 INSTALL_TARGS = ui.lib ui.h func.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = ui
@@ -25,44 +25,18 @@ LIBS = ui
 # What programs to make
 TEST_PROGS = testg
 
-# What object files for the lib
-UI_OBJS = ui.obj mouse.obj window.obj uidraw.obj button.obj \
-		  gadget.obj listbox.obj message.obj popup.obj scroll.obj \
-		  radio.obj checkbox.obj inputbox.obj userbox.obj menu.obj \
-		  harderr.obj file.obj keytrap.obj icon.obj keypress.obj \
-		  menubar.obj keypad.obj 
-#func.obj #Couldn't find func.c - where are the functions??
+# What source files for the lib
+ui_OBJS = ui.c mouse.c window.c uidraw.c button.c \
+		  gadget.c listbox.c message.c popup.c scroll.c \
+		  radio.c checkbox.c inputbox.c userbox.c menu.c \
+		  harderr.c file.c keytrap.c icon.c keypress.c \
+		  menubar.c keypad.c 
+#func.c #Couldn't find func.c - where are the functions??
 
-# What object files and libs for the test programs
-TESTG_SRCS = testg.c
-TESTG_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib readfile.lib iff.lib func.lib cflib.lib cfile.lib
-TESTG_LFLAGS = option stack=50k
+# What source files and libs for the test programs
+testg_SRCS = testg.c
+testg_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib readfile.lib iff.lib func.lib cflib.lib cfile.lib
+testg_LFLAGS = option stack=50k
 
-ui.lib: $(UI_OBJS)
-	wlib ui.lib $(UI_OBJS)
-	copy *.lib $(LIBDIR)
-barbox.obj: barbox.c
-button.obj: button.c
-checkbox.obj: checkbox.c
-file.obj: file.c
-func.obj: func.c
-gadget.obj: gadget.c
-harderr.obj: harderr.c
-icon.obj: icon.c
-inputbox.obj: inputbox.c
-keypad.obj: keypad.c
-keypress.obj: keypress.c
-keytrap.obj: keytrap.c
-listbox.obj: listbox.c
-menu.obj: menu.c
-menubar.obj: menubar.c
-message.obj: message.c
-mouse.obj: mouse.c
-number.obj: number.c
-popup.obj: popup.c
-radio.obj: radio.c
-scroll.obj: scroll.c
-ui.obj:	 ui.c
-uidraw.obj: uidraw.c
-userbox.obj: userbox.c
-window.obj: window.c
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

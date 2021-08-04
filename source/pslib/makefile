@@ -7,61 +7,30 @@
 # Makefile for compress library
 #
 
-LIBDIR = ..\main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
-
 # What to install, and where to install it
 INSTALL_TARGS = cflib.lib cflib.h pslib.exe
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = cflib 
 
-# What object files for the lib
-CFLIB_OBJS = lzw.obj bitio.obj library.obj 
+# What source files for the lib
+cflib_SRCS = lzw.c bitio.c library.c 
 #cf.obj
 
 # What test programs to make
 PROGS = pslib
 TEST_PROGS = cftest cftest2
 
-cflib.lib: $(CFLIB_OBJS)
-	wlib cflib.lib $(CFLIB_OBJS)
-	copy *.lib $(LIBDIR)
+# What source files and libs for the test programs
+pslib_SRCS = pslib.c
+pslib_LIBS = cflib.lib misc.lib mem.lib io.lib
+cftest_SRCS = cftest.c
+cftest_LIBS = cflib.lib misc.lib mem.lib io.lib
+cftest2_SRCS = cftest2.c
+cftest2_LIBS = cflib.lib misc.lib mem.lib io.lib
 
-# What object files and libs for the test programs
-PSLIB_OBJS = pslib.obj
-PSLIB_SRCS = pslib.c
-PSLIB_LIBS = cflib.lib misc.lib mem.lib io.lib
-CFTEST_OBJS = cftest.obj
-CFTEST_SRCS = cftest.c
-CFTEST_LIBS = cflib.lib misc.lib mem.lib io.lib
-CFTEST2_OBJS = cftest2.obj
-CFTEST2_SRCS = cftest2.c
-CFTEST2_LIBS = cflib.lib misc.lib mem.lib io.lib
-
-
-bitio.obj: bitio.c
-
-cf.obj:	 cflib.h conio.h ctype.h dos.h errno.h error.h fcntl.h i86.h io.h \
-	 library.h mem.h stat.h stdarg.h stdio.h stdlib.h string.h time.h \
-	 types.h
-
-cftest.obj: cflib.h error.h mem.h readfile.h stdio.h stdlib.h types.h
-
-cftest2.obj: cflib.h error.h mem.h readfile.h stdio.h stdlib.h types.h
-
-library.obj: library.c
-
-lzw.obj: lzw.c
-
-pslib.obj: cflib.h conio.h ctype.h dos.h fcntl.h i86.h library.h mem.h \
-	 parsarg.h stdarg.h stdio.h stdlib.h string.h time.h types.h
-
-readfile.obj: errno.h error.h fcntl.h io.h mem.h readfile.h stat.h stdio.h \
-	 stdlib.h string.h types.h
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

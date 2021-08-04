@@ -9,18 +9,18 @@ SUBSYSTEMS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap
 #sosdigi sosmidi
 
 # What to make in the subdirs if nothing specified
-SUBTARGETS = clean optimize no_mono no_debug linstall
-#SUBTARGETS = update linstall
+SUBTARGETS = clean optimize no_mono no_debug install
+#SUBTARGETS = update install
 
 # When making clean here, delete libs
 CLEAN_TARGS = 
-#lib\*.lib lib\*.h lib\*.inc
+#lib/*.lib lib/*.h lib/*.inc
 
 default:
-	$(MAKE) $(MAKEFLAGS) -C bios linstallh
-	$(foreach subsystem,$(SUBSYSTEMS),\
-		$(shell $(MAKE) -C $(subsystem) $(MAKEFLAGS) all)\
-	)
+	$(MAKE) $(MAKEFLAGS) -C bios installh
+	@for subsystem in $(SUBSYSTEMS); do\
+	 $(MAKE) -C $$subsystem all;\
+	done
 
 #all Miner makefiles should include this
-include $(INIT)\makefile.def
+include $(MINER)/init/makefile.def

@@ -7,7 +7,7 @@
 # Makefile for bios functions
 #
 
-LIBDIR = ..\main
+LIBDIR = ../main
 #
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
@@ -17,7 +17,7 @@ CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 INSTALL_TARGS =
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS =
@@ -25,14 +25,9 @@ LIBS =
 # What test programs to make
 TEST_PROGS = testp
 
-# What object files and libs for the test programs
-TESTP_OBJS = testp.obj iff.obj iff15bpp.obj
+# What source files and libs for the test programs
+TESTP_SRCS = testp.c iff.c iff15bpp.c
 TESTP_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib bm.lib iff.lib readfile.lib
-iff.exe: iff.obj
-	wcl386 /l=dos4g iff.c
-iff.obj: iff.c
-iff15bpp.obj: 
 
-testp.obj: 
-
-tga.obj: 
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

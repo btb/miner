@@ -7,7 +7,7 @@
 # Makefile for DESCENT execuable
 #
 
-LIBDIR = ..\main
+LIBDIR = ../main
 #
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG

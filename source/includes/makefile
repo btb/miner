@@ -11,19 +11,14 @@
 INSTALL_TARGS = types.h types.inc psmacros.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What test programs to make
 TEST_PROGS = test
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 test_SRCS = test.c mactest.c
 test_LIBS = io.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
-
-
-mactest.obj: psmacros.inc
-
-test.obj: mono.h
+include $(MINER)/init/makefile.def

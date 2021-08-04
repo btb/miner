@@ -1,30 +1,17 @@
 # Compiler and assembler defines
 
+SHELL=sh
+
 
 #_147
 # Kill annoying built-in rules
 .SUFFIXES:
 
-# Check for local miner directory
-ifndef MINERLOCAL
-MINERLOCAL = MINER
-endif
 
 # Directory definitions
-LIBDIRNET = $(MINER)/source/lib
-LIBDIRLOCAL = $(MINERLOCAL)\source\lib
+LIBDIR = $(MINER)/source/lib
 TOOLSDIR = $(MINER)/tools
 GAMEDIR = $(MINER)/game
-
-# Where to install libraries
-ifdef LIB_SUBDIR
-LIBDIRNET_INST = $(LIBDIRNET)/$(LIB_SUBDIR)
-LIBDIRLOCAL_INST = $(LIBDIRLOCAL)\$(LIB_SUBDIR)
-else
-LIBDIRNET_INST = $(LIBDIRNET)
-LIBDIRLOCAL_INST = $(LIBDIRLOCAL)
-endif
-
 
 
 # generate list of objs for each target
@@ -33,48 +20,36 @@ $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS),\
 )
 
 
-
-
 #_349
 # What extensions get installed where
 LIBEXT = .lib .h .inc
 TOOLSEXT = .exe
 
+#_362
+# Set make's search paths
+vpath %.h $(INCPATH) $(ALLDIRS)
+vpath %.inc $(INCPATH) $(ALLDIRS)
+vpath %.lib . $(LIBDIR) $(EXTLIBS)
+
 
 #_411
 # Generate lists of targets with extentions 
-# DLL_DLLS = $(DLLS,<.\\,>.dll)
-# TEST_EXES = $(TEST_PROGS,<.\\,>.exe)
+TEST_EXES = $(addsuffix .exe,$(TEST_PROGS))
 LIB_LIBS = $(addsuffix .lib,$(LIBS))
-##PROG_EXES = $(PROGS,>.exe)
+PROG_EXES = $(addsuffix .exe,$(PROGS))
 
-# Make list of prog exe names, prepending current director as path if none
-# %foreach PROG $(PROGS)
-# %if "$(PROG,P)" == ""
-# %set PROG_EXES := $(PROG_EXES) .\$(PROG).exe
-# %else
-# %set PROG_EXES := $(PROG_EXES) $(PROG).exe
-# %endif
+#_427
+ALL_EXES = $(TEST_EXES) $(PROG_EXES)
 
-# %endfor
-
-# ALL_EXES = $(TEST_EXES) $(PROG_EXES)
-
-#_429
 # Default target if none specified in makefile
 .PHONY: all
-all:	$(LIB_LIBS) $(PROGS)
-	$(call do_subsystems,$(SUBTARGETS))
+all:	$(LIB_LIBS) $(PROG_EXES)
+	$(do_subsystems)
 
 # Target like all that also builds test progs
 .PHONY: test
-test .PHONY:	$(LIB_LIBS) $(PROG_EXES) $(TEST_EXES)
-	$(error $(TEST_EXES))
-	$(call do_subsystems,$(SUBTARGETS))
-
-# Target to make data
-.PHONY: data
-data .PHONY:	
+test:	$(LIB_LIBS) $(PROG_EXES) $(TEST_EXES)
+	$(do_subsystems)
 
 
 
@@ -85,12 +60,12 @@ ifndef WATCOM
 $(error 1 Make error: Watcom not set up (run WATCOM batch file))
 endif
 
-INCPATH += . $(LIBDIRLOCAL) $(EXTLIBS) $(WATCOM)\h $(WATCOM)\h\sys
+INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 
 CC = wcc386
 CCENV = WCC386
 CFLAGS_STACK = /s	#default is stack checking off
-CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO)
+CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,\,$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO)
 
 ifdef GLOBAL_INCFILES
 CFLAGS += /fi=$(GLOBAL_INCFILES)
@@ -98,13 +73,20 @@ endif
 
 LIBEXE = wlib
 LINK = wlink
-TOUCH = wtouch
 
 
 # Flags for MASM 6.1
 AS = ml
-AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(INCPATH)) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$(@F)
+AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,\,$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$(@F)
 ASENV = ML
+
+
+
+
+#_573
+LFLAGS = system dos4g
+LFLAGS += option quiet $(LFLAGS_DEBUG)
+
 
 
 
@@ -119,38 +101,32 @@ ifdef SHOW_REASONS
 	))
 endif
 ifdef CCENV
-	$(eval export $(CCENV) = $(CFLAGS) $($T_CFLAGS) $($(<F)_CFLAGS) /fo=$(@F))
+	$(eval export $(CCENV) = $(CFLAGS) /fo=$(@F))
  ifdef SHOW_FLAGS
 	$(info $(CC) flags: $($(CCENV)))
  endif
 	$(CC) $<
 else
-	$(CC) $(CFLAGS) $($T_CFLAGS) $($(<F)_CFLAGS) $<
+	$(CC) $(CFLAGS) $<
 endif
 
 %.obj: %.asm
 	$(info will make $@ from $<)
 ifdef SHOW_REASONS
 	$(warning $(if $(wildcard $@),\
-		$(@F) <- $(?F)\
-	,\
+		$(@F) <- $(?F),\
 		$(@F) <- (does not exist)\
 	))
 endif
-	$(eval __AFLAGS = $(AFLAGS) $($(@F)_AFLAGS))
-ifdef $(ASENV)
-	$(eval export $(ASENV) = $(AFLAGS) $($(<F)_AFLAGS))
+ifdef ASENV
+	$(eval export $(ASENV) = $(AFLAGS))
  ifdef SHOW_FLAGS
-	@echo $(AS) flags: $(AFLAGS) $($(<F)_AFLAGS))
+	$(info $(AS) flags: $(AFLAGS))
  endif
 	$(AS) $<
 else
-	$(AS) $< $(AFLAGS) $($(<F)_AFLAGS))
+	$(AS) $< $(AFLAGS)
 endif
-
-# macros for literal comma "$," and space "$ "
-, := ,
-$() $() := $() $()
 
 
 
@@ -160,43 +136,33 @@ $() $() := $() $()
 #_750
 # Build test programs
 ifneq '$(ALL_EXES)' ''
-$(ALL_EXES): %: $(MAKEFILE_LIST) $$($$*_OBJS) $$($$*_LIBS) $$($$*_DATA)
-	$(if $($(@F)_OBJS),,\
-		$(error 1 Makefile error: no object files given for test program $(*F))\
+$(ALL_EXES): %.exe: $$($$*_OBJS) $$($$*_LIBS) $$($$*_DATA)
+	$(if $($*_OBJS),\
+		$(info will make $@ from $($*_OBJS) $($*_LIBS) $($*_DATA)),\
+		$(error 1 Makefile error: no object files given for test program $*)\
 	)
  ifdef SHOW_REASONS
 	$(warning $(if $(wildcard $@),\
-		$(@F) <- $(?F)
-	,\
-		$(@F) <- (does not exist)\
+		$@ <- $?,\
+		$@ <- (does not exist)\
 	))
  endif
-	$(file > $(@F).lnk,\
-		$(LFLAGS) $($(@F)_LFLAGS) file $(subst $ ,$,\n$ ,$($(@F)_OBJS)))
- ifneq "$($(@F)_LIBS)" ""
-	$(file >> $(@F).lnk,\
-		library $(subst $ ,$,\n$ ,$($(@F)_LIBS)))
- endif
-	$(file >> $(@F).lnk,\
-		name $(basename $(@)))
-	$(LINK) @$(@F).lnk
+	$(file > $*.lnk,$(LFLAGS) $($*_LFLAGS))
+	$(foreach OBJ,$($*_OBJS),$(file >> $*.lnk,file $(OBJ)))
+	$(foreach LIB,$(filter $(addprefix %,$($*_LIBS)),$^),$(file >> $*.lnk,library $(LIB)))
+	$(file >> $*.lnk,name $*)
+	$(LINK) @$*.lnk
 endif
 
-# Set a variable to the name main target (the exe) being built
-ifneq '$(TARGNAMES)' ''
-.PHONY: $(TARGNAMES)
-$(TARGNAMES):
-	$(eval T=$(@F))
-endif
 
 
 
 #_812
 # Build libraries
-ifneq "$(LIBS)" ""
-$(addsuffix .lib,$(LIBS)): %.lib: $(MAKEFILE_LIST) $$($$*_OBJS)
-	$(info will make $@ from $($*_OBJS))
-	$(if $($*_OBJS),,\
+ifneq "$(LIB_LIBS)" ""
+$(LIB_LIBS): %.lib: $$($$*_OBJS)
+	$(if $($*_OBJS),\
+		$(info will make $@ from $($*_OBJS)),\
 		$(error 1 Makefile error: no object files given for library $*)\
 	)
  ifdef SHOW_REASONS
@@ -205,65 +171,61 @@ $(addsuffix .lib,$(LIBS)): %.lib: $(MAKEFILE_LIST) $$($$*_OBJS)
 		$@ <- (does not exist)\
 	))
  endif
-	$(LIBEXE) /q /n /b $@ $($*_OBJS)
+	$(file > $*.arg, $($*_OBJS))
+	$(LIBEXE) /q /n /b $@ @$*.arg
 endif
 
+#_828
 # Visit subdirs and make there
-define do_subsystems
- $(eval SUBTARG=($1))
- $(foreach SYSTEM,$(SUBSYSTEMS),\
-  $(shell $(MAKE) $(MFLAGS) -C $(SYSTEM) $(SUBTARG))\
- )
+define do_subsystems =
+@SUBSYSTEMS=($(SUBSYSTEMS)); \
+for SYSTEM in "$${SUBSYSTEMS[@]}"; do\
+ $(MAKE) -C $$SYSTEM $(MFLAGS) $@;\
+done
 endef
-
 
 
 #_845
 # Clean up temp & intermediary files
 
-CLEAN_TARGS := $(CLEAN_TARGS) $(TEST_EXES) $(PROG_EXES) $(LIB_LIBS)
-
+CLEAN_TARGS := $(CLEAN_TARGS) $(TEST_EXES) $(PROG_EXES) $(LIB_LIBS) $(DLL_DLLS)
 .PHONY: clean
 clean:
-	$(call do_subsystems,$@)	
-	$(foreach CLTARG,$(CLEAN_TARGS),\
-		$(if $(wildcard $(CLTARG)),\
-			del $(CLTARG),\
-		)\
-	)
-
+	$(do_subsystems)
+	rm -f $(CLEAN_TARGS)
 
 
 #_889
 # Local install
-.PHONY: linstall
-linstall:	$(addprefix .\,$(INSTALL_TARGS))
-	$(foreach TARG,$(INSTALL_TARGS),\
-	 	@rem figure out where to install to\
-		$(if $(suffix $(TARG)),,\
-			$(error Error: don't know where to install $(TARG))\
-		)\
-		$(if $(filter $(LIBEXT),$(suffix $(TARG))),\
-	    	$(eval INST_DIRS=$(LIBDIRLOCAL_INST)),\
-		)\
-		$(if $(filter $(TOOLSEXT),$(suffix $(TARG))),\
-			$(error Error: Can't local install tools ($(TARG)))\
-		)\
-		$(if $(filter-out $(LIBSEXT) $(TOOLSEXT),$(suffix $(TARG))),,\
-			$(error Error: don't know where to install $(TARG))\
-		)\
-		$(shell copy $(TARG) $(LIBDIRLOCAL_INST) > NUL)\
-		$(info Installing $(TARG) to $(LIBDIRLOCAL_INST))\
-	)
+.PHONY: install
+install:	installlib installtools
 
+.PHONY: installlib
+installlib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
+	$(do_subsystems)
+	@TARGETS=($^);\
+	for TARG in "$${TARGETS[@]}"; do\
+	 cp $$TARG $(LIBDIR);\
+	 echo Installing $$TARG to $(LIBDIR);\
+	done
 
+.PHONY: installtools
+installtools:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
+	$(do_subsystems)
+	@TARGETS=($^);\
+	for TARG in "$${TARGETS[@]}"; do\
+	 cp $$TARG $(LIBDIR);\
+	 echo Installing $$TARG to $(LIBDIR);\
+	done
 
 
 #_942
 # Local Install for just headers
-.PHONY: linstallh
-linstallh:	$(addprefix .\,$(filter %.h %.inc,$(INSTALL_TARGS)))
-	$(foreach TARG,$?,\
-		$(shell copy $(TARG) $(LIBDIRLOCAL_INST) > NUL)\
-		$(info Installing $(TARG) to $(LIBDIRLOCAL_INST))\
-	)
+.PHONY: installh
+installh:	$(filter %.h %.inc,$(INSTALL_TARGS))
+	$(do_subsystems)
+	@TARGETS=($^);\
+	for TARG in "$${TARGETS[@]}"; do\
+	 cp $$TARG $(LIBDIR);\
+	 echo Installing $$TARG to $(LIBDIR);\
+	done

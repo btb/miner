@@ -11,14 +11,14 @@
 INSTALL_TARGS = effect2d.h gr.h gr.lib grdef.h gr.inc palette.h ibitblt.h rle.h pcx.h
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = gr
 
 # What test programs to make
 #TEST_PROGS = testg testp vesatest
-PROGS = testg
+TEST_PROGS = testg
 
 # What source files for the lib
 gr_SRCS = linear.asm vesa.asm modex.asm canvas.c bitmap.c gr.c font.c \
@@ -27,7 +27,7 @@ gr_SRCS = linear.asm vesa.asm modex.asm canvas.c bitmap.c gr.c font.c \
 	scale.c scalea.asm circle.c ibitblt.c rle.c pcx.c
 #effects.c roller.c 
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 testg_SRCS = testg.c tmapbits.c
 testg_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 
@@ -38,4 +38,4 @@ testg_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 #vesatest_LIBS = io.lib gr.lib misc.lib mem.lib cflib.lib 
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
+include $(MINER)/init/makefile.def

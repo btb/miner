@@ -11,7 +11,7 @@
 INSTALL_TARGS = div0.lib div0.h div0.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = div0
@@ -19,20 +19,12 @@ LIBS = div0
 # What test programs to make
 TEST_PROGS = testd
 
-# What object files for the lib
-div0_OBJS =  div0.obj
+# What source files for the lib
+div0_SRCS =  div0.asm
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 testd_SRCS = testd.c testda.asm
 testd_LIBS = div0.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
-
-# div0.lib: $(DIV0_OBJS)
-# 	wlib div0.lib $(DIV0_OBJS)
-# 	copy *.lib $(LIBDIR)
-
-div0.obj: div0.asm
-
-testd.obj: 
+include $(MINER)/init/makefile.def

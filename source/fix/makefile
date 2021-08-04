@@ -11,7 +11,7 @@
 INSTALL_TARGS = fix.lib fix.h fix.inc
 
 # What to clean
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 # What libs to make
 LIBS = fix
@@ -19,26 +19,12 @@ LIBS = fix
 # What test programs to make
 TEST_PROGS = fixtest
 
-# What object files for the lib
-fix_OBJS = fix.obj
+# What source files for the lib
+fix_SRCS = fix.asm
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 fixtest_SRCS = fixtest.c
 fixtest_LIBS = fix.lib io.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
-
-# fix.lib: $(FIX_OBJS)
-# 	wlib fix.lib $(FIX_OBJS)
-# 	copy *.lib $(LIBDIR)
-
-asingen.obj: math.h stdio.h
-
-fix.obj: fix.inc fix.asm
-
-fixtest.obj: conio.h fix.h graph.h stdio.h stdlib.h types.h
-
-singen.obj: math.h
-
-test.obj: psmacros.inc
+include $(MINER)/init/makefile.def

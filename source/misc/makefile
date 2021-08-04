@@ -22,12 +22,12 @@ CLEAN_TARGS = *.obj
 # What test programs to make
 TEST_PROGS = errtest parstest
 
-# What object files and libs for the test programs
-PARSTEST_SRCS = parstest.c
-PARSTEST_LIBS = misc.lib
+# What source files and libs for the test programs
+parstest_SRCS = parstest.c
+parstest_LIBS = misc.lib
 
-ERRTEST_SRCS = errtest.c
-ERRTEST_LIBS = misc.lib
+errtest_SRCS = errtest.c
+errtest_LIBS = misc.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)/makefile.def
+include $(MINER)/init/makefile.def

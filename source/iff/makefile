@@ -13,13 +13,13 @@ INSTALL_TARGS = iff.lib iff.h
 # What libs to build
 LIBS = iff
 
-# What objs in the iff lib
-iff_OBJS = iff.obj
+# What sources in the iff lib
+iff_SRCS = iff.c
 
 # What test programs to make
 TEST_PROGS = ifftest ifftestv
 
-# What object files and libs for the test programs
+# What source files and libs for the test programs
 ifftest_SRCS = ifftest.c
 ifftest_LIBS = iff.lib gr.lib mem.lib bm.lib misc.lib cflib.lib cfile.lib
 
@@ -27,14 +27,4 @@ ifftestv_SRCS = ifftestv.c
 ifftestv_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
 
 #rules and targets common to all Miner makefiles
-include $(INIT)\makefile.def
-
-# iff.lib: $(IFF_OBJS)
-# 	wlib iff.lib $(IFF_OBJS)
-# 	copy *.lib $(LIBDIR)
-
-iff.obj: iff.c
-
-ifftest.obj: conio.h fix.h gr.h iff.h stdio.h stdlib.h types.h
-
-ifftestv.obj: conio.h fix.h gr.h iff.h stdio.h types.h vesa.h
+include $(MINER)/init/makefile.def

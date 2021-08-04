@@ -4,7 +4,7 @@
 # Makes all the executable by visiting subdirs and making there
 #
 
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 PROGS = xcolor
 

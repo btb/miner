@@ -4,12 +4,12 @@
 # Makes all the executable by visiting subdirs and making there
 #
 
-LIBDIR = ..\main
+LIBDIR = ../main
 #
 
 CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
 
-CLEAN_TARGS = $(OBJDIR)\*.obj
+CLEAN_TARGS = *.obj
 
 PROGS = lbmcomp
 
