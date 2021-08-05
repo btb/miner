@@ -7,12 +7,6 @@
 # Makefile for bios functions
 #
 
-LIBDIR = ../main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
-
 # What to install, and where to install it
 INSTALL_TARGS =
 
@@ -26,8 +20,8 @@ LIBS =
 TEST_PROGS = testp
 
 # What source files and libs for the test programs
-TESTP_SRCS = testp.c iff.c iff15bpp.c
-TESTP_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib bm.lib iff.lib readfile.lib
+testp_SRCS = testp.c iff.c iff15bpp.c
+testp_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib bm.lib iff.lib readfile.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

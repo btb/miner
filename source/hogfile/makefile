@@ -4,15 +4,11 @@
 # Makes all the executable by visiting subdirs and making there
 #
 
-LIBDIR = ../main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 CLEAN_TARGS = *.obj
 
 PROGS = hogfile
 
 HOGFILE_SRCS = hogfile.c 
 
-
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

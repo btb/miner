@@ -7,12 +7,6 @@
 # Makefile for user-interface functions
 #
 
-LIBDIR = ../main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
-
 # What to install, and where to install it
 INSTALL_TARGS = ui.lib ui.h func.h
 
@@ -26,7 +20,7 @@ LIBS = ui
 TEST_PROGS = testg
 
 # What source files for the lib
-ui_OBJS = ui.c mouse.c window.c uidraw.c button.c \
+ui_SRCS = ui.c mouse.c window.c uidraw.c button.c \
 		  gadget.c listbox.c message.c popup.c scroll.c \
 		  radio.c checkbox.c inputbox.c userbox.c menu.c \
 		  harderr.c file.c keytrap.c icon.c keypress.c \

@@ -4,11 +4,6 @@
 # Makes all the executable by visiting subdirs and making there
 #
 
-LIBDIR = ../main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-
 CLEAN_TARGS = *.obj
 
 PROGS = lbmcomp
@@ -19,4 +14,5 @@ LBMCOMP_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.l
 
 LBMCOMP_LFLAGS = option stack=150k
 
-
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

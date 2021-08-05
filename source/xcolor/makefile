@@ -8,12 +8,11 @@ CLEAN_TARGS = *.obj
 
 PROGS = xcolor
 
-XCOLOR_SRCS = xcolor.c 
+xcolor_SRCS = xcolor.c 
 
-XCOLOR_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib
+xcolor_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib
 
-XCOLOR_LFLAGS = option stack=150k
+xcolor_LFLAGS = option stack=150k
 
-xcolor.exe: xcolor.obj
-	wl386 xcolor.c 
-xcolor.obj: xcolor.c
+#rules and targets common to all Miner makefiles
+include $(MINER)/init/makefile.def

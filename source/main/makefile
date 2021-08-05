@@ -7,6 +7,9 @@ INI_FILE = inferno.ini
 # Load this person's personal settings
 include $(INI_FILE)
 
+# What to clean
+CLEAN_TARGS = *.obj
+
 # What programs to make
 ifdef SHAREWARE
 PROGS = dcntshr

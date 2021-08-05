@@ -190,18 +190,19 @@ endef
 
 CLEAN_TARGS := $(CLEAN_TARGS) $(TEST_EXES) $(PROG_EXES) $(LIB_LIBS) $(DLL_DLLS)
 .PHONY: clean
+clean: SUBSYSTEMS = $(SUBDIRS)
 clean:
 	$(do_subsystems)
 	rm -f $(CLEAN_TARGS)
 
+really-clean: SUBSYSTEMS = $(SUBDIRS)
+really-clean:
+	$(do_subsystems)
+	rm -f $(CLEAN_TARGS) *.err *.arg *.lnk *.bak *.map
 
-#_889
-# Local install
-.PHONY: linstall
-linstall:	linstalllib linstalltools
 
-.PHONY: linstalllib
-linstalllib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
+.PHONY: install
+install:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
@@ -209,8 +210,11 @@ linstalllib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	 echo Installing $$TARG to $(LIBDIR);\
 	done
 
-.PHONY: linstalltools
-linstalltools:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
+
+#_889
+# Local install
+.PHONY: linstall
+linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
