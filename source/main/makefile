@@ -12,9 +12,9 @@ CLEAN_TARGS = *.obj
 
 # What programs to make
 ifdef SHAREWARE
-PROGS = dcntshr
+GAMES = dcntshr
 else
-PROGS = descentr
+GAMES = descentr
 endif
 
 # Files to link for Descent

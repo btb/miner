@@ -15,7 +15,7 @@ GAMEDIR = $(MINER)/game
 
 
 # generate list of objs for each target
-$(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS),\
+$(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
  $(eval $(target)_OBJS = $(addsuffix .obj,$(basename $($(target)_SRCS))))\
 )
 
@@ -37,18 +37,21 @@ vpath %.lib . $(LIBDIR) $(EXTLIBS)
 TEST_EXES = $(addsuffix .exe,$(TEST_PROGS))
 LIB_LIBS = $(addsuffix .lib,$(LIBS))
 PROG_EXES = $(addsuffix .exe,$(PROGS))
+GAME_EXES = $(addsuffix .exe,$(GAMES))
+
+INSTALL_TARGS += $(GAME_EXES)
 
 #_427
-ALL_EXES = $(TEST_EXES) $(PROG_EXES)
+ALL_EXES = $(TEST_EXES) $(PROG_EXES) $(GAME_EXES)
 
 # Default target if none specified in makefile
 .PHONY: all
-all:	$(LIB_LIBS) $(PROG_EXES)
+all:	$(LIB_LIBS) $(PROG_EXES) $(GAME_EXES)
 	$(do_subsystems)
 
 # Target like all that also builds test progs
 .PHONY: test
-test:	$(LIB_LIBS) $(PROG_EXES) $(TEST_EXES)
+test:	$(LIB_LIBS) $(PROG_EXES) $(TEST_EXES) $(GAME_EXES)
 	$(do_subsystems)
 
 
@@ -188,7 +191,7 @@ endef
 #_845
 # Clean up temp & intermediary files
 
-CLEAN_TARGS := $(CLEAN_TARGS) $(TEST_EXES) $(PROG_EXES) $(LIB_LIBS) $(DLL_DLLS)
+CLEAN_TARGS := $(CLEAN_TARGS) $(ALL_EXES) $(LIB_LIBS) $(DLL_DLLS)
 .PHONY: clean
 clean: SUBSYSTEMS = $(SUBDIRS)
 clean:
@@ -202,12 +205,14 @@ really-clean:
 
 
 .PHONY: install
+install: SUBSYSTEMS = $(SUBDIRS)
 install:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 cp $$TARG $(LIBDIR);\
-	 echo Installing $$TARG to $(LIBDIR);\
+	 DEST=$(if $(filter $(GAME_EXES),$^),$(GAMEDIR),$(TOOLSDIR));\
+	 cp $$TARG $$DEST;\
+	 echo Installing $$TARG to $$DEST;\
 	done
 
 
