@@ -1,0 +1,9 @@
+*.err
+*.bak
+*.obj
+*.lib
+*.lnk
+*.arg
+*.exe
+*.map
+source/lib
