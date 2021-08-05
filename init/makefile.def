@@ -197,11 +197,11 @@ clean:
 
 #_889
 # Local install
-.PHONY: install
-install:	installlib installtools
+.PHONY: linstall
+linstall:	linstalllib linstalltools
 
-.PHONY: installlib
-installlib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
+.PHONY: linstalllib
+linstalllib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
@@ -209,8 +209,8 @@ installlib:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	 echo Installing $$TARG to $(LIBDIR);\
 	done
 
-.PHONY: installtools
-installtools:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
+.PHONY: linstalltools
+linstalltools:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
@@ -221,8 +221,8 @@ installtools:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
 
 #_942
 # Local Install for just headers
-.PHONY: installh
-installh:	$(filter %.h %.inc,$(INSTALL_TARGS))
+.PHONY: linstallh
+linstallh:	$(filter %.h %.inc,$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\

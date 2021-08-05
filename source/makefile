@@ -17,9 +17,9 @@ CLEAN_TARGS =
 #lib/*.lib lib/*.h lib/*.inc
 
 default:
-	$(MAKE) $(MAKEFLAGS) -C bios installh
+	$(MAKE) $(MAKEFLAGS) -C bios linstallh
 	@for subsystem in $(SUBSYSTEMS); do\
-	 $(MAKE) -C $$subsystem all;\
+	 $(MAKE) -C $$subsystem linstall;\
 	done
 
 #all Miner makefiles should include this
