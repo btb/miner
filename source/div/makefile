@@ -28,3 +28,7 @@ testd_LIBS = div0.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+div0.obj: div0.asm
+testd.obj: testd.c div0.h
+testda.obj: testda.c

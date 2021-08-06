@@ -28,3 +28,5 @@ fixtest_LIBS = fix.lib io.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+fix.obj: fix.asm fix.inc psmacros.inc types.inc

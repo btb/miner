@@ -34,3 +34,8 @@ cftest2_LIBS = cflib.lib misc.lib mem.lib io.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+bitio.obj: bitio.c cflib.h library.h mem.h types.h
+library.obj: library.c cflib.h error.h library.h mem.h types.h
+lzw.obj: lzw.c cflib.h library.h mem.h types.h
+pslib.obj: pslib.c cflib.h library.h mem.h parsarg.h types.h

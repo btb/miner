@@ -17,6 +17,7 @@ GAMEDIR = $(MINER)/game
 # generate list of objs for each target
 $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
  $(eval $(target)_OBJS = $(addsuffix .obj,$(basename $($(target)_SRCS))))\
+ $(eval ALLDIRS += $($(target)_DIRS))\
 )
 
 
@@ -27,8 +28,8 @@ TOOLSEXT = .exe
 
 #_362
 # Set make's search paths
-vpath %.h $(INCPATH) $(ALLDIRS)
-vpath %.inc $(INCPATH) $(ALLDIRS)
+vpath %.h . $(LIBDIR) $(ALLDIRS)
+vpath %.inc . $(LIBDIR) $(ALLDIRS)
 vpath %.lib . $(LIBDIR) $(EXTLIBS)
 
 

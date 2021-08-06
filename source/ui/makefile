@@ -34,3 +34,26 @@ testg_LFLAGS = option stack=50k
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+button.obj: button.c fix.h gr.h key.h mem.h mono.h types.h ui.h
+checkbox.obj: checkbox.c fix.h gr.h key.h mem.h types.h ui.h
+file.obj: file.c fix.h gr.h key.h mem.h mono.h types.h ui.h
+gadget.obj: gadget.c fix.h gr.h key.h mem.h types.h ui.h
+harderr.obj: harderr.c
+icon.obj: icon.c fix.h gr.h key.h mem.h types.h ui.h
+inputbox.obj: inputbox.c fix.h gr.h key.h mem.h types.h ui.h
+keypad.obj: keypad.c cflib.h error.h fix.h func.h gr.h key.h mem.h mono.h types.h ui.h
+keypress.obj: keypress.c fix.h gr.h key.h types.h ui.h
+keytrap.obj: keytrap.c fix.h gr.h key.h types.h ui.h
+listbox.obj: listbox.c fix.h gr.h key.h types.h ui.h
+menu.obj: menu.c fix.h gr.h mem.h types.h ui.h
+menubar.obj: menubar.c error.h fix.h func.h gr.h key.h mem.h mono.h types.h ui.h
+message.obj: message.c fix.h gr.h key.h types.h ui.h
+mouse.obj: mouse.c fix.h gr.h mem.h mouse.h types.h ui.h
+popup.obj: popup.c fix.h gr.h mouse.h types.h ui.h
+radio.obj: radio.c fix.h gr.h key.h mono.h types.h ui.h
+scroll.obj: scroll.c fix.h gr.h key.h types.h ui.h
+ui.obj: ui.c fix.h gr.h key.h mono.h mouse.h types.h ui.h
+uidraw.obj: uidraw.c fix.h gr.h types.h ui.h
+userbox.obj: userbox.c fix.h gr.h key.h types.h ui.h
+window.obj: window.c fix.h gr.h key.h mem.h mono.h mouse.h types.h ui.h

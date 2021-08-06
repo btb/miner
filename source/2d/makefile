@@ -39,3 +39,28 @@ testg_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib  cfile.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+bitblt.obj: bitblt.c fix.h gr.h grdef.h mem.h mono.h rle.h types.h
+bitmap.obj: bitmap.c dpmi.h fix.h gr.h grdef.h mem.h types.h
+box.obj: box.c fix.h gr.h grdef.h mem.h types.h
+canvas.obj: canvas.c fix.h gr.h grdef.h mem.h types.h
+circle.obj: circle.c fix.h gr.h grdef.h mem.h types.h
+disc.obj: disc.c fix.h gr.h grdef.h mem.h types.h
+font.obj: font.c cfile.h error.h fix.h gr.h grdef.h mem.h mono.h types.h
+gpixel.obj: gpixel.c fix.h gr.h grdef.h mem.h types.h
+gr.obj: gr.c dpmi.h error.h fix.h gr.h grdef.h mem.h mono.h palette.h types.h
+ibitblt.obj: ibitblt.c error.h fix.h gr.h ibitblt.h mem.h types.h
+lbitblt.obj: lbitblt.asm fix.inc gr.inc psmacros.inc types.inc
+line.obj: line.c clip.h fix.h gr.h grdef.h mem.h types.h
+linear.obj: linear.asm psmacros.inc vgaregs.inc
+modex.obj: modex.asm psmacros.inc tweak.inc vgaregs.inc
+palette.obj: palette.c cfile.h error.h fix.h gr.h grdef.h key.h mem.h mono.h types.h
+pcx.obj: pcx.c cfile.h fix.h gr.h mem.h pcx.h types.h
+pixel.obj: pixel.c fix.h gr.h grdef.h mem.h types.h
+poly.obj: poly.c fix.h gr.h grdef.h mem.h types.h
+rect.obj: rect.c fix.h gr.h grdef.h mem.h types.h
+rle.obj: rle.c dpmi.h error.h fix.h gr.h grdef.h key.h mem.h mono.h types.h
+scale.obj: scale.c error.h fix.h gr.h mono.h rle.h types.h
+scalea.obj: scalea.asm psmacros.inc types.inc
+scanline.obj: scanline.c fix.h gr.h grdef.h mem.h types.h
+vesa.obj: vesa.asm fix.inc gr.inc psmacros.inc types.inc vgaregs.inc

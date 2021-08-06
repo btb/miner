@@ -8,7 +8,7 @@ CLEAN_TARGS = *.obj
 
 PROGS = hogfile
 
-HOGFILE_SRCS = hogfile.c 
+hogfile_SRCS = hogfile.c 
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

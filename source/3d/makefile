@@ -29,3 +29,14 @@ TEST_PROGS = 3dtest
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
+
+clipper.obj: clipper.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+draw.obj: draw.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+globvars.obj: globvars.asm 3d.inc fix.inc psmacros.inc types.inc vecmat.inc
+horizon.obj: horizon.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+instance.obj: instance.asm 3d.inc fix.inc psmacros.inc types.inc vecmat.inc
+interp.obj: interp.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+matrix.obj: matrix.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+points.obj: points.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+rod.obj: rod.asm 3d.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
+setup.obj: setup.asm 3d.inc div0.inc fix.inc gr.inc psmacros.inc types.inc vecmat.inc
