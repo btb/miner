@@ -10,9 +10,6 @@
 # What to install
 INSTALL_TARGS = iff.lib iff.h
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What libs to build
 LIBS = iff
 

@@ -16,9 +16,6 @@ LIBS = vecmat
 # What sources in the lib
 vecmat_SRCS = vecmat.asm
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What test programs to make
 TEST_PROGS = vectest 
 

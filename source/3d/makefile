@@ -10,9 +10,6 @@
 # What to install
 INSTALL_TARGS = 3d.lib 3d.h 3d.inc
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What libs to build
 LIBS = 3d
 

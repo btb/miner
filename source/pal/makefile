@@ -10,9 +10,6 @@
 # What to install, and where to install it
 INSTALL_TARGS =
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What libs to make
 LIBS =
 

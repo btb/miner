@@ -17,6 +17,7 @@ GAMEDIR = $(MINER)/game
 # generate list of objs for each target
 $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
  $(eval $(target)_OBJS = $(addsuffix .obj,$(basename $($(target)_SRCS))))\
+ $(eval ALLOBJS += $($(target)_OBJS))\
  $(eval ALLDIRS += $($(target)_DIRS))\
 )
 
@@ -192,17 +193,20 @@ endef
 #_845
 # Clean up temp & intermediary files
 
-CLEAN_TARGS := $(CLEAN_TARGS) $(ALL_EXES) $(LIB_LIBS) $(DLL_DLLS)
+CLEAN_TARGS := $(ALLOBJS) $(ALL_EXES) $(LIB_LIBS) $(DLL_DLLS) $(CLEAN_TARGS)
 .PHONY: clean
 clean: SUBSYSTEMS = $(SUBDIRS)
 clean:
 	$(do_subsystems)
-	rm -f $(CLEAN_TARGS)
+	@CLEAN_TARGS=($(CLEAN_TARGS));\
+	for CLTARG in "$${CLEAN_TARGS[@]}"; do\
+	 rm -f $$CLTARG>NUL;\
+	done
 
 really-clean: SUBSYSTEMS = $(SUBDIRS)
-really-clean:
+really-clean: clean
 	$(do_subsystems)
-	rm -f $(CLEAN_TARGS) *.err *.arg *.lnk *.bak *.map
+	rm -f *.obj *.err *.arg *.lnk *.bak *.map>NUL
 
 
 .PHONY: install

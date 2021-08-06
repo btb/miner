@@ -16,9 +16,6 @@ CCFLAGS = $(CCFLAGS) /I../misc /I../includes /I../fix
 # What to install, and where to install it
 INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h dpmi.h ipx.h #swift.h
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What libs to make
 LIBS = io
 

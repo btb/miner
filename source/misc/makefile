@@ -16,9 +16,6 @@ LIBS = misc
 # What sources in the lib
 misc_SRCS = parsarg.c error.c
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What test programs to make
 TEST_PROGS = errtest parstest
 

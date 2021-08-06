@@ -10,9 +10,6 @@
 # What to install
 INSTALL_TARGS = types.h types.inc psmacros.inc
 
-# What to clean
-CLEAN_TARGS = *.obj
-
 # What test programs to make
 TEST_PROGS = test
 
