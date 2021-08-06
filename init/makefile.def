@@ -21,6 +21,10 @@ $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
  $(eval ALLDIRS += $($(target)_DIRS))\
 )
 
+$(foreach GAME,$(GAMES),\
+ $(eval GAME_DATA += $($(GAME)_DATA))\
+)
+
 
 #_349
 # What extensions get installed where
@@ -32,7 +36,7 @@ TOOLSEXT = .exe
 vpath %.h . $(LIBDIR) $(ALLDIRS)
 vpath %.inc . $(LIBDIR) $(ALLDIRS)
 vpath %.lib . $(LIBDIR) $(EXTLIBS)
-
+vpath %.c $(ALLDIRS)
 
 #_411
 # Generate lists of targets with extentions 
@@ -41,7 +45,7 @@ LIB_LIBS = $(addsuffix .lib,$(LIBS))
 PROG_EXES = $(addsuffix .exe,$(PROGS))
 GAME_EXES = $(addsuffix .exe,$(GAMES))
 
-INSTALL_TARGS += $(GAME_EXES)
+INSTALL_TARGS += $(GAME_EXES) $(GAME_DATA)
 
 #_427
 ALL_EXES = $(TEST_EXES) $(PROG_EXES) $(GAME_EXES)
@@ -110,7 +114,7 @@ ifdef CCENV
  ifdef SHOW_FLAGS
 	$(info $(CC) flags: $($(CCENV)))
  endif
-	$(CC) $<
+	$(CC) $(subst /,\,$<)
 else
 	$(CC) $(CFLAGS) $<
 endif
@@ -141,9 +145,9 @@ endif
 #_750
 # Build test programs
 ifneq '$(ALL_EXES)' ''
-$(ALL_EXES): %.exe: $$($$*_OBJS) $$($$*_LIBS) $$($$*_DATA)
+$(ALL_EXES): %.exe: $$($$*_OBJS) $$($$*_LIBS)
 	$(if $($*_OBJS),\
-		$(info will make $@ from $($*_OBJS) $($*_LIBS) $($*_DATA)),\
+		$(info will make $@ from $($*_OBJS) $($*_LIBS)),\
 		$(error 1 Makefile error: no object files given for test program $*)\
 	)
  ifdef SHOW_REASONS
@@ -211,11 +215,11 @@ really-clean: clean
 
 .PHONY: install
 install: SUBSYSTEMS = $(SUBDIRS)
-install:	$(filter $(addprefix %,$(TOOLSEXT)),$(INSTALL_TARGS))
+install:	$(filter $(PROG_EXES) $(GAME_EXES) $(GAME_DATA),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 DEST=$(if $(filter $(GAME_EXES),$^),$(GAMEDIR),$(TOOLSDIR));\
+	 DEST=$(if $(filter $(GAME_EXES) $(GAME_DATA),$^),$(GAMEDIR),$(TOOLSDIR));\
 	 cp $$TARG $$DEST;\
 	 echo Installing $$TARG to $$DEST;\
 	done

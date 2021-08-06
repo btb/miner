@@ -8,10 +8,14 @@ INI_FILE = inferno.ini
 include $(INI_FILE)
 
 # What programs to make
+ifndef BUILD_EDITOR
 ifdef SHAREWARE
 GAMES = dcntshr
 else
 GAMES = descentr
+endif
+else
+GAMES = editor
 endif
 
 # Files to link for Descent
@@ -34,8 +38,6 @@ descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
 				div0.lib misc.lib texmap.lib
-#		ui.lib
-#		editor.lib
 #		sosdigi.lib #sosmidi.lib
 		#iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
@@ -55,7 +57,26 @@ descentr_DIRS   = $(descent_DIRS)
 descentr_LFLAGS = $(descent_LFLAGS)
 descentr_DATA   = $(descent_DATA)
 
+# Files in the editor subdirectory
+editor_SRCS = $(descent_SRCS) \
+	med.c einit.c eglobal.c mine.c curves.c kcurve.c \
+	khelp.c ksegsel.c kbuild.c kview.c kmine.c seguvs.c ksegsize.c \
+	ksegmove.c ktmap.c kfuncs.c autosave.c group.c texture.c \
+	fixseg.c eobject.c elight.c texpage.c objpage.c medmisc.c \
+	medsel.c kgame.c info.c medwall.c eswitch.c medrobot.c meddraw.c \
+	segment.c ehostage.c centers.c func.c
 
+# These sources are always built optimized
+editor_SRCS_OPT =
+
+editor_LIBS = $(descent_LIBS) ui.lib #medlisp.lib 
+
+editor_DIRS = $(descent_DIRS)
+editor_LFLAGS = $(descent_LFLAGS)
+
+# Editor data files to check out with source
+editor_DATA = segmove.pad segsize.pad texture.pad object.pad curve.pad \
+	      group.pad objmov.pad lighting.pad test.pad med.mnu #global.key
 
 
 
@@ -136,3 +157,40 @@ vfx.obj: vfx.c error.h fix.h gr.h mono.h settings.h types.h
 victor.obj: victor.c args.h error.h fix.h key.h mono.h nocomlib.h settings.h text.h types.h victor.h
 wall.obj: wall.c aistruct.h bm.h digi.h editor.h error.h fireball.h fix.h game.h gameseg.h gameseq.h gauges.h gr.h inferno.h mission.h mono.h multi.h newdemo.h object.h piggy.h player.h segment.h settings.h sounds.h switch.h text.h textures.h types.h ui.h vclip.h vecmat.h wall.h weapon.h
 weapon.obj: weapon.c aistruct.h digi.h error.h fix.h game.h gameseg.h gameseq.h gauges.h gr.h inferno.h mission.h mono.h multi.h newdemo.h object.h piggy.h player.h powerup.h segment.h settings.h sounds.h text.h types.h vclip.h vecmat.h weapon.h
+
+autosave.obj: autosave.c editor.h error.h fix.h gr.h inferno.h mem.h mono.h segment.h settings.h types.h ui.h vecmat.h
+centers.obj: centers.c 3d.h ai.h aistruct.h bm.h centers.h digi.h editor.h ehostage.h eobject.h error.h eswitch.h fix.h fuelcen.h game.h gameseg.h gr.h hostage.h inferno.h kdefs.h key.h medrobot.h medwall.h mono.h object.h objpage.h piggy.h polyobj.h powerup.h robot.h screens.h segment.h settings.h sounds.h switch.h timer.h types.h ui.h vclip.h vecmat.h wall.h
+curves.obj: curves.c editor.h fix.h gameseg.h gr.h inferno.h key.h mono.h segment.h settings.h types.h ui.h vecmat.h
+eglobal.obj: eglobal.c editor.h fix.h gr.h inferno.h segment.h settings.h types.h ui.h vecmat.h
+ehostage.obj: ehostage.c 3d.h ai.h aistruct.h bm.h centers.h digi.h editor.h eobject.h error.h eswitch.h fix.h fuelcen.h game.h gameseg.h gr.h hostage.h inferno.h kdefs.h key.h medrobot.h medwall.h mono.h object.h objpage.h piggy.h polyobj.h powerup.h robot.h screens.h segment.h settings.h sounds.h switch.h timer.h types.h ui.h vclip.h vecmat.h wall.h
+einit.obj: einit.c editor.h fix.h gr.h inferno.h mono.h segment.h settings.h types.h ui.h vecmat.h
+elight.obj: elight.c 3d.h aistruct.h bm.h digi.h editor.h error.h fix.h gameseg.h gr.h inferno.h kdefs.h mono.h object.h piggy.h segment.h seguvs.h settings.h sounds.h texmap.h textures.h types.h ui.h vecmat.h wall.h
+eobject.obj: eobject.c 3d.h ai.h aistruct.h bm.h digi.h editor.h error.h fix.h fuelcen.h fvi.h game.h gameseg.h gr.h hostage.h inferno.h kdefs.h medrobot.h mono.h object.h objpage.h piggy.h player.h polyobj.h powerup.h robot.h segment.h settings.h sounds.h switch.h types.h ui.h vclip.h vecmat.h weapon.h
+eswitch.obj: eswitch.c aistruct.h bm.h centers.h digi.h editor.h ehostage.h error.h eswitch.h fix.h fuelcen.h gameseg.h gr.h inferno.h key.h medrobot.h medwall.h mono.h object.h piggy.h screens.h segment.h settings.h sounds.h switch.h texmerge.h textures.h timer.h types.h ui.h vecmat.h wall.h
+fixseg.obj: fixseg.c editor.h error.h fix.h gameseg.h gr.h inferno.h key.h mono.h segment.h settings.h types.h ui.h vecmat.h
+func.obj: func.c func.h settings.h
+group.obj: group.c aistruct.h bm.h cflib.h digi.h editor.h error.h fix.h fuelcen.h gamemine.h gameseg.h gr.h hash.h inferno.h medwall.h mono.h nocfile.h object.h piggy.h segment.h settings.h sounds.h switch.h textures.h types.h ui.h vecmat.h wall.h
+info.obj: info.c ai.h aistruct.h bm.h digi.h editor.h error.h fix.h gameseg.h gr.h inferno.h mono.h object.h objpage.h piggy.h segment.h settings.h sounds.h switch.h texpage.h textures.h types.h ui.h vecmat.h wall.h
+kbuild.obj: kbuild.c editor.h fix.h gamesave.h gameseg.h gr.h inferno.h mono.h segment.h settings.h types.h ui.h vecmat.h
+kcurve.obj: kcurve.c editor.h fix.h gr.h inferno.h kdefs.h segment.h settings.h types.h ui.h vecmat.h
+kfuncs.obj: kfuncs.c aistruct.h digi.h editor.h eobject.h error.h fix.h func.h gamesave.h gameseg.h gr.h inferno.h kdefs.h medwall.h mono.h object.h piggy.h segment.h settings.h slew.h sounds.h types.h ui.h vecmat.h wall.h
+kgame.obj: kgame.c aistruct.h digi.h editor.h fix.h game.h gamesave.h gameseg.h gameseq.h gr.h inferno.h mission.h object.h piggy.h player.h segment.h settings.h sounds.h types.h ui.h vecmat.h weapon.h
+khelp.obj: khelp.c editor.h fix.h gr.h inferno.h segment.h settings.h types.h ui.h vecmat.h
+kmine.obj: kmine.c aistruct.h dcflib.h digi.h editor.h error.h fix.h game.h gameseg.h gameseq.h gr.h inferno.h info.h kdefs.h mission.h mono.h nocfile.h object.h piggy.h player.h segment.h settings.h sounds.h texpage.h types.h ui.h vecmat.h weapon.h
+ksegmove.obj: ksegmove.c editor.h fix.h gr.h inferno.h segment.h settings.h types.h ui.h vecmat.h
+ksegsel.obj: ksegsel.c editor.h fix.h gr.h inferno.h segment.h settings.h types.h ui.h vecmat.h
+ksegsize.obj: ksegsize.c editor.h error.h fix.h gameseg.h gr.h inferno.h mono.h segment.h settings.h types.h ui.h vecmat.h
+ktmap.obj: ktmap.c editor.h fix.h gr.h inferno.h kdefs.h mono.h segment.h settings.h types.h ui.h vecmat.h
+kview.obj: kview.c editor.h fix.h gr.h inferno.h segment.h settings.h types.h ui.h vecmat.h
+med.obj: med.c 3d.h ai.h aistruct.h bm.h centers.h cflib.h digi.h editor.h effects.h ehostage.h error.h eswitch.h fix.h fuelcen.h func.h game.h gamesave.h gameseg.h gameseq.h gr.h inferno.h info.h kdefs.h key.h kfuncs.h macro.h meddraw.h medmisc.h medrobot.h medsel.h medwall.h mem.h mission.h mono.h newmenu.h object.h objpage.h piggy.h player.h render.h screens.h segment.h settings.h slew.h sounds.h switch.h texmap.h texpage.h textures.h types.h ui.h vclip.h vecmat.h wall.h weapon.h
+meddraw.obj: meddraw.c 3d.h aistruct.h bm.h cflib.h digi.h editor.h error.h fix.h fuelcen.h func.h game.h gameseg.h gr.h inferno.h kdefs.h key.h medlisp.h mem.h mono.h object.h piggy.h render.h screens.h segment.h segpoint.h settings.h sounds.h switch.h texmap.h textures.h types.h ui.h vecmat.h wall.h
+medmisc.obj: medmisc.c 3d.h aistruct.h digi.h editor.h error.h fix.h func.h game.h gameseg.h gr.h inferno.h key.h meddraw.h mem.h mono.h object.h piggy.h render.h screens.h segment.h settings.h sounds.h texpage.h types.h ui.h vecmat.h
+medrobot.obj: medrobot.c 3d.h ai.h aistruct.h bm.h centers.h digi.h editor.h ehostage.h eobject.h error.h eswitch.h fix.h fuelcen.h game.h gameseg.h gr.h hostage.h inferno.h kdefs.h key.h medwall.h mono.h object.h objpage.h piggy.h polyobj.h powerup.h robot.h screens.h segment.h settings.h sounds.h switch.h timer.h types.h ui.h vclip.h vecmat.h wall.h
+medsel.obj: medsel.c aistruct.h digi.h editor.h error.h fix.h gameseg.h gr.h inferno.h key.h mem.h mono.h object.h piggy.h segment.h settings.h sounds.h types.h ui.h vecmat.h
+medwall.obj: medwall.c aistruct.h bm.h centers.h digi.h editor.h ehostage.h error.h eswitch.h fix.h fuelcen.h gameseg.h gr.h inferno.h key.h medrobot.h medwall.h mono.h object.h piggy.h screens.h segment.h settings.h sounds.h switch.h texmerge.h textures.h timer.h types.h ui.h vecmat.h wall.h
+mine.obj: mine.c aistruct.h bm.h dcflib.h digi.h editor.h error.h fix.h fuelcen.h gamemine.h gameseg.h gr.h inferno.h key.h medwall.h mono.h nocfile.h object.h piggy.h segment.h settings.h sounds.h switch.h texpage.h textures.h types.h ui.h vecmat.h wall.h
+objpage.obj: objpage.c 3d.h aistruct.h bm.h digi.h editor.h error.h fix.h game.h gameseg.h gr.h hostage.h inferno.h mono.h object.h objpage.h piggy.h player.h polyobj.h powerup.h robot.h screens.h segment.h settings.h sounds.h texmap.h types.h ui.h vclip.h vecmat.h weapon.h
+segment.obj: segment.c 3d.h aistruct.h demo.h digi.h editor.h error.h fix.h fuelcen.h game.h gameseg.h gameseq.h gr.h hostage.h inferno.h key.h medwall.h mission.h mono.h object.h piggy.h player.h render.h segment.h seguvs.h settings.h sounds.h switch.h types.h ui.h vclip.h vecmat.h wall.h weapon.h
+seguvs.obj: seguvs.c aistruct.h bm.h digi.h editor.h effects.h error.h fix.h fvi.h gameseg.h gr.h inferno.h kdefs.h mono.h object.h piggy.h segment.h settings.h sounds.h types.h ui.h vclip.h vecmat.h wall.h
+texpage.obj: texpage.c bm.h digi.h editor.h error.h fix.h gamesave.h gameseg.h gr.h inferno.h key.h mono.h piggy.h screens.h segment.h settings.h sounds.h texpage.h textures.h types.h ui.h vecmat.h
+texture.obj: texture.c editor.h error.h fix.h gr.h inferno.h kdefs.h mono.h segment.h seguvs.h settings.h texture.c types.h ui.h vecmat.h
