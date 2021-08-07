@@ -226,8 +226,7 @@ bitmap_index bm_load_sub( char * filename )
 		return bitmap_num;
 	}
 
-	//MALLOC( new, grs_bitmap, 1 );//hack KRB
-	new = (grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+	MALLOC( new, grs_bitmap, 1 );
 	iff_error = iff_read_bitmap(filename,new,BM_LINEAR,newpal);
 	new->bm_selector=0;
 	if (iff_error != IFF_NO_ERROR)		{
@@ -334,8 +333,7 @@ int ds_load( char * filename )	{
 
 	if (cfp!=NULL) {
 		new.length	= cfilelength( cfp );
-		//MALLOC( new.data, ubyte, new.length );//hack by KRB
-		new.data = (ubyte *)malloc(new.length*sizeof(ubyte));
+		MALLOC( new.data, ubyte, new.length );
 		cfread( new.data, 1, new.length, cfp );
 		cfclose(cfp);
 		mprintf( (0, "S" ));

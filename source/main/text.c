@@ -122,8 +122,7 @@ void load_text()
 
 		len = cfilelength(ifile);
 
-		//MALLOC(text,char,len);//Won't compile... working on it..-KRB
-		text=malloc(len*sizeof(char));//my hack -KRB
+		MALLOC(text,char,len);
 		atexit(free_text);
 
 		cfread(text,1,len,ifile);
@@ -136,8 +135,7 @@ void load_text()
 
 		len = cfilelength(tfile);
 
-		//MALLOC(text,char,len);//Won't compile... working on it..-KRB
-		text=malloc(len*sizeof(char));//my hack -KRB
+		MALLOC(text,char,len);
 
 		atexit(free_text);
 

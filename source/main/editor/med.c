@@ -487,8 +487,7 @@ void medkey_init()
 	int np;
 	char * LispCommand;
 
-	//MALLOC( LispCommand, char, DIAGNOSTIC_MESSAGE_MAX );//hacked by KRB
-	LispCommand = (char *)malloc(DIAGNOSTIC_MESSAGE_MAX*sizeof(char));
+	MALLOC( LispCommand, char, DIAGNOSTIC_MESSAGE_MAX );
 
 	for (i=0; i<2048; i++ )
 		KeyFunction[i] = NULL;

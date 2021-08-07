@@ -219,8 +219,7 @@ ubyte *ReadFileRaw( char *filename, int *length )
 
     *length = filelength( handle );
 
- //   MALLOC( FileData, ubyte, *length );//Compile hack again -KRB
-	FileData = (ubyte *)malloc(*length*sizeof(ubyte));
+    MALLOC( FileData, ubyte, *length );
 
     if (FileData == NULL )  {
         close( handle );
@@ -324,8 +323,7 @@ ubyte *cfreadfile( char *filename, int *size ) {
     fread( size, sizeof(int), 1, input);
 
     length = file_size( filename ) - 6;
-    //MALLOC( tempbuf, ubyte, length );//Compile hack again -KRB
-	tempbuf=(ubyte *)malloc(length*sizeof(ubyte));
+    MALLOC( tempbuf, ubyte, length );
     fread( tempbuf, sizeof(ubyte), length, input );
 
     buf = lzw_expand( tempbuf, NULL, *size );
@@ -362,8 +360,7 @@ ubyte *extract( char *library, char *filename ) {
 
            if (!strcmp(Header.name, filename)) {
                 fseek( InputLibFile, Header.offset, SEEK_SET );
-                //MALLOC(buf, ubyte, Header.original_size);//Compile hack again -KRB
-				buf=(ubyte *)malloc(Header.original_size*sizeof(ubyte));
+                MALLOC(buf, ubyte, Header.original_size);
                 buf_ptr = buf;
 
                 if ( Header.compression == 0 ) {
@@ -371,8 +368,7 @@ ubyte *extract( char *library, char *filename ) {
                 }
 
                     else if ( Header.compression == LF_LZW ) {
-                        //MALLOC(tempbuf, ubyte, Header.length);//Compile hack again -KRB
-						tempbuf=(ubyte*)malloc(Header.length*sizeof(ubyte));
+                        MALLOC(tempbuf, ubyte, Header.length);
                         fread( tempbuf, sizeof(ubyte), Header.length, InputLibFile );
                         lzw_expand( tempbuf, buf, Header.original_size );
                     }
@@ -431,8 +427,7 @@ int ReadFileBuf( char *filename, ubyte *buf, int bufsize ) {
 	                fread( buf, sizeof(ubyte), LibHeaderList[i].original_size, InputLibInitFile );
 	            }
 	                else if ( LibHeaderList[i].compression == LF_LZW ) {
-	                    //MALLOC(tempbuf, ubyte, LibHeaderList[i].length);//Compile hack again -KRB
-						tempbuf=(ubyte *)malloc( LibHeaderList[i].length*sizeof(ubyte));
+	                    MALLOC(tempbuf, ubyte, LibHeaderList[i].length);
 	                    fread( tempbuf, sizeof(ubyte), LibHeaderList[i].length, InputLibInitFile );
 	                    lzw_expand( tempbuf, buf, LibHeaderList[i].original_size );
 	                }
@@ -467,8 +462,7 @@ ubyte *ReadFile( char *filename, int *length ) {
 	    for ( i=0; i < init_numfiles; i++ ) {
 	       if (!strcmp(LibHeaderList[i].name, filename)) {
 	            fseek( InputLibInitFile, LibHeaderList[i].offset, SEEK_SET );
-	            //MALLOC(buf, ubyte, LibHeaderList[i].original_size);//Compile hack again -KRB
-	            buf=(ubyte *)malloc(LibHeaderList[i].original_size*sizeof(ubyte));
+	            MALLOC(buf, ubyte, LibHeaderList[i].original_size);
 	            buf_ptr = buf;
 	            *length = LibHeaderList[i].original_size;
 	
@@ -478,8 +472,7 @@ ubyte *ReadFile( char *filename, int *length ) {
 	            }
 	
 	                else if ( LibHeaderList[i].compression == LF_LZW ) {
-	                    //MALLOC(tempbuf, ubyte, LibHeaderList[i].length);//Compile hack again -KRB
-						tempbuf=(ubyte *)malloc(LibHeaderList[i].length*sizeof(ubyte));
+	                    MALLOC(tempbuf, ubyte, LibHeaderList[i].length);
 	                    fread( tempbuf, sizeof(ubyte), LibHeaderList[i].length, InputLibInitFile );
 	                    lzw_expand( tempbuf, buf, LibHeaderList[i].original_size );
 	                }
@@ -521,8 +514,7 @@ int lib_init( char *init_lib_name ) {
 	 fread( &temp, sizeof(short), 1, InputLibInitFile );
 	init_numfiles = temp;
 
-   // MALLOC ( LibHeaderList, file_header, init_numfiles );//Compile hack again -KRB
-	  LibHeaderList=(file_header *)malloc(init_numfiles*sizeof(file_header));
+	MALLOC ( LibHeaderList, file_header, init_numfiles );
 	 if (! LibHeaderList) {
 		fclose(InputLibInitFile);
 	   return LI_NO_MEM;

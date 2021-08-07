@@ -655,8 +655,7 @@ int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,i
 						}
 						else {
 
-							//MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );//Hack by KRB
-							bmheader->raw_data=(ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
+							MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );
 							if (!bmheader->raw_data)
 								return IFF_NO_MEM;
 						}
@@ -673,8 +672,7 @@ int iff_parse_ilbm_pbm(FFILE *ifile,long form_type,iff_bitmap_header *bmheader,i
 						bmheader->h = prev_bm->bm_h;
 						bmheader->type = prev_bm->bm_type;
 
-						//MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );//Hack by KRB
-						bmheader->raw_data=(ubyte *)malloc((bmheader->w * bmheader->h)*sizeof(ubyte));
+						MALLOC( bmheader->raw_data, ubyte, bmheader->w * bmheader->h );
 
 						memcpy(bmheader->raw_data, prev_bm->bm_data, bmheader->w * bmheader->h );
 						skip_chunk(ifile,len);
@@ -741,8 +739,7 @@ int convert_ilbm_to_pbm(iff_bitmap_header *bmheader)
 	int bytes_per_row,byteofs;
 	ubyte checkmask,newbyte,setbit;
 
-	//MALLOC( new_data, byte, bmheader->w * bmheader->h );//hack by KRB
-	new_data = (byte *)malloc((bmheader->w * bmheader->h)*sizeof(byte));
+	MALLOC( new_data, byte, bmheader->w * bmheader->h );
 	if (new_data == NULL) return IFF_NO_MEM;
 
 	destptr = new_data;
@@ -793,8 +790,7 @@ int convert_rgb15(grs_bitmap *bm,iff_bitmap_header *bmheader)
 
 //        if ((new_data = malloc(bm->bm_w * bm->bm_h * 2)) == NULL)
 //            {ret=IFF_NO_MEM; goto done;}
-       //MALLOC(new_data, ushort, bm->bm_w * bm->bm_h * 2);//hack by KRB also a bug I believe. It is allocating twice the needed memory.
-		new_data = malloc(bm->bm_w * bm->bm_h * 2);//I left it as previously done, thinking the *2 means sizeof(ushort)
+	MALLOC(new_data, ushort, bm->bm_w * bm->bm_h * 2);//KRB: a bug I believe. It is allocating twice the needed memory.
        if (new_data == NULL)
            return IFF_NO_MEM;
 
@@ -828,8 +824,7 @@ int open_fake_file(char *ifilename,FFILE *ffile)
 
 	ffile->length = cfilelength(ifile);
 
-	//MALLOC(ffile->data,ubyte,ffile->length);//Hack by KRB
-	ffile->data = (ubyte *)malloc(ffile->length*sizeof(ubyte));
+	MALLOC(ffile->data,ubyte,ffile->length);
 
 	if (cfread(ffile->data, 1, ffile->length, ifile) < ffile->length)
 		ret = IFF_READ_ERROR;
@@ -1111,8 +1106,7 @@ int write_body(FILE *ofile,iff_bitmap_header *bitmap_header,int compression_on)
 	put_long(len,ofile);
 
     //if (! (new_span = malloc(bitmap_header->w+(bitmap_header->w/128+2)*2))) return IFF_NO_MEM;
-   // MALLOC( new_span, ubyte, bitmap_header->w + (bitmap_header->w/128+2)*2);//hack by KRB, also allocating twice the needed memory, probably a bug
-	new_span = malloc(bitmap_header->w+(bitmap_header->w/128+2)*2);//left it alone, as in 2 lines above -KRB
+    MALLOC( new_span, ubyte, bitmap_header->w + (bitmap_header->w/128+2)*2);//KRB: allocating twice the needed memory, probably a bug
     if (new_span == NULL) return IFF_NO_MEM;
 
 	for (y=bitmap_header->h;y--;) {
@@ -1322,8 +1316,7 @@ int iff_read_animbrush(char *ifilename,grs_bitmap **bm_list,int max_bitmaps,int 
 
 			prev_bm = *n_bitmaps>0?bm_list[*n_bitmaps-1]:NULL;
 
-		   //MALLOC(bm_list[*n_bitmaps] , grs_bitmap, 1 );//hack by KRB
-			bm_list[*n_bitmaps]=(grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+			MALLOC(bm_list[*n_bitmaps] , grs_bitmap, 1 );
 			bm_list[*n_bitmaps]->bm_data = NULL;
 
 			ret = iff_parse_bitmap(&ifile,bm_list[*n_bitmaps],form_type,*n_bitmaps>0?NULL:palette,prev_bm);
