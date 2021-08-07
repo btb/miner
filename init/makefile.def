@@ -232,8 +232,7 @@ linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 cp $$TARG $(LIBDIR);\
-	 echo Installing $$TARG to $(LIBDIR);\
+	 cp -uv $$TARG $(LIBDIR);\
 	done
 
 
@@ -244,6 +243,5 @@ linstallh:	$(filter %.h %.inc,$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 cp $$TARG $(LIBDIR);\
-	 echo Installing $$TARG to $(LIBDIR);\
+	 cp -uv $$TARG $(LIBDIR);\
 	done
