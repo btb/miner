@@ -79,8 +79,7 @@ static char rcsid[] = "$Id: bitio.c 1.9 1993/10/22 17:51:09 yuan Exp $";
 BIT_BUF *OpenOutputBitBuf( ) {
     BIT_BUF *bit_buf;
 
-    //MALLOC( bit_buf, BIT_BUF, 1 );//Compile hack again -KRB
-	bit_buf = (BIT_BUF *)malloc(1*sizeof(BIT_BUF));
+    MALLOC( bit_buf, BIT_BUF, 1 );
     if ( bit_buf == NULL )
         return( bit_buf );
     bit_buf->current_byte = 0;
@@ -94,8 +93,7 @@ BIT_BUF *OpenInputBitBuf( ubyte *buffer ) {
     BIT_BUF *bit_buf;
 
     //bit_buf = (BIT_BUF *) calloc( 1, sizeof( BIT_BUF ) );
-  //  MALLOC(bit_buf, BIT_BUF, 1);//Compile hack again -KRB
-	bit_buf = (BIT_BUF *)malloc(1*sizeof(BIT_BUF));
+    MALLOC(bit_buf, BIT_BUF, 1);
     if ( bit_buf == NULL )
         return( bit_buf );
     bit_buf->buf = buffer;

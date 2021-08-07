@@ -49,8 +49,7 @@ void dofile( char * filename )
 	int i;
 	grs_bitmap * bitmap;
 
-	//MALLOC( bitmap, grs_bitmap, 1 );//Hack by KRB
-	bitmap = (grs_bitmap *)malloc(1*sizeof(grs_bitmap));
+	MALLOC( bitmap, grs_bitmap, 1 );
 
 	printf( "Reading %s...", filename );
 	iff_read_bitmap( filename, bitmap, BM_LINEAR, palette );

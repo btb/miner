@@ -402,8 +402,7 @@ int gr_save_mode()
 		gr_saved_screen.height = *pNumRows+1;
 		gr_saved_screen.char_height = *pCharHeight;
 		gr_getcursor(&gr_saved_screen.cursor_x, &gr_saved_screen.cursor_y, &gr_saved_screen.cursor_sline, &gr_saved_screen.cursor_eline );
-		//MALLOC(gr_saved_screen.video_memory,ushort, gr_saved_screen.width*gr_saved_screen.height );//Hack by Krb
-		gr_saved_screen.video_memory=(ushort *)malloc((gr_saved_screen.width*gr_saved_screen.height)*sizeof(ushort));
+		MALLOC(gr_saved_screen.video_memory,ushort, gr_saved_screen.width*gr_saved_screen.height );
 		for (i=0; i < gr_saved_screen.width*gr_saved_screen.height; i++ )
 			gr_saved_screen.video_memory[i] = pTextMemory[i];
 	}
@@ -636,8 +635,7 @@ int gr_init(int mode)
 	gr_sync_display();
 	gr_sync_display();
 
-	//MALLOC( grd_curscreen,grs_screen,1 );//Hack by KRB
-	grd_curscreen=(grs_screen*)malloc(1*sizeof(grs_screen));
+	MALLOC( grd_curscreen,grs_screen,1 );
 	memset( grd_curscreen, 0, sizeof(grs_screen));
 
 	// Set the mode.

@@ -159,8 +159,7 @@ void close_autosave(void) {
 
     for (i=0;i<Autosave_total;i++) {
 
-        //MALLOC(delname, char, 128);//Hack by KRB
-        delname = (char *)malloc(128*sizeof(char));
+        MALLOC(delname, char, 128);
 
         strcpy ( delname, mine_filename );
         strupr( delname );
@@ -182,8 +181,7 @@ void autosave_mine(char *name) {
 
 	if (Autosave_flag) {
 	
-	    //MALLOC(savename, char, 128);//Hack by KRB
-	    savename = (char *)malloc(128*sizeof(char));
+	    MALLOC(savename, char, 128);
 
 	
 	    strcpy ( savename, name );

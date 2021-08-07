@@ -114,10 +114,8 @@ void InitializeDictionary()
 
 void InitializeStorage()
 {
-	//MALLOC( dict, DICTIONARY, TABLE_SIZE );//won't compile, hack below -KRB
-	//MALLOC( decode_stack, char, TABLE_SIZE );
-	dict = (DICTIONARY *)malloc(TABLE_SIZE*sizeof(DICTIONARY));
-	decode_stack = (char *)malloc(TABLE_SIZE*sizeof(char));
+	MALLOC( dict, DICTIONARY, TABLE_SIZE );
+	MALLOC( decode_stack, char, TABLE_SIZE );
 }
 
 
@@ -136,8 +134,7 @@ ubyte *lzw_compress( ubyte *inputbuf, ubyte *outputbuf, int input_size, int *out
 
     output = OpenOutputBitBuf();
     if ( outputbuf == NULL ) {
-        //MALLOC( output->buf, ubyte, input_size); //Another compile hack -KRB
-		output->buf = (ubyte *)malloc(input_size*sizeof(ubyte));
+        MALLOC( output->buf, ubyte, input_size);
         if (output->buf == NULL) {
             printf("    ERROR : OpenOutputBitBuf - Not enough memory to read buffer.\n");
             exit(1);
@@ -208,8 +205,7 @@ ubyte *lzw_expand( ubyte *inputbuf, ubyte *outputbuf, int length ) {
 
     input = OpenInputBitBuf( inputbuf );
 	if ( outputbuf == NULL )
-		//MALLOC(outputbuf, ubyte, length);//Another hack for compiling -KRB
-		outputbuf = (ubyte *)malloc(length*sizeof(ubyte));
+	    MALLOC(outputbuf, ubyte, length);
     InitializeStorage();
     counter = 0;
     for ( ; ; ) {

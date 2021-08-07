@@ -110,8 +110,7 @@ UI_GADGET_ICON * ui_add_gadget_icon( UI_WINDOW * wnd, char * text, short x, shor
 
 	icon->width = w;
 	icon->height = h;
-	//MALLOC( icon->text, char, strlen( text )+2);//Hack by KRB
-	icon->text=(char *)malloc((strlen( text )+2)*sizeof(char));
+	MALLOC( icon->text, char, strlen( text )+2);
 	strcpy( icon->text, text );
 	icon->trap_key = k;
 	icon->user_function = f;

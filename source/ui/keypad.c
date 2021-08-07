@@ -317,13 +317,11 @@ void ui_pad_read( int n, char * filename )
 		return;
 	}
 					  
-	//MALLOC( KeyPad[n], UI_KEYPAD, 1 );//Hack by KRB
-	KeyPad[n]=(UI_KEYPAD *)malloc(1*sizeof(UI_KEYPAD));
+	MALLOC( KeyPad[n], UI_KEYPAD, 1 );
 
 			
 	for (i=0; i < 17; i++ ) {
-		//MALLOC( KeyPad[n]->buttontext[i], char, 100 );//Hack by KRB
-		KeyPad[n]->buttontext[i]=(char *)malloc(100*sizeof(char));
+		MALLOC( KeyPad[n]->buttontext[i], char, 100 );
 	}
 
 	KeyPad[n]->numkeys = 0;
