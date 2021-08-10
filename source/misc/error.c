@@ -95,6 +95,8 @@ void set_warn_func(void (*f)(char *s))
 //uninstall warning function - install default printf
 void clear_warn_func(void (*f)(char *s))
 {
+	if (warn_func != f)
+		Int3();
 	warn_func = warn_printf;
 }
 
