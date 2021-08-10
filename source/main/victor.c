@@ -98,11 +98,14 @@ static char rcsid[] = "$Id: victor.c 2.5 1995/03/30 16:35:59 mike Exp $";
 //#include "serial.h"
 #include "victor.h"
 #include "text.h"
-//#include "commlib.h" //Not included in public release -KRB
-//#include "fast.h" //Not included in public release -KRB
-#include "key.h"
+#ifdef GREENLEAF
+#include "commlib.h" //Not included in public release -KRB
+#include "fast.h" //Not included in public release -KRB
+#else
 //This include is just to allow compiling. It doesn't mean it will work. Values in here are only dummy values
 #include "nocomlib.h"
+#endif
+#include "key.h"
 
 int Victor_headset_installed=0;
 int Victor_mode=0;

@@ -39,4 +39,32 @@ typedef struct  {
 #define OFF 0
 
 
+extern PORT *PortOpenGreenleafFast(int port, int baud, char parity, int databits, int stopbits);
+extern void SetDtr(PORT *port, int state);
+extern void SetRts(PORT *port, int state);
+extern void UseRtsCts(PORT *port, int state);
+extern void WriteChar(PORT *port, char ch);
+extern void ClearRXBuffer(PORT *port);
+extern void ReadBufferTimed(PORT *port, char *buf, int a, int b);
+extern int  Change8259Priority(int a);
+extern int  FastSetPortHardware(short port, int IRQ, int baseaddr);
+extern int  FastGetPortHardware(short port, int *IRQ, int *baseaddr);
+extern void FastSet16550TriggerLevel(int a);
+extern void FastSet16550UseTXFifos(int a);
+extern      FastSavePortParameters(short port);
+extern int  PortClose(PORT *port);
+extern void FastRestorePortParameters(int num);
+extern int  GetCd(PORT *port);
+extern int  ReadCharTimed(PORT *port, int blah);
+extern int  ReadChar(PORT *port);
+extern void ClearLineStatus(PORT *port);
+extern int  HMInputLine(PORT *port, int a, char *buf, int b);
+extern void HMWaitForOK(int a, int b);
+extern      HMSendString(PORT *port, char *msg);
+extern void HMReset(PORT *port);
+extern void HMDial(PORT *port, char *pPhoneNum);
+extern void HMSendStringNoWait(PORT *port, char *pbuf,int a);
+extern void HMAnswer(PORT *port);
+extern void ClearTXBuffer(PORT *port);
+extern void WriteBuffer(PORT *port, char *pbuff, int len);
 
