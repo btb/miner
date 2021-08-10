@@ -15,6 +15,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "nocomlib.h"
 
+#pragma off(unreferenced)
+
 PORT * PortOpenGreenleafFast(int port, int baud,char parity,int databits, int stopbits)
 {
 	return 0;
@@ -56,10 +58,16 @@ int Change8259Priority(int a)
 	return 0;
 }
 
-int FastSetPortHardware(PORT *port,int IRQ, int baseaddr)
+int FastSetPortHardware(short port,int IRQ, int baseaddr)
 {
 	return 0;
 }
+
+int FastGetPortHardware(short port, int *IRQ, int *baseaddr)
+{
+	return 0;
+}
+
 void FastSet16550TriggerLevel(int a)
 {
 	return;
@@ -70,7 +78,7 @@ void FastSet16550UseTXFifos(int a)
 }
 
 
-FastSavePortParameters(PORT *port)
+FastSavePortParameters(short port)
 {
 	return;
 }

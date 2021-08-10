@@ -203,7 +203,6 @@ static char rcsid[] = "$Id: modem.c 2.13 1995/11/28 16:25:05 john Exp $";
 #include <time.h>
 #include <io.h>
 
-//#include "fast.h" // Commlib stuff //Don't have fast.h -KRB
 #include "game.h"
 #include "scores.h"
 #include "modem.h"
@@ -222,8 +221,14 @@ static char rcsid[] = "$Id: modem.c 2.13 1995/11/28 16:25:05 john Exp $";
 #include "netmisc.h"
 #include "fuelcen.h"
 #include "dpmi.h"
-//#include "commlib.h" -Don't have these either! -KRB
-//#include "glfmodem.h" -Don't have these either! -KRB
+#ifdef GREENLEAF
+#include "fast.h" // Commlib stuff //Don't have fast.h -KRB
+#include "commlib.h" //Don't have these either! -KRB
+#include "glfmodem.h" //Don't have these either! -KRB
+#else
+//This include is just to allow compiling. It doesn't mean it will work. Values in here are only dummy values
+#include "nocomlib.h"
+#endif
 #include "multi.h"
 #include "timer.h"
 #include "text.h"
@@ -234,8 +239,6 @@ static char rcsid[] = "$Id: modem.c 2.13 1995/11/28 16:25:05 john Exp $";
 #include "multibot.h"
 #include "args.h"
 
-//This include is just to allow compiling. It doesn't mean it will work. Values in here are only dummy values
-#include "nocomlib.h"
 
 #define MIN_COMM_GAP 8000
 #define INIT_STRING_LEN 20
@@ -533,7 +536,7 @@ com_enable()
 #ifndef NDEBUG
 	{
 		int curr_irq, curr_base;
-		//FastGetPortHardware(com_port_num, &curr_irq, &curr_base); //Removed , we don't have this function! -KRB
+		FastGetPortHardware(com_port_num, &curr_irq, &curr_base);
 		mprintf((0, "Current port settings: base %x, irq %x.\n", curr_base, curr_irq ));
 	}
 #endif
