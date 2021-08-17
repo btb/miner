@@ -78,7 +78,7 @@ INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 CC = wcc386
 CCENV = WCC386
 CFLAGS_STACK = /s	#default is stack checking off
-CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,\,$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO)
+CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,\,$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) /fo=$(@F)
 
 ifdef GLOBAL_INCFILES
 CFLAGS += /fi=$(GLOBAL_INCFILES)
@@ -100,7 +100,7 @@ INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 CC = wcc386
 # CCENV = WCC386
 CFLAGS_STACK = -s	#default is stack checking off
-CFLAGS = -zq -zld -w3 -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO)
+CFLAGS = -zq -zld -w3 -ef -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$(@F)
 
 ifdef GLOBAL_INCFILES
 CFLAGS += -fi=$(GLOBAL_INCFILES)
@@ -148,7 +148,7 @@ ifdef SHOW_REASONS
 	))
 endif
 ifdef CCENV
-	$(eval export $(CCENV) = $(CFLAGS) /fo=$(@F))
+	$(eval export $(CCENV) = $(CFLAGS))
  ifdef SHOW_FLAGS
 	$(info $(CC) flags: $($(CCENV)))
  endif
@@ -219,7 +219,7 @@ $(LIB_LIBS): %.lib: $$($$*_OBJS)
 	))
  endif
 	$(file > $*.arg, $($*_OBJS))
-	$(LIBEXE) /q /n /b $@ @$*.arg
+	$(LIBEXE) -q -n -b $@ @$*.arg
 endif
 
 #_828
