@@ -2,7 +2,7 @@
 # Makefile for DESCENT execuable
 #
 
-INI_FILE = inferno.ini
+INI_FILE ?= $(MINER)/init/inferno.ini
 
 # Load this person's personal settings
 include $(INI_FILE)
@@ -106,7 +106,7 @@ endif
 
 
 # Make the default target be 'all', and rebuild settings.h if necessary
-all: settings.h
+all: settings.h vers_id.h
 
 
 # Set up personal settings

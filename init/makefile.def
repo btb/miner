@@ -178,7 +178,7 @@ else
 	$(AS) $(AFLAGS) $<
 endif
 
-$(ALLOBJS): | $(OBJDIR)
+$(ALLOBJS): $(GLOBAL_INCFILES) | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
