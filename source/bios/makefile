@@ -33,12 +33,12 @@ demo_LIBS = io.lib
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-demo.obj: demo.c dpmi.h error.h fix.h ipx.h key.h mono.h timer.h types.h
-dpmi.obj: dpmi.c dpmi.h error.h mono.h types.h
-ipx.obj: ipx.c dpmi.h error.h fix.h ipx.h key.h timer.h types.h
-joy.obj: joy.asm
-joyc.obj: joyc.c dpmi.h fix.h joy.h mono.h types.h
-key.obj: key.c dpmi.h error.h fix.h key.h timer.h types.h
-mono.obj: mono.c fix.h key.h types.h
-mouse.obj: mouse.c dpmi.h error.h fix.h mouse.h timer.h types.h
-timer.obj: timer.asm psmacros.inc
+$(OBJDIR)/demo.obj: demo.c dpmi.h error.h fix.h ipx.h key.h mono.h timer.h types.h
+$(OBJDIR)/dpmi.obj: dpmi.c dpmi.h error.h mono.h types.h
+$(OBJDIR)/ipx.obj: ipx.c dpmi.h error.h fix.h ipx.h key.h timer.h types.h
+$(OBJDIR)/joy.obj: joy.asm
+$(OBJDIR)/joyc.obj: joyc.c dpmi.h fix.h joy.h mono.h types.h
+$(OBJDIR)/key.obj: key.c dpmi.h error.h fix.h key.h timer.h types.h
+$(OBJDIR)/mono.obj: mono.c fix.h key.h types.h
+$(OBJDIR)/mouse.obj: mouse.c dpmi.h error.h fix.h mouse.h timer.h types.h
+$(OBJDIR)/timer.obj: timer.asm psmacros.inc

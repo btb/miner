@@ -15,4 +15,4 @@ cfile_SRCS = cfile.c
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-cfile.obj: cfile.c cfile.h types.h
+$(OBJDIR)/cfile.obj: cfile.c cfile.h types.h

@@ -26,4 +26,4 @@ vectest_LIBS = vecmat.lib io.lib fix.lib
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-vecmat.obj: vecmat.asm fix.inc psmacros.inc types.inc vecmat.inc
+$(OBJDIR)/vecmat.obj: vecmat.asm fix.inc psmacros.inc types.inc vecmat.inc

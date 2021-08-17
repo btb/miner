@@ -29,4 +29,4 @@ ifftestv_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-iff.obj: iff.c cfile.h error.h fix.h gr.h iff.h mem.h types.h
+$(OBJDIR)/iff.obj: iff.c cfile.h error.h fix.h gr.h iff.h mem.h types.h

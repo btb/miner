@@ -1,7 +1,7 @@
 # Compiler and assembler defines
 
 SHELL=sh
-
+SEP ?= /
 
 #_147
 # Kill annoying built-in rules
@@ -14,9 +14,17 @@ TOOLSDIR = $(MINER)/tools
 GAMEDIR = $(MINER)/game
 
 
+#_349
+# What extensions get installed where
+LIBEXT = .lib .h .inc
+TOOLSEXT = .exe
+
+# Set object file directory if not already set
+OBJDIR ?= ./obj
+
 # generate list of objs for each target
 $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
- $(eval $(target)_OBJS = $(addsuffix .obj,$(basename $($(target)_SRCS))))\
+ $(eval $(target)_OBJS = $(addprefix $(OBJDIR)/,$(addsuffix .obj,$(basename $($(target)_SRCS)))))\
  $(eval ALLOBJS += $($(target)_OBJS))\
  $(eval ALLDIRS += $($(target)_DIRS))\
 )
@@ -24,12 +32,6 @@ $(foreach target,$(LIBS) $(PROGS) $(TEST_PROGS) $(GAMES),\
 $(foreach GAME,$(GAMES),\
  $(eval GAME_DATA += $($(GAME)_DATA))\
 )
-
-
-#_349
-# What extensions get installed where
-LIBEXT = .lib .h .inc
-TOOLSEXT = .exe
 
 #_362
 # Set make's search paths
@@ -73,12 +75,13 @@ ifndef WATCOM
 $(error 1 Make error: Watcom not set up (run WATCOM batch file))
 endif
 
+SEP = \$()
 INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 
 CC = wcc386
 CCENV = WCC386
 CFLAGS_STACK = /s	#default is stack checking off
-CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,\,$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) /fo=$(@F)
+CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,\,$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) /fo=$(subst /,\,$@)
 
 ifdef GLOBAL_INCFILES
 CFLAGS += /fi=$(GLOBAL_INCFILES)
@@ -100,7 +103,7 @@ INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 CC = wcc386
 # CCENV = WCC386
 CFLAGS_STACK = -s	#default is stack checking off
-CFLAGS = -zq -zld -w3 -ef -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$(@F)
+CFLAGS = -zq -zld -w3 -ef -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$@
 
 ifdef GLOBAL_INCFILES
 CFLAGS += -fi=$(GLOBAL_INCFILES)
@@ -115,14 +118,14 @@ ifeq "$(ASSEMBLER)" "MASM"
 
 # Flags for MASM 6.1
 AS = ml
-AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,\,$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$(@F)
+AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,\,$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$@
 ASENV = ML
 
 else ifeq "$(ASSEMBLER)" "JWASM"
 
 # Flags for JWasm
 AS = jwasm
-AFLAGS = -c -W3 -Zd -nologo $(addprefix -I,$(INCPATH)) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) -Fo$(@F)
+AFLAGS = -c -W3 -Zd -nologo $(addprefix -I,$(INCPATH)) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) -Fo$@
 
 else
 $(error 1 Make error: Unknown assembler: $(ASSEMBLER))
@@ -139,7 +142,7 @@ LFLAGS += option quiet $(LFLAGS_DEBUG)
 
 #_656
 # Inference rules
-%.obj: %.c
+$(OBJDIR)/%.obj: %.c
 	$(info will make $@ from $<)
 ifdef SHOW_REASONS
 	$(warning $(if $(wildcard $@),\
@@ -152,12 +155,12 @@ ifdef CCENV
  ifdef SHOW_FLAGS
 	$(info $(CC) flags: $($(CCENV)))
  endif
-	$(CC) $(subst /,\,$<)
+	$(CC) $(subst /,$(SEP),$<)
 else
 	$(CC) $(CFLAGS) $<
 endif
 
-%.obj: %.asm
+$(OBJDIR)/%.obj: %.asm
 	$(info will make $@ from $<)
 ifdef SHOW_REASONS
 	$(warning $(if $(wildcard $@),\
@@ -175,6 +178,10 @@ else
 	$(AS) $(AFLAGS) $<
 endif
 
+$(ALLOBJS): | $(OBJDIR)
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 
 .SECONDEXPANSION:
@@ -218,7 +225,7 @@ $(LIB_LIBS): %.lib: $$($$*_OBJS)
 		$@ <- (does not exist)\
 	))
  endif
-	$(file > $*.arg, $($*_OBJS))
+	$(file > $*.arg, $(subst /,$(SEP),$($*_OBJS)))
 	$(LIBEXE) -q -n -b $@ @$*.arg
 endif
 

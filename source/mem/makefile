@@ -18,4 +18,4 @@ mem_SRCS = mem.c
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-mem.obj: mem.c error.h mono.h
+$(OBJDIR)/mem.obj: mem.c error.h mono.h

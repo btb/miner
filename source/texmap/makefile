@@ -42,11 +42,11 @@ texmap_DIRS = ../main
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-ntmap.obj: ntmap.c 3d.h bm.h digi.h error.h fix.h gr.h key.h mono.h piggy.h rle.h scanline.h sounds.h texmap.h texmapl.h textures.h types.h vecmat.h
-tmap_fl1.obj: tmap_fl1.asm tmap_inc.asm
-tmap_flt.obj: tmap_flt.asm tmap_inc.asm
-tmap_lin.obj: tmap_lin.asm psmacros.inc tmap_inc.asm
-tmap_ll.obj: tmap_ll.asm tmap_inc.asm
-tmap_per.obj: tmap_per.asm tmap_inc.asm
-tmapfade.obj: tmapfade.asm tmap_inc.asm
-tmapflat.obj: tmapflat.c 3d.h error.h fix.h gr.h grdef.h mono.h scanline.h texmap.h texmapl.h types.h vecmat.h
+$(OBJDIR)/ntmap.obj: ntmap.c 3d.h bm.h digi.h error.h fix.h gr.h key.h mono.h piggy.h rle.h scanline.h sounds.h texmap.h texmapl.h textures.h types.h vecmat.h
+$(OBJDIR)/tmap_fl1.obj: tmap_fl1.asm tmap_inc.asm
+$(OBJDIR)/tmap_flt.obj: tmap_flt.asm tmap_inc.asm
+$(OBJDIR)/tmap_lin.obj: tmap_lin.asm psmacros.inc tmap_inc.asm
+$(OBJDIR)/tmap_ll.obj: tmap_ll.asm tmap_inc.asm
+$(OBJDIR)/tmap_per.obj: tmap_per.asm tmap_inc.asm
+$(OBJDIR)/tmapfade.obj: tmapfade.asm tmap_inc.asm
+$(OBJDIR)/tmapflat.obj: tmapflat.c 3d.h error.h fix.h gr.h grdef.h mono.h scanline.h texmap.h texmapl.h types.h vecmat.h

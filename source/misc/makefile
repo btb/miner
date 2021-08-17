@@ -29,5 +29,5 @@ errtest_LIBS = misc.lib
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
 
-error.obj: error.c error.h mono.h
-parsarg.obj: parsarg.c parsarg.h
+$(OBJDIR)/error.obj: error.c error.h mono.h
+$(OBJDIR)/parsarg.obj: parsarg.c parsarg.h
