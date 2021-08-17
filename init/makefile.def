@@ -84,11 +84,22 @@ LIBEXE = wlib
 LINK = wlink
 
 
+ifeq "$(ASSEMBLER)" "MASM"
+
 # Flags for MASM 6.1
 AS = ml
 AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,\,$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$(@F)
 ASENV = ML
 
+else ifeq "$(ASSEMBLER)" "JWASM"
+
+# Flags for JWasm
+AS = jwasm
+AFLAGS = -c -W3 -Zd -nologo $(addprefix -I,$(INCPATH)) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) -Fo$(@F)
+
+else
+$(error 1 Make error: Unknown assembler: $(ASSEMBLER))
+endif
 
 
 
@@ -134,7 +145,7 @@ ifdef ASENV
  endif
 	$(AS) $<
 else
-	$(AS) $< $(AFLAGS)
+	$(AS) $(AFLAGS) $<
 endif
 
 
