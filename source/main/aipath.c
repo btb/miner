@@ -156,7 +156,7 @@ static char rcsid[] = "$Id: aipath.c 2.0 1995/02/27 11:30:48 john Exp $";
 #include "fvi.h"
 #include "physics.h"
 #include "wall.h"
-#include "editor\editor.h"
+#include "editor/editor.h"
 #include "player.h"
 #include "fireball.h"
 #include "game.h"

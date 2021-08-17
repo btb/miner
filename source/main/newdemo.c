@@ -756,7 +756,7 @@ static char rcsid[] = "$Id: newdemo.c 2.7 1995/05/26 16:16:06 john Exp $";
 #include "piggy.h"
 
 #ifdef EDITOR
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 
 //#include "nocfile.h"

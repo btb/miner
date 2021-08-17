@@ -285,7 +285,7 @@ static char rcsid[] = "$Id: ai.c 2.11 1995/07/09 11:15:48 john Exp $";
 #include "text.h"
 
 #ifdef EDITOR
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 
 #ifndef NDEBUG

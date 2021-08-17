@@ -181,7 +181,7 @@ static char rcsid[] = "$Id: powerup.c 2.2 1995/03/24 13:50:36 john Exp $";
 
 #ifdef EDITOR
 #include "gr.h"	//	for powerup outline drawing
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 
 #define	ENERGY_MAX	i2f(200)

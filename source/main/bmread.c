@@ -94,7 +94,7 @@ static char rcsid[] = "$Id: bmread.c 2.4 1995/03/28 18:05:29 john Exp $";
 #include "args.h"
 
 
-#include "editor\texpage.h"
+#include "editor/texpage.h"
 
 #define BM_NONE			-1
 #define BM_COCKPIT		 0

@@ -151,7 +151,7 @@ static char rcsid[] = "$Id: ntmap.c 1.52 1995/03/14 15:13:06 john Exp $";
 #include "rle.h"
 #include "scanline.h"
 
-#include "..\main\textures.h"
+#include "../main/textures.h"
 
 #define	EDITOR_TMAP	1		//if in, include extra stuff
 

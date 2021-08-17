@@ -111,7 +111,7 @@ static char rcsid[] = "$Id: dumpmine.c 2.1 1995/04/06 12:21:50 mike Exp $";
 
 #include "inferno.h"
 #ifdef EDITOR
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 #include "error.h"
 #include "object.h"

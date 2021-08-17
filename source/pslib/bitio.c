@@ -67,8 +67,8 @@ static char rcsid[] = "$Id: bitio.c 1.9 1993/10/22 17:51:09 yuan Exp $";
 #include <stdlib.h>
 #include <fcntl.h>
 #include <io.h>
-#include <sys\types.h>
-#include <sys\stat.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "library.h"
 #include "mem.h"

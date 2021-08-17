@@ -198,7 +198,7 @@ static char rcsid[] = "$Id: medwall.c 2.0 1995/02/27 11:35:47 john Exp $";
 
 #include "medwall.h"
 #include "inferno.h"
-#include "editor.h"//modified by KRB (editor\)
+#include "editor.h"//modified by KRB (editor/)
 #include "segment.h"
 #include "error.h"
 #include "gameseg.h"
@@ -206,7 +206,7 @@ static char rcsid[] = "$Id: medwall.c 2.0 1995/02/27 11:35:47 john Exp $";
 #include "textures.h"
 #include "screens.h"
 #include "switch.h"
-#include "eswitch.h"//modified by KRB (editor\)
+#include "eswitch.h"//modified by KRB (editor/)
 
 #include "texmerge.h"
 #include "medrobot.h"

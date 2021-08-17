@@ -709,8 +709,8 @@ static char copyright[] = "DESCENT   COPYRIGHT (C) 1994,1995 PARALLAX SOFTWARE C
 #include "gameseq.h"
 
 #ifdef EDITOR
-#include "editor\editor.h"
-#include "editor\kdefs.h"
+#include "editor/editor.h"
+#include "editor/kdefs.h"
 #endif
 
 #include "vers_id.h"

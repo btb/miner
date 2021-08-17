@@ -168,7 +168,7 @@ static char rcsid[] = "$Id: switch.c 2.1 1995/03/21 14:39:08 john Exp $";
 #include "game.h"
 #include "switch.h"
 #include "inferno.h"
-#include "editor\editor.h"
+#include "editor/editor.h"
 #include "segment.h"
 #include "error.h"
 #include "gameseg.h"

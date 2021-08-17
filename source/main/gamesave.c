@@ -294,7 +294,7 @@ static char rcsid[] = "$Id: gamesave.c 2.2 1995/04/23 14:53:12 john Exp $";
 
 #include "inferno.h"
 #ifdef EDITOR
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 #include "error.h"
 #include "object.h"

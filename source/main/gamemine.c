@@ -158,7 +158,7 @@ static char rcsid[] = "$Id: gamemine.c 2.2 1995/03/06 15:23:14 john Exp $";
 #include "newmenu.h"
 
 #ifdef EDITOR
-#include "editor\editor.h"
+#include "editor/editor.h"
 #endif
 
 #include "cfile.h"		

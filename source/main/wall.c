@@ -118,7 +118,7 @@ static char rcsid[] = "$Id: wall.c 2.1 1995/03/21 14:39:04 john Exp $";
 #include "wall.h"
 #include "switch.h"
 #include "inferno.h"
-#include "editor\editor.h"
+#include "editor/editor.h"
 #include "segment.h"
 #include "error.h"
 #include "gameseg.h"
