@@ -266,7 +266,7 @@ install:	$(filter $(PROG_EXES) $(GAME_EXES) $(GAME_DATA),$(INSTALL_TARGS))
 #_889
 # Local install
 .PHONY: linstall
-linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
+linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS)) | $(LIBDIR)
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
@@ -277,9 +277,12 @@ linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 #_942
 # Local Install for just headers
 .PHONY: linstallh
-linstallh:	$(filter %.h %.inc,$(INSTALL_TARGS))
+linstallh:	$(filter %.h %.inc,$(INSTALL_TARGS)) | $(LIBDIR)
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
 	 $(INSTALL) $$TARG $(LIBDIR);\
 	done
+
+$(LIBDIR):
+	mkdir $(LIBDIR)
