@@ -6,5 +6,10 @@
 *.arg
 *.exe
 *.map
-source/lib
+
+.vscode/
+game/
+source/lib/
+
 DELETED
+NUL
