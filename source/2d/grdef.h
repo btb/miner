@@ -49,6 +49,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
+extern void gr_sync_display(void);
 extern int  gr_modex_setmode(short mode);
 extern void gr_modex_setplane(short plane);
 extern void gr_modex_setstart(short x, short y, int wait_for_retrace);

@@ -1726,7 +1726,9 @@ int main(int argc,char **argv)
 
 	#ifndef NDEBUG
 	if ( FindArg( "-showmeminfo" ) )
+	{
 //		show_mem_info = 1;		// Make memory statistics show
+	}
 	#endif
 
 	return(0);		//presumably successful exit

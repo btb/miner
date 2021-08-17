@@ -346,6 +346,7 @@ uint check_point_to_face(vms_vector *checkp,segment *sp, side *s,int facenum,int
 	#ifdef COMPACT_SEGS
 		get_side_normal(sp, s-sp->sides, facenum, (vms_vector *)&norm );
 	#else
+		(void)sp; // avoid unreferenced warning
 		memcpy( &norm, &s->normals[facenum], sizeof(vms_vector_array));
 	#endif
 	checkp_array = (vms_vector_array *)checkp;
