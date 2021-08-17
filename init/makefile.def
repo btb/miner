@@ -224,7 +224,7 @@ endif
 
 #_828
 # Visit subdirs and make there
-define do_subsystems =
+define do_subsystems
 @SUBSYSTEMS=($(SUBSYSTEMS)); \
 for SYSTEM in "$${SUBSYSTEMS[@]}"; do\
  $(MAKE) -C $$SYSTEM $(MFLAGS) $@;\
