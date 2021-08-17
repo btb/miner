@@ -8,10 +8,18 @@ set _WATCOM=M:\WATCOM
 rem where is source code
 set MINER=M:/MINER
 
+rem set toolchain
+set COMPILER=WATCOM
+set ASSEMBLER=MASM
+set INSTALL=cp -uv
+
 rem make options
 set SHOW_REASONS=1
 set SHOW_FLAGS=1
 
+rem debug
+rem set CFLAGS_DEBUG=/wx /we
+rem set AFLAGS_DEBUG=/WX
 
 rem Set up DJGPP
 set DJGPP=%_DJGPP%\DJGPP.ENV

@@ -5,14 +5,15 @@ export MINER=~/MinerProj/miner
 # set toolchain
 export COMPILER=OPENWATCOM
 export ASSEMBLER=JWASM
-export INSTALL=install -C -d -v
+export INSTALL="install -C -v"
 
 # make options
 export SHOW_REASONS=1
 export SHOW_FLAGS=1
 
 # debug
-# set CFLAGS_DEBUG=/wx /we
+# export CFLAGS_DEBUG="-wx -we"
+# export AFLAGS_DEBUG="-W4 -WX"
 
 # Set up Watcom
 export PATH=$_WATCOM/osx64:$PATH

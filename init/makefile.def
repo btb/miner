@@ -270,7 +270,7 @@ linstall:	$(filter $(addprefix %,$(LIBEXT)),$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 cp -uv $$TARG $(LIBDIR);\
+	 $(INSTALL) $$TARG $(LIBDIR);\
 	done
 
 
@@ -281,5 +281,5 @@ linstallh:	$(filter %.h %.inc,$(INSTALL_TARGS))
 	$(do_subsystems)
 	@TARGETS=($^);\
 	for TARG in "$${TARGETS[@]}"; do\
-	 cp -uv $$TARG $(LIBDIR);\
+	 $(INSTALL) $$TARG $(LIBDIR);\
 	done
