@@ -277,6 +277,9 @@ void free_packet( int id )
 		while ((--largest_packet_index>0) && (packet_buffers[largest_packet_index].packetnum == -1 ));
 }
 
+void got_new_packet(ecb_header *ecb);
+void ipx_listen_for_packet(ecb_header *ecb);
+
 int ipx_get_packet_data( ubyte * data )
 {
 	int i, n, best, best_id, size;
