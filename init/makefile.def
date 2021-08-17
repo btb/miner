@@ -63,7 +63,11 @@ test:	$(LIB_LIBS) $(PROG_EXES) $(TEST_EXES) $(GAME_EXES)
 
 
 
-#_481
+#_477
+# Compiler and assembler defines
+
+ifeq "$(COMPILER)" "WATCOM"
+
 # Make sure we're set up for Watcom C
 ifndef WATCOM
 $(error 1 Make error: Watcom not set up (run WATCOM batch file))
@@ -83,6 +87,29 @@ endif
 LIBEXE = wlib
 LINK = wlink
 
+
+else ifeq "$(COMPILER)" "OPENWATCOM"
+
+# Make sure we're set up for Watcom C
+ifndef WATCOM
+$(error 1 Make error: Watcom not set up (run WATCOM batch file))
+endif
+
+INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
+
+CC = wcc386
+# CCENV = WCC386
+CFLAGS_STACK = -s	#default is stack checking off
+CFLAGS = -zq -zld -w3 -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO)
+
+ifdef GLOBAL_INCFILES
+CFLAGS += -fi=$(GLOBAL_INCFILES)
+endif
+
+LIBEXE = wlib
+LINK = wlink
+
+endif
 
 ifeq "$(ASSEMBLER)" "MASM"
 
