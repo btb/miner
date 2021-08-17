@@ -298,6 +298,8 @@ int get_word(FFILE *f)
 
 }
 
+int put_byte(unsigned char c, FILE *f);
+
 int put_word(int n,FILE *f)
 {
 	unsigned char c0,c1;
