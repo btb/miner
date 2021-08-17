@@ -437,7 +437,7 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 		fprintf( stderr, "\nMEM_MALLOC_ZERO: Attempting to malloc 0 bytes.\n" );
 		fprintf( stderr, "\tVar %s, file %s, line %d.\n", var, filename, line );
 		Error( "MEM_MALLOC_ZERO" );
-		Int3();
+		// Int3(); // unreachable
 	}
 
 	ptr = malloc( size + CHECKSIZE );
@@ -446,7 +446,7 @@ void * mem_malloc( unsigned int size, char * var, char * filename, int line, int
 		fprintf( stderr, "\nMEM_OUT_OF_MEMORY: Malloc returned NULL\n" );
 		fprintf( stderr, "\tVar %s, file %s, line %d.\n", var, filename, line );
 		Error( "MEM_OUT_OF_MEMORY" );
-		Int3();
+		// Int3(); // unreachable
 	}
 
 	base = (unsigned int)ptr;

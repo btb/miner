@@ -145,6 +145,8 @@ void _loadds far mouse_handler (int m_ax, int mbx, int mcx, int mdx, int msi, in
 {
 #pragma aux mouse_handler parm [EAX] [EBX] [ECX] [EDX] [ESI] [EDI]
 
+	(void)mbx; (void)mcx; (void)mdx; (void)mdi; // avoid unreferenced warning
+
 	Mouse.ctime = timer_get_fixed_secondsX();
 
 	if (m_ax & ME_LB_P)	{	// left button pressed

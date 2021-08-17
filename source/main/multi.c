@@ -1847,7 +1847,7 @@ void multi_do_send_player(char *buf)
 	netplayer_stats * p;
 	p = (netplayer_stats *)buf;	
 
-	Assert( p->Player_num >= 0 );
+	// Assert( p->Player_num >= 0 ); // Player_num is unsigned
 	Assert( p->Player_num <= N_players );
 
 	mprintf(( 0, "Got netplayer_stats for player %d (I'm %d)\n", p->Player_num, Player_num ));

@@ -350,6 +350,10 @@ extern int Game_window_w,		//width and height of player's game window
 
 extern int Rear_view;			//if true, looking back.
 
+//initialize the various canvases on the game screen
+//called every time the screen mode or cockpit changes
+void init_cockpit(void);
+
 //selects a given cockpit (or lack of one).
 void select_cockpit(int mode);
 
