@@ -126,7 +126,7 @@ _size = (_end1 - _start1)/num_iters
 	jns	j_eax_ok1	; if we jump, we had -1, which is kind of ok, if not, we int 3
 	int	3	; oops, going to jump behind _start1, very bad...
 	sub	eax,eax	; ok to continue
-j_eax_ok1:	imul	eax,eax,dword ptr _size
+j_eax_ok1:	imul	eax,dword ptr _size
 	add	eax,offset _start1
 	jmp	eax
 
