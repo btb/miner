@@ -370,7 +370,7 @@ calc_rod_corners:
 	add	eax,size g3s_point
 	call	vm_vec_sub
 
-	lea	ebp,size g3s_point[eax]
+	lea	ebp,size g3s_point+[eax]
 
 ;bot points
 	lea	edi,temp_vec
