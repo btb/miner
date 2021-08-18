@@ -4,7 +4,7 @@
 # $Author: matt $
 # $Date: 1994/11/21 11:34:49 $
 #
-# Makefile for bios functions
+# Makefile for div library
 #
 
 # What to install, and where to install it

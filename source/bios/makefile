@@ -7,12 +7,6 @@
 # Makefile for bios functions
 #
 
-LIBDIR = ../main
-#
-
-CCFLAGS = /dNETWORK /dRELEASE /dNDEBUG
-CCFLAGS = $(CCFLAGS) /I../misc /I../includes /I../fix
-
 # What to install, and where to install it
 INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h dpmi.h ipx.h #swift.h
 

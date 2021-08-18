@@ -17,8 +17,10 @@ LIBS = cflib
 cflib_SRCS = lzw.c bitio.c library.c 
 #cf.obj
 
-# What test programs to make
+# What programs to make
 PROGS = pslib
+
+# What test programs to make
 TEST_PROGS = cftest cftest2
 
 # What source files and libs for the test programs

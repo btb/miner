@@ -1,17 +1,13 @@
 #
-# Master makefile for Miner source
-#
-# Makes all the executable by visiting subdirs and making there
+# Makefile for xcolor
 #
 
-CLEAN_TARGS = *.obj
-
+# What programs to make
 PROGS = xcolor
 
+# What source files and libs for the programs
 xcolor_SRCS = xcolor.c 
-
 xcolor_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib
-
 xcolor_LFLAGS = option stack=150k
 
 #rules and targets common to all Miner makefiles
