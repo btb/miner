@@ -1056,11 +1056,11 @@ typedef struct {
 	short	path_start, objnum;
 } obj_path;
 
-int path_index_compare(obj_path *i1, obj_path *i2)
+int path_index_compare(const void *i1, const void *i2)
 {
-	if (i1->path_start < i2->path_start)
+	if (((obj_path *)i1)->path_start < ((obj_path *)i2)->path_start)
 		return -1;
-	else if (i1->path_start == i2->path_start)
+	else if (((obj_path *)i1)->path_start == ((obj_path *)i2)->path_start)
 		return 0;
 	else
 		return 1;

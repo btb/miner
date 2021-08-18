@@ -302,7 +302,7 @@ void draw_tmap_flat(grs_bitmap *bp,int nverts,g3s_point **vertbuf)
 //	-----------------------------------------------------------------------------------------
 //This is like gr_upoly_tmap() but instead of drawing, it calls the specified
 //function with ylr values
-void gr_upoly_tmap_ylr(int nverts, int *vert, void *ylr_func() )
+void gr_upoly_tmap_ylr(int nverts, int *vert, void (*ylr_func)())
 {
 	g3ds_tmap	my_tmap;
 	int			i;

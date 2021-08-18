@@ -189,10 +189,9 @@ char *get_parm_value(char *parm,FILE *f)
 		return NULL;
 }
 
-ml_sort_func(mle *e0,mle *e1)
+int ml_sort_func(const void *e0, const void *e1)
 {
-	return strcmp(e0->mission_name,e1->mission_name);
-
+	return strcmp(((mle *)e0)->mission_name, ((mle *)e1)->mission_name);
 }
 
 

@@ -670,7 +670,7 @@ int gr_init(int mode)
 
 	// Set flags indicating that this is installed.
 	gr_installed = 1;
-	atexit(gr_close);
+	atexit((void *)gr_close);
 
 	return 0;
 }

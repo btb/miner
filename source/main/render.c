@@ -1511,15 +1511,15 @@ sort_item sort_list[SORT_LIST_SIZE];
 int n_sort_items;
 
 //compare function for object sort. 
-int sort_func(sort_item *a,sort_item *b)
+int sort_func(const void *a, const void *b)
 {
 	fix delta_dist;
 	object *obj_a,*obj_b;
 
-	delta_dist = a->dist - b->dist;
+	delta_dist = ((sort_item *)a)->dist - ((sort_item *)b)->dist;
 
-	obj_a = &Objects[a->objnum];
-	obj_b = &Objects[b->objnum];
+	obj_a = &Objects[((sort_item *)a)->objnum];
+	obj_b = &Objects[((sort_item *)b)->objnum];
 
 	if (abs(delta_dist) < (obj_a->size + obj_b->size)) {		//same position
 

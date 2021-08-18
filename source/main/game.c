@@ -597,7 +597,7 @@ void reset_palette_add()
 }
 
 
-game_show_warning(char *s)
+void game_show_warning(char *s)
 {
 
 	if (!((Game_mode & GM_MULTI) && (Function_mode == FMODE_GAME)))
