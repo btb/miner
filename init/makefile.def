@@ -324,10 +324,10 @@ $(ALL_EXES): %.exe: $$($$*_OBJS) $$($$*_LIBS)
 		$@ <- (does not exist)\
 	))
  endif
-	$(file > $*.lnk,$(LFLAGS) $($*_LFLAGS))
-	$(foreach OBJ,$($*_OBJS),$(file >> $*.lnk,file $(OBJ)))
-	$(foreach LIB,$(filter $(addprefix %,$($*_LIBS)),$^),$(file >> $*.lnk,library $(LIB)))
-	$(file >> $*.lnk,name $*)
+	@echo "$(LFLAGS) $($*_LFLAGS)" > $*.lnk
+	@$(foreach OBJ,$($*_OBJS),echo "file $(OBJ)" >> $*.lnk;)
+	@$(foreach LIB,$(filter $(addprefix %,$($*_LIBS)),$^),echo "library $(LIB)" >> $*.lnk;)
+	@echo "name $*" >> $*.lnk
 	$(LINK) @$*.lnk
 endif
 
@@ -348,7 +348,7 @@ $(LIB_LIBS): %.lib: $$($$*_OBJS)
 		$@ <- (does not exist)\
 	))
  endif
-	$(file > $*.arg, $(subst /,$(SEP),$($*_OBJS)))
+	@echo "$(subst /,$(SEP),$($*_OBJS))" > $*.arg
 	$(LIBEXE) -q -n -b $@ @$*.arg
 endif
 
