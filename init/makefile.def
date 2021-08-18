@@ -121,7 +121,7 @@ settings.h: $(INI_FILE) #$(MAKEFILE_LIST)
 
 
 # Subroutine to add lines to SETTINGS.H
-define def_setting =
+define def_setting
  $(if $(_SVAR),,$(eval _SVAR=$(_IVAR)))
  $(if $(_SVAL),,$(eval _SVAL=1))
  $(if $(_IVAL),\
@@ -143,7 +143,7 @@ define def_setting =
 endef
 
 # Version of def_settings to add line if variable NOT set (or not equal)
-define def_setting2 =
+define def_setting2
  $(if $(_SVAR),,$(eval _SVAR = $(_IVAR)))
  $(if $(_SVAL),,$(eval _SVAL=1))
  $(if $(_IVAL),\
