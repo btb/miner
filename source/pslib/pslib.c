@@ -122,7 +122,11 @@ void print_usage ( void ) {
 
 void datetime( char *filename, ushort *date_ptr, ushort *time_ptr ) {
     int handle;
+#if defined(__WATCOMC__) && (__WATCOMC__ < 1280)
     ushort date, time;
+#else
+    unsigned int date, time;
+#endif
 
     if( _dos_open( filename, O_RDONLY, &handle ) != 0 )
         printf( "    Unable to`open '%s' for date & time check\n", filename );
