@@ -154,7 +154,7 @@ void gr_rle_decode( ubyte * src, ubyte * dest )
 }
 
 void rle_stosb(char *dest, int len, int color);
-#pragma aux rle_stosb = "cld rep	stosb" parm [edi] [ecx] [eax] modify exact [edi ecx];
+#pragma aux rle_stosb = /*"cld",*/ "rep	stosb" parm [edi] [ecx] [eax] modify exact [edi ecx];
 
 // Given pointer to start of one scanline of rle data, uncompress it to
 // dest, from source pixels x1 to x2.
