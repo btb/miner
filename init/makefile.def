@@ -101,7 +101,7 @@ settings.h: $(INI_FILE) #$(MAKEFILE_LIST)
 	@echo >>$(LIBDIR)/settings.h
 	@echo "#define NEWDEMO			//Demo is always IN ">>$(LIBDIR)/settings.h
 	@echo >>$(LIBDIR)/settings.h
-	$(eval _IVAR=EDITOR)$(def_setting)
+	$(eval _IVAR=BUILD_EDITOR)$(eval _SVAR=EDITOR)$(def_setting)
 	$(eval _IVAR=RELEASE_VERSION)$(eval _SVAR=RELEASE)$(def_setting)
 	$(eval _IVAR=SHAREWARE)$(def_setting)
 	$(eval _IVAR=ARCADE)$(def_setting)
