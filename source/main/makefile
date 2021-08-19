@@ -42,7 +42,7 @@ descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
 descent_DIRS = editor
 
 # Link flags for Descent
-descent_LFLAGS = option map,verbose,stack=50k
+descent_LFLAGS = option map,verbose,stack=50k,nocaseexact
 
 # DescentR is really Descent
 descentr_SRCS   = $(descent_SRCS)
