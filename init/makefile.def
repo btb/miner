@@ -226,7 +226,7 @@ INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 CC = wcc386
 # CCENV = WCC386
 CFLAGS_STACK = -s	#default is stack checking off
-CFLAGS = -zq -zld -w3 -ef -on -oa $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$@
+CFLAGS = -zq -zld -w3 -ef -on -oa -zp1 $(addprefix -i=,$(INCPATH)) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$@
 
 ifdef GLOBAL_INCFILES
 CFLAGS += -fi=$(GLOBAL_INCFILES)
