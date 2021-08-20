@@ -52,7 +52,7 @@ LIB_LIBS = $(addsuffix .lib,$(LIBS))
 PROG_EXES = $(addsuffix .exe,$(PROGS))
 GAME_EXES = $(addsuffix .exe,$(GAMES))
 
-INSTALL_TARGS += $(GAME_EXES) $(GAME_DATA)
+INSTALL_TARGS += $(PROG_EXES) $(GAME_EXES) $(GAME_DATA)
 
 #_427
 ALL_EXES = $(TEST_EXES) $(PROG_EXES) $(GAME_EXES)

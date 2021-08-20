@@ -39,6 +39,8 @@ static char rcsid[] = "$Id: xcolor.c 1.1 1994/01/24 11:09:24 john Exp $";
 #include "iff.h"
 #include "mem.h"
 
+int descent_critical_error;
+
 ubyte palette[768];
 
 void dofile( char * filename )

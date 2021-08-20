@@ -7,7 +7,8 @@ PROGS = xcolor
 
 # What source files and libs for the programs
 xcolor_SRCS = xcolor.c 
-xcolor_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib
+# xcolor_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib
+xcolor_LIBS = gr.lib misc.lib mem.lib iff.lib ui.lib io.lib cflib.lib cfile.lib
 xcolor_LFLAGS = option stack=150k
 
 #rules and targets common to all Miner makefiles
