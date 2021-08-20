@@ -3,7 +3,7 @@ export _WATCOM=/usr/local/Cellar/open-watcom-v2/2.0-2021-08-01
 export MINER=~/MinerProj/miner
 
 # set toolchain
-export COMPILER=OPENWATCOM
+export COMPILER=WATCOM
 export ASSEMBLER=JWASM
 export INSTALL="install -C -v"
 
@@ -14,6 +14,9 @@ export SHOW_FLAGS=1
 # debug
 # export CFLAGS_DEBUG="-wx -we"
 # export AFLAGS_DEBUG="-W4 -WX"
+
+# print full path in errors
+export GLOBAL_CFLAGS="-ef"
 
 # Set up Watcom
 export PATH=$_WATCOM/osx64:$PATH

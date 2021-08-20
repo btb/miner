@@ -198,35 +198,12 @@ ifndef WATCOM
 $(error 1 Make error: Watcom not set up (run WATCOM batch file))
 endif
 
-SEP = \$()
 INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
 
 CC = wcc386
 CCENV = WCC386
-CFLAGS_STACK = /s	#default is stack checking off
-CFLAGS = /zq /zld /w3 /on /oa $(addprefix /I=,$(subst /,$(SEP),$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) /fo=$(subst /,$(SEP),$@)
-
-ifdef GLOBAL_INCFILES
-CFLAGS += /fi=$(GLOBAL_INCFILES)
-endif
-
-LIBEXE = wlib
-LINK = wlink
-
-
-else ifeq "$(COMPILER)" "OPENWATCOM"
-
-# Make sure we're set up for Watcom C
-ifndef WATCOM
-$(error 1 Make error: Watcom not set up (run WATCOM batch file))
-endif
-
-INCPATH += . $(LIBDIR) $(EXTLIBS) $(WATCOM)/h $(WATCOM)/h/sys
-
-CC = wcc386
-# CCENV = WCC386
 CFLAGS_STACK = -s	#default is stack checking off
-CFLAGS = -zq -zld -w3 -ef -on -oa -zp1 $(addprefix -i=,$(subst /,$(SEP),$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$(subst /,$(SEP),$@)
+CFLAGS = -zq -zld -w3 -on -oa -zp1 $(addprefix -I=,$(subst /,$(SEP),$(INCPATH))) $(CFLAGS_DEBUG) $(CFLAGS_OPT) $(GLOBAL_CFLAGS) $(CFLAGS_STACK) $(CFLAGS_MONO) -fo=$(subst /,$(SEP),$@)
 
 ifdef GLOBAL_INCFILES
 CFLAGS += -fi=$(GLOBAL_INCFILES)
@@ -241,7 +218,7 @@ ifeq "$(ASSEMBLER)" "MASM"
 
 # Flags for MASM 6.1
 AS = ml
-AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,\,$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$@
+AFLAGS = /c /W3 /Zd /nologo $(addprefix /I,$(subst /,$(SEP),$(INCPATH))) $(AFLAGS_DEBUG) $(GLOBAL_AFLAGS) /Fo$@
 ASENV = ML
 
 else ifeq "$(ASSEMBLER)" "JWASM"

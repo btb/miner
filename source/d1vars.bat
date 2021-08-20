@@ -35,6 +35,9 @@ path %_WATCOM%\bin;%_WATCOM%\binb;%PATH%
 set INCLUDE=%_WATCOM%\h;%INCLUDE%
 set WATCOM=%_WATCOM%\.
 
+rem Use DOS path separator
+set SEP=\
+
 rem Clear temporary vars
 set _DJGPP=
 set _MASM=
