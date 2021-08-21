@@ -110,9 +110,13 @@ int __far critical_error_handler( unsigned deverr, unsigned errcode, unsigned fa
 
 void InstallErrorHandler()
 {
+#ifndef KRB
+	_harderr(critical_error_handler);
+#else
 	_harderr((void *) critical_error_handler );
 	//Above line modified by KRB, added (void *) cast
 	//for the compiler.
+#endif
 }
 
 void file_sort( int n, char list[][13] )

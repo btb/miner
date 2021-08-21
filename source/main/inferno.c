@@ -1135,9 +1135,13 @@ int main(int argc,char **argv)
 	if (!dpmi_lock_region(&descent_critical_errcode,sizeof(unsigned)))	{
 		Error( "Unable to lock critial error handler" );
 	}
+#ifndef KRB
+	_harderr(descent_critical_error_handler);
+#else
 	_harderr((void *) descent_critical_error_handler );
 	//Above line modified by KRB, added (void *) cast
 	//for the compiler.
+#endif
 
 #ifdef USE_CD
 	i=find_descent_cd();
@@ -1689,7 +1693,7 @@ int main(int argc,char **argv)
 		case FMODE_EDITOR:
 			keyd_editor_mode = 1;
 			editor();
-			_harderr( (void *)descent_critical_error_handler );		// Reinstall game error handler
+			_harderr(descent_critical_error_handler);		// Reinstall game error handler
 			if ( Function_mode == FMODE_GAME ) {
 				Game_mode = GM_EDITOR;
 				editor_reset_stuff_on_level();
