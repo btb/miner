@@ -136,6 +136,10 @@ void WriteBuffer(PORT *port, char *pbuff, int len)
 	return;
 }
 
+int GetLineStatus(PORT *port)
+{
+	return 0;
+}
 
 
 
