@@ -290,7 +290,7 @@ CFILE * cfopen(char * filename, char * mode )
 	FILE * fp;
 	CFILE *cfile;
 	
-	if (strcmpi( mode, "rb"))	{
+	if (stricmp(mode, "rb")) {
 		printf( "CFILES CAN ONLY BE OPENED WITH RB\n" );
 		exit(1);
 	}

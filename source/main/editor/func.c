@@ -77,7 +77,7 @@ int (*func_get( char * name, int * numparams ))(void)
 	int i;
 
 	for (i=0; i<func_size; i++ )
-		if (!strcmpi( name, func_table[i].name ))
+		if (!stricmp(name, func_table[i].name))
 		{
 			*numparams = func_table[i].nparams;
 			return func_table[i].cfunction;
@@ -91,7 +91,7 @@ int func_get_index( char * name )
 	int i;
 
 	for (i=0; i<func_size; i++ )
-		if (!strcmpi( name, func_table[i].name ))
+		if (!stricmp(name, func_table[i].name))
 		{
 			return i;
 		}
