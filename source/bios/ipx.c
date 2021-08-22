@@ -171,7 +171,6 @@ static char rcsid[] = "$Id: ipx.c 2.10 1995/03/29 17:27:55 john Exp $";
 #include <dos.h>
 #include <stdio.h>
 #include <string.h>
-#include <malloc.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <assert.h>

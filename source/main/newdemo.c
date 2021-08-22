@@ -698,7 +698,6 @@ static char rcsid[] = "$Id: newdemo.c 2.7 1995/05/26 16:16:06 john Exp $";
 #include <io.h>
 #include <string.h>	// for memset
 #include <ctype.h>
-#include <malloc.h>
 #include <limits.h>
 
 #include "inferno.h"

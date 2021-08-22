@@ -20,7 +20,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <fcntl.h>
 #include <io.h>
 #include <dos.h>
-#include <malloc.h>
 #include <ctype.h>
 
 #include "gr.h"

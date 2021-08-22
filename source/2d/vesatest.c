@@ -39,7 +39,6 @@ static char rcsid[] = "$Id: vesatest.c 1.3 1993/12/21 11:40:47 john Exp $";
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
-#include <malloc.h>
 
 #include "gr.h"
 

@@ -242,7 +242,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: physics.c 2.2 1995/03/24 14:48:54 john Exp $";
 #pragma on (unreferenced)
 
-//@@#include <malloc.h>
 #include <stdio.h>
 #include <stdlib.h>
 
