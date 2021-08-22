@@ -73,11 +73,11 @@ void strrev( char *s1 )
 	int i,l;
 	char *s2;
 	
-	s2 = (char *)mymalloc(strlen(s1) + 1);
+	s2 = (char *)malloc(strlen(s1) + 1);
 	strcpy(s2, s1);
 	l = strlen(s2);
 	for (i = 0; i < l; i++)
 		s1[l-1-i] = s2[i];
-	myfree(s2);
+	free(s2);
 }
 
