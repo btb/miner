@@ -371,10 +371,12 @@ void make_curside_bottom_side(void)
 }
 #endif
 
-void ToggleBottom(void)
+int ToggleBottom(void)
 {
 	Render_only_bottom = !Render_only_bottom;
 	Update_flags = UF_WORLD_CHANGED;
+
+	return 0;
 }
 		
 // ---------------------------------------------------------------------------------------------

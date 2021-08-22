@@ -1101,7 +1101,7 @@ void gamestate_restore_check() {
 		}
 }
 
-void RestoreGameState() {
+int RestoreGameState(void) {
 	load_level("GAMESAVE.LVL");
 	gamestate_not_restored = 0;
 
@@ -1109,6 +1109,8 @@ void RestoreGameState() {
 	editor_status("Gamestate restored.\n");
 
 	Update_flags |= UF_WORLD_CHANGED;
+
+	return 0;
 }
 
 extern void check_wall_validity(void);

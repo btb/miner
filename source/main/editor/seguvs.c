@@ -322,9 +322,11 @@ void set_average_light_on_side(segment *segp, int sidenum)
 
 }
 
-void set_average_light_on_curside(void)
+int set_average_light_on_curside(void)
 {
 	set_average_light_on_side(Cursegp, Curside);
+
+	return 0;
 }
 
 //	-----------------------------------------------------------------------------------------
@@ -415,7 +417,7 @@ void set_average_light_on_all_fast(void)
 }
 
 extern int Doing_lighting_hack_flag;	//	If set, don't mprintf warning messages in gameseg.c/find_point_seg
-void set_average_light_on_all(void)
+int set_average_light_on_all(void)
 {
 //	set_average_light_on_all_fast();
 
@@ -430,13 +432,16 @@ void set_average_light_on_all(void)
 //		for (side=0; side<MAX_SIDES_PER_SEGMENT; side++)
 //			if (Segments[seg].segnum != -1)
 //				set_average_light_on_side(&Segments[seg], side);
+
+	return 0;
 }
 
-void set_average_light_on_all_quick(void)
+int set_average_light_on_all_quick(void)
 {
 	cast_all_light_in_mine(1);
 	Update_flags |= UF_WORLD_CHANGED;
 
+	return 0;
 }
 
 //	---------------------------------------------------------------------------------------------
@@ -1087,9 +1092,11 @@ found1: ;
 
 }
 
-void fix_bogus_uvs_on_side(void)
+int fix_bogus_uvs_on_side(void)
 {
 	med_propagate_tmaps_to_back_side(Cursegp, Curside, 1);
+
+	return 0;
 }
 
 void fix_bogus_uvs_on_side1(segment *sp, int sidenum, int uvonly_flag)
@@ -1112,13 +1119,15 @@ void fix_bogus_uvs_seg(segment *segp)
 	}
 }
 
-void fix_bogus_uvs_all(void)
+int fix_bogus_uvs_all(void)
 {
 	int	seg;
 
 	for (seg=0; seg<=Highest_segment_index; seg++)
 		if (Segments[seg].segnum != -1)
 			fix_bogus_uvs_seg(&Segments[seg]);
+
+	return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -129,7 +129,7 @@ int SaveSituation();
 int LoadSituation();
 
 // In kgame.c
-void SetPlayerPosition(void);
+int SetPlayerPosition(void);
 int SaveGameData();
 int LoadGameData();
 int LoadMineOnly();
@@ -153,7 +153,7 @@ int Degroup();
 int RotateGroup();
 
 // In segment.c
-void ToggleBottom();
+int ToggleBottom(void);
 void make_curside_bottom_side();
 
 // In editor.c
@@ -328,11 +328,11 @@ int	LightSetDefaultAll();
 int	LightAmbientLighting();
 
 // seguvs.c
-int fix_bogus_uvs_on_side();
-int fix_bogus_uvs_all();
-void set_average_light_on_curside(void);
-void set_average_light_on_all(void);
-void set_average_light_on_all_quick(void);
+int fix_bogus_uvs_on_side(void);
+int fix_bogus_uvs_all(void);
+int set_average_light_on_curside(void);
+int set_average_light_on_all(void);
+int set_average_light_on_all_quick(void);
 
 // Miscellaneous, please put in correct file if you have time
 int IncreaseDrawDepth();
@@ -410,7 +410,7 @@ extern int repaircen_create_from_curseg();
 extern int controlcen_create_from_curseg();
 extern int robotmaker_create_from_curseg();
 extern int fuelcen_reset_all();
-extern void RestoreGameState();
+extern int RestoreGameState(void);
 extern int fuelcen_delete_from_curseg();
 
 // In editor\robot.c

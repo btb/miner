@@ -234,13 +234,15 @@ void propagate_light_intensity(segment *segp, int sidenum)
 // -----------------------------------------------------------------------------
 //	Highest level function, bound to a key.  Apply ambient light to all segments based
 //	on user-defined light sources.
-void LightAmbientLighting()
+int LightAmbientLighting(void)
 {
 	int seg, side;
 
 	for (seg=0; seg<=Highest_segment_index; seg++)
 		for (side=0;side<MAX_SIDES_PER_SEGMENT;side++)
 			propagate_light_intensity(&Segments[seg], side);
+
+	return 0;
 }
 
 
