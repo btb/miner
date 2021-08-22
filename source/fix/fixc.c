@@ -54,7 +54,9 @@ static char rcsid[] = "$Id: fix.c 1.7 1995/09/22 14:08:16 allender Exp $";
 #pragma on (unreferenced)
 
 #include <stdlib.h>
+#ifdef MACINTOSH
 #include <ToolUtils.h>
+#endif
 #include <math.h>
 
 #include "error.h"
