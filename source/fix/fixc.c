@@ -119,10 +119,12 @@ fix fixquadadjust(quad *q)
 
 #ifndef __powerc
 
+#ifdef MACINTOSH
 fix fixmul(fix a, fix b)
 {
 	return (fix)FixMul((Fixed)a, (Fixed)b);
 }
+#endif
 
 //divide a quad by a fix, returning a fix
 long fixdivquadlong(ulong nl,ulong nh,ulong d)
