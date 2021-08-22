@@ -3,17 +3,10 @@
 #
 
 # What programs to make
-ifndef BUILD_EDITOR
-ifdef SHAREWARE
-GAMES = dcntshr
-else ifdef DEST_SAT
-GAMES = descent
-else
-GAMES = descentr
-endif
-else
-GAMES = editor
-endif
+GAMES = $(if $(BUILD_EDITOR),editor,\
+		  $(if $(SHAREWARE),dcntshr,\
+		  $(if $(DEST_SAT),descent,\
+		  descentr)))
 
 # Files to link for Descent
 descent_SRCS = inferno.c game.c gauges.c mglobal.c \
