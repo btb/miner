@@ -49,6 +49,10 @@ option(PIGGY_NO_PAGING "Don't use paging from pig file" OFF)
 if(NOT PIGGY_NO_PAGING)
    SET(PIGGY_USE_PAGING ON)
 endif()
+option(NO_ASSEMBLY "Build with only C code" OFF)
+if(NO_ASSEMBLY)
+   SET(NASM ON)
+endif()
 
 #other vestiges
 #STORE_DEMO
