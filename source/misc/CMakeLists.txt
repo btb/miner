@@ -6,7 +6,7 @@
 add_library(misc)
 
 # What objs in the lib
-target_sources(misc PRIVATE parsarg.c error.c)
+target_sources(misc PRIVATE $<$<BOOL:${BUILD_EDITOR}>:parsarg.c> error.c)
 
 # What test programs to make
 # add_executable(errtest)
