@@ -1,4 +1,4 @@
-export _WATCOM=/usr/local/Cellar/open-watcom-v2/2.0-2021-08-01
+export _WATCOM=/usr/local/opt/open-watcom-v2
 # where is source code
 export MINER=~/MinerProj/miner
 
