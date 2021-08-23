@@ -21,7 +21,7 @@ if(WATCOM)
 endif()
 
 # Set up personal settings
-set(USE_SOS ON)
+set(USE_SOS ON CACHE BOOL "Use the Sound Operating System libraries")
 set(NEWDEMO ON)
 option(BUILD_EDITOR "" OFF)
 if(BUILD_EDITOR)

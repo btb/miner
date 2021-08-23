@@ -16,6 +16,7 @@ set INSTALL=cp -uv
 rem make options
 set SHOW_REASONS=1
 set SHOW_FLAGS=1
+set USE_SOS=1
 
 rem debug
 rem set CFLAGS_DEBUG=/wx /we
