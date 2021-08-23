@@ -152,6 +152,11 @@ void rep_movsb( ubyte * sbits, ubyte * dbits, int width );
 
 #define FIND_SCALED_NUM(x,x0,x1,y0,y1) (fixmuldiv((x)-(x0),(y1)-(y0),(x1)-(x0))+(y0))
 
+void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0, fix u1, fix v1);
+
 // Scales bitmap, bp, into vertbuf[0] to vertbuf[1]
 void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 {

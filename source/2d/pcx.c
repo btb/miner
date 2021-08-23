@@ -183,6 +183,9 @@ int pcx_read_bitmap( char * filename, grs_bitmap * bmp,int bitmap_type ,ubyte * 
 	return PCX_ERROR_NONE;
 }
 
+int pcx_encode_byte(ubyte byt, ubyte cnt, FILE *fid);
+int pcx_encode_line(ubyte *inBuff, int inLen, FILE *fp);
+
 int pcx_write_bitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 {
 	int retval;

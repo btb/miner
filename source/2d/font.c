@@ -990,7 +990,6 @@ void gr_close_font( grs_font * font )
 	}
 }
 
-void build_colormap_good( ubyte * palette, ubyte * colormap, int * freq );
 void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
 #pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
 "again_ddn:"							\

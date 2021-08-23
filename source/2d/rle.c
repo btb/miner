@@ -451,6 +451,7 @@ void rle_cache_flush()
 }
 
 
+void rle_expand_texture_sub(grs_bitmap *bmp, grs_bitmap *rle_temp_bitmap_1);
 
 grs_bitmap * rle_expand_texture( grs_bitmap * bmp )
 {

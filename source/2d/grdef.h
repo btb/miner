@@ -72,6 +72,9 @@ void gr_linear_movsb( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsw( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsd(ubyte *source, ubyte *dest, int nbytes);
 void gr_linear_stosd( void * source, unsigned char color, unsigned short nbytes);
+
+void build_colormap_good(ubyte *palette, ubyte *colormap, int *freq);
+
 extern unsigned int gr_var_color;
 extern unsigned int gr_var_bwidth;
 extern unsigned char * gr_var_bitmap;

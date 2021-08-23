@@ -491,6 +491,10 @@ void gr_ubitmapGENERICm(int x, int y, grs_bitmap * bm)
 }
 
 
+void gr_bm_ubitblt0x_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *src, grs_bitmap *dest);
+void gr_bm_ubitblt00_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *src, grs_bitmap *dest);
+void gr_bm_ubitblt00m_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *src, grs_bitmap *dest);
+
 void gr_ubitmap( int x, int y, grs_bitmap *bm )
 {   int source, dest;
 
