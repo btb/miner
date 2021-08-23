@@ -76,8 +76,11 @@ configure_file(main/settings.h.in main/settings.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/main)
 
 # The only thing to make is the subdirs
-set(SUBSYSTEMS misc includes fix cfile 2d bios iff div mem vecmat 3d texmap)
+set(SUBSYSTEMS misc includes fix cfile 2d bios iff mem vecmat 3d texmap)
 #sosdigi sosmidi
+if(NOT NO_ASSEMBLY)
+   list(APPEND SUBSYSTEMS div)
+endif()
 if(BUILD_EDITOR)
 list(APPEND SUBSYSTEMS pslib ui)
 endif()

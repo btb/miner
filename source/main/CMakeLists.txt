@@ -14,8 +14,11 @@ if(USE_SOS)
 endif()
 
 add_executable(descent)
-target_link_libraries(descent 3d gr fix io iff vecmat cfile div0 misc texmap
+target_link_libraries(descent 3d gr fix io iff vecmat cfile misc texmap
 	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:mem>)
+if(NOT NO_ASSEMBLY)
+	target_link_libraries(descent div0)
+endif()
 if(USE_SOS)
 	target_link_libraries(descent sosdigi sosmidi)
 endif()
