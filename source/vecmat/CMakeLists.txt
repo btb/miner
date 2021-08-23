@@ -7,7 +7,11 @@ add_library(vecmat)
 set_target_properties(vecmat PROPERTIES LINKER_LANGUAGE C)
 
 # What objs in the lib
-target_sources(vecmat PRIVATE vecmat.asm)
+target_sources(vecmat PRIVATE $<IF:$<BOOL:${NO_ASSEMBLY}>,
+	vecmatc.c
+,
+	vecmat.asm
+>)
 
 # What test programs to make
 # add_executable(vectest)

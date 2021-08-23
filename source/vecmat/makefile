@@ -14,7 +14,7 @@ INSTALL_TARGS = vecmat.lib vecmat.h vecmat.inc
 LIBS = vecmat
 
 # What sources in the lib
-vecmat_SRCS = vecmat.asm
+vecmat_SRCS = $(if $(NO_ASSEMBLY),vecmatc.c,vecmat.asm)
 
 # What test programs to make
 TEST_PROGS = vectest 
