@@ -664,7 +664,9 @@ static char copyright[] = "DESCENT   COPYRIGHT (C) 1994,1995 PARALLAX SOFTWARE C
 #include "inferno.h"
 #include "error.h"
 #include "cflib.h"
+#ifndef NASM
 #include "div0.h"
+#endif
 #include "game.h"
 #include "segment.h"		//for Side_to_verts
 #include "mem.h"
@@ -1327,8 +1329,10 @@ int main(int argc,char **argv)
 	} else {
 		if (Inferno_verbose) printf( "\n%s", TXT_VERBOSE_10);
 	}
+#ifndef NASM
 	if (Inferno_verbose) printf( "\n%s", TXT_VERBOSE_11);
 	div0_init(DM_ERROR);
+#endif
 
 	//------------ Init sound ---------------
 	if (!FindArg( "-nosound" ))	{
