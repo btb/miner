@@ -515,7 +515,6 @@ vms_vector *vm_vec_crossprod(vms_vector *dest,vms_vector *src0,vms_vector *src1)
 }
 #else
 
-#if 0
 vms_vector *vm_vec_crossprod(vms_vector *dest,vms_vector *src0,vms_vector *src1)
 {
 	quad q;
@@ -539,7 +538,6 @@ vms_vector *vm_vec_crossprod(vms_vector *dest,vms_vector *src0,vms_vector *src1)
 
 	return dest;
 }
-#endif
 
 #endif
 
