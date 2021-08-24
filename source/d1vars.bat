@@ -32,7 +32,7 @@ SET INCLUDE=%_MASM%\INCLUDE;%INCLUDE%
 SET TMP=C:\WINDOWS\TEMP
 
 rem Set up Watcom
-path %_WATCOM%\bin;%_WATCOM%\binb;%PATH%
+set PATH=%_WATCOM%\bin;%_WATCOM%\binb;%_WATCOM%\binnt;%_WATCOM%\binw;%PATH%
 set INCLUDE=%_WATCOM%\h;%INCLUDE%
 set WATCOM=%_WATCOM%\.
 
