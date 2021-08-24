@@ -9,6 +9,7 @@
 
 .vscode/
 game/
+init/inferno.ini
 source/lib/
 
 DELETED
