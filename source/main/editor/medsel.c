@@ -85,10 +85,10 @@ typedef struct sort_element {
 
 //compare the distance of two segments.  slow, since it computes the
 //distance each time
-segdist_cmp(sort_element *s0,sort_element *s1)
+int segdist_cmp(const void *s0, const void *s1)
 {
-	return (s0->dist==s1->dist)?0:((s0->dist<s1->dist)?-1:1);
-
+	return (((sort_element *)s0)->dist == ((sort_element *)s1)->dist) ? 0
+		: ((((sort_element *)s0)->dist < ((sort_element *)s1)->dist) ? -1 : 1);
 }
 
 

@@ -354,7 +354,7 @@ void clear_editor_status(void)
 }
 
 
-void diagnostic_message( char *format, ... )
+void diagnostic_message(const char *format, ...)
 {
 	char diag_line[DIAGNOSTIC_MESSAGE_MAX];
 
@@ -988,7 +988,7 @@ close_editor_screen()
 
 }
 
-med_show_warning(char *s)
+void med_show_warning(char *s)
 {
 	grs_canvas *save_canv=grd_curcanv;
 
