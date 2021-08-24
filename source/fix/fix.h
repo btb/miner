@@ -166,6 +166,7 @@ void fixquadnegate(quad *q);
 	"imul	edx"	\
 	"idiv	ebx";
 
+#if 0
 #pragma aux fixmulaccum parm [esi] [eax] [edx] modify exact [eax edx] = \
 	"imul	edx"			\
 	"add  [esi],eax"	\
@@ -183,6 +184,7 @@ void fixquadnegate(quad *q);
 
 #pragma aux fixdivquadlong parm [eax] [edx] [ebx] modifiy exact [eax edx] = \
 	"idiv	ebx";
+#endif
 
 #endif
 
