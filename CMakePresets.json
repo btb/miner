@@ -1,0 +1,29 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Watcom WMake generator",
+      "generator": "Watcom WMake",
+      "binaryDir": "${sourceDir}/build/default",
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "DOS",
+        "CMAKE_ASM_MASM_COMPILER": "/usr/local/bin/jwasm",
+        "CMAKE_BUILD_TYPE":"Release"
+      },
+      "environment": {
+        "WATCOM": "/usr/local/opt/open-watcom-v2"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "environment": {
+        "WATCOM": "/usr/local/opt/open-watcom-v2"
+      }
+    }
+  ]
+}
