@@ -37,4 +37,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: joycal.c 2.0 1995/02/27 11:27:48 john Exp $";
 #pragma on (unreferenced)
 
-

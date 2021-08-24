@@ -399,4 +399,3 @@ void game_init_render_buffers(int screen_mode, int render_max_w, int render_max_
 
 #endif
 
-

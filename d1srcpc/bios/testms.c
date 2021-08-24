@@ -62,4 +62,3 @@ void main (void)
 	mouse_close();
 	key_close();
 }
-

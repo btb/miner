@@ -410,4 +410,3 @@ void merge_textures_super_xparent( int type, grs_bitmap * bottom_bmp, grs_bitmap
 			break;
 	}
 }
-

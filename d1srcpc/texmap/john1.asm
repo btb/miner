@@ -113,4 +113,3 @@ skip1:	inc	edi
 
 	dec	_loop_count
 	jns	tmap_loop
-

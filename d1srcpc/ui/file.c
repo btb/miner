@@ -616,4 +616,3 @@ int ui_get_file( char * filename, char * Filespec  )
 
 }
 
-

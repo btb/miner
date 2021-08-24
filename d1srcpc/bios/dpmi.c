@@ -434,4 +434,3 @@ int dpmi_set_pm_handler(unsigned intnum, void far * isr )
 	return 1;
 }
 
-

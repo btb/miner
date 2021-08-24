@@ -658,4 +658,3 @@ void ui_wprintf_at( UI_WINDOW * wnd, short x, short y, char * format, ... )
 	ui_mouse_show();
 
 }
-

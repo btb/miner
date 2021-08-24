@@ -175,4 +175,3 @@ void ui_radio_do( UI_GADGET_RADIO * radio, int keypress )
 }
 
 
-

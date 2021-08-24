@@ -20,4 +20,3 @@ cfile.obj: cfile.h conio.h ctype.h dos.h errno.h error.h fcntl.h i86.h io.h \
 	 mem.h stat.h stdarg.h stdio.h stdlib.h string.h time.h types.h
 
 test.obj: cfile.h cflib.h io.h stat.h stdio.h stdlib.h string.h types.h
-

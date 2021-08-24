@@ -1192,4 +1192,3 @@ void automap_build_edge_list()
 	mprintf( (0, "Automap used %d / %d edges\n", Num_edges, Max_edges  ));
 
 }
-

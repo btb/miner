@@ -74,4 +74,3 @@ instance_model_part(polymodel *po,int part_number,vms_angvec *anim_angles)
 
 }
 
-ÿ

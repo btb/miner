@@ -229,4 +229,3 @@ void gr_setcolor(int color)
 	gr_var_color = color;
 
 }
-

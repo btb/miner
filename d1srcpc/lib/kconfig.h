@@ -179,4 +179,3 @@ extern void kconfig_init_external_controls(int intno, int address);
 
 
 #endif
-

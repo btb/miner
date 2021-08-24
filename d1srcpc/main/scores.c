@@ -658,5 +658,3 @@ ReshowScores:
 	game_flush_inputs();
 	
 }
-
-

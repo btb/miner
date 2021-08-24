@@ -283,4 +283,3 @@ void read_flying_controls( object * obj )
 	}
 
 }
-

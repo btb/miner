@@ -1047,4 +1047,3 @@ void kill_stuck_objects(int wallnum)
 			Num_stuck_objects++;
 }
 
-

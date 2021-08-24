@@ -55,4 +55,3 @@ typedef struct mouse_info {
 
 int
 	 
-

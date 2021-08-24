@@ -502,4 +502,3 @@ void rls_stretch_scanline()
 		scale_dest_ptr += scale_final_pixel_count;
 	}
 }
-

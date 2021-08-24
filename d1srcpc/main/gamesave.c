@@ -2166,4 +2166,3 @@ void load_hostage_data(CFILE * fp,int do_read)
 }
 #endif	//HOSTAGE_FACES
 
-

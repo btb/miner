@@ -57,4 +57,3 @@ extern char destsat_cdpath[128];
 #endif
 
 
-

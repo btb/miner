@@ -222,4 +222,3 @@ gr_set_current_canvas(photo_canvas);
 
 }
 
-

@@ -250,4 +250,3 @@ extern void init_all_matcens(void);
 extern fix EnergyToCreateOneRobot;
 
 #endif
-

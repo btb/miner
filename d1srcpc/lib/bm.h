@@ -286,4 +286,3 @@ extern int First_multi_bitmap_num;
 
 
 #endif
-

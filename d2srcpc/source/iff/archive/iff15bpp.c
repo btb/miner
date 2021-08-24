@@ -89,4 +89,3 @@ line_done: ;
 	return new;
 }
 
-ÿ

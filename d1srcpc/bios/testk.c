@@ -110,4 +110,3 @@ void main (void)
 	key_close();
 	//timer_close();
 }
-

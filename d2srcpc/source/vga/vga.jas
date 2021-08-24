@@ -607,5 +607,3 @@ short vga_check_mode(short mode)
 	}
 	return 11;
 }
-
-

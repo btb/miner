@@ -99,4 +99,3 @@ extern fix timer_get_approx_seconds();		// Returns time since program started...
 
 #endif
 
-

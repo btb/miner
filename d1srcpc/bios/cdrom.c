@@ -81,4 +81,3 @@ void main()
 {
 	find_cdrom();
 }
-

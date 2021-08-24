@@ -126,4 +126,3 @@ void stop_effect(int effect_num);
 void restart_effect(int effect_num);
 
 #endif
-

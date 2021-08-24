@@ -200,4 +200,3 @@ void radar_render_frame()
 		gr_upixel( Blips[i].x, Blips[i].y );
 	}
 }
-

@@ -128,4 +128,3 @@ int gr_ucircle(fix xc1,fix yc1,fix r1)
 	}
 	return 0;
 }
-

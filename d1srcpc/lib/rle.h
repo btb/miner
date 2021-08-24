@@ -58,4 +58,3 @@ grs_bitmap * rle_expand_texture( grs_bitmap * bmp );
 rle_cache_flush();
 
 #endif
-

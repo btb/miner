@@ -280,4 +280,3 @@ void menubar_close()
 	}
 }
 
-

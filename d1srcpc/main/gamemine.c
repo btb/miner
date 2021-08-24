@@ -827,4 +827,3 @@ int load_mine_data_compiled_new(CFILE *LoadFile)
 }
 
 #endif
-

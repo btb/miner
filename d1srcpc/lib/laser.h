@@ -265,4 +265,3 @@ extern muzzle_info		Muzzle_data[MUZZLE_QUEUE_MAX];
 
 #endif
 
-

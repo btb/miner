@@ -42,4 +42,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern FILE * nfopen( char * name, char * mode );
 
 #endif
-

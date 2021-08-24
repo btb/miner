@@ -577,4 +577,3 @@ int do_powerup(object *obj)
 	return used;
 
 }
-

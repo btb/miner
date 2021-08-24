@@ -137,4 +137,3 @@ void gr_box(int left,int top,int right,int bot)
 	else
 		gr_ubox12( left, top, right, bot );
 }
-

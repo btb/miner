@@ -87,4 +87,3 @@ unsigned char gr_gpixel( grs_bitmap * bitmap, int x, int y )
 	}
 	return 0;
 }
-

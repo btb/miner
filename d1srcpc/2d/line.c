@@ -345,4 +345,3 @@ int gr_line(fix a1, fix b1, fix a2, fix b2)
 
 }
 
-

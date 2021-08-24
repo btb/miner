@@ -1274,4 +1274,3 @@ int gr_internal_string_clipped_m(int x, int y, char *s )
 	}
 	return 0;
 }
-

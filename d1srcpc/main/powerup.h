@@ -238,4 +238,3 @@ extern void do_megawow_powerup(int quantity);
 extern powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...);
 
 #endif
-

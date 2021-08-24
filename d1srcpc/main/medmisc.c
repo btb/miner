@@ -667,4 +667,3 @@ void set_view_target_from_segment(segment *sp)
 
 
 
-

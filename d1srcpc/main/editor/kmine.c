@@ -456,4 +456,3 @@ int LoadSituation(void)
 	return 1;
 }
 
-

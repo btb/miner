@@ -329,4 +329,3 @@ dont_draw_scanline:
 #undef CHECK_WINDOW
 #undef USE_UVS
 
-ÿ

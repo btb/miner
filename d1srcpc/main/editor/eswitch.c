@@ -630,4 +630,3 @@ void do_trigger_window()
 
 
 
-

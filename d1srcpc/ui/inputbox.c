@@ -189,4 +189,3 @@ void ui_inputbox_do( UI_GADGET_INPUTBOX * inputbox, int keypress )
 	ui_draw_inputbox( inputbox );
 
 }
-

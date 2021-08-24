@@ -117,4 +117,3 @@ ubyte * digicomp_get_data(int soundnum)
 
 
 
-

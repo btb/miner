@@ -2029,4 +2029,3 @@ int set_segment_depths(int start_seg, ubyte *segbuf)
 //--	set_segment_depths(0, Segbuf);
 //--}
 
-

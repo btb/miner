@@ -49,4 +49,3 @@ extern int NumTextures;
 extern bitmap_index Textures[MAX_TEXTURES];	// Array of all texture tmaps.
 
 #endif
-

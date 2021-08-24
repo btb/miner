@@ -351,4 +351,3 @@ int gr_init(int mode)
 
 	return 0;
 }
-

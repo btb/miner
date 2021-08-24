@@ -186,4 +186,3 @@ extern int digi_get_max_channels();
 extern int digi_lomem;
 
 #endif
-

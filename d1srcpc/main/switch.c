@@ -404,4 +404,3 @@ void triggers_frame_process()
 			Triggers[i].time -= FrameTime;
 }
 
-

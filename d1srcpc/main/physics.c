@@ -1281,4 +1281,3 @@ set_thrust_from_velocity(object *obj)
 
 }
 
-

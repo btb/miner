@@ -95,4 +95,3 @@ init_morphs();
 extern morph_data *find_morph_data(object *obj);
 
 #endif
-

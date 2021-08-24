@@ -316,5 +316,3 @@ const char *VesaGetErrorString( VesaErr_t err )
    return vesa_errors[err];
 }
 
-
-

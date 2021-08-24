@@ -1555,4 +1555,3 @@ void check_wall_validity(void)
 	}
 }
 
-

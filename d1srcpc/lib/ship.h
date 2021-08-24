@@ -48,4 +48,3 @@ void ship_energy_drain(fix damage);
 void ship_energy_empty();
 
 #endif
-

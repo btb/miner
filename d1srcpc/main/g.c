@@ -2237,4 +2237,3 @@ void update_laser_weapon_info(void)
 		old_weapon[0] = -1;
 }
 
-

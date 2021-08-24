@@ -221,4 +221,3 @@ int MacroMenu()
 	return 1;
 }
 
-

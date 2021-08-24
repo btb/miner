@@ -541,4 +541,3 @@ int load_mission_by_name(char *mission_name)
 	return 0;		//couldn't find mission
 }
 
-
