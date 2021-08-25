@@ -126,6 +126,25 @@ fix fixmul(fix a, fix b)
 {
 	return (fix)FixMul((Fixed)a, (Fixed)b);
 }
+#else
+fix fixmul(fix a, fix b)
+{
+	ulong t;
+	int sign;
+	ulong aa, bb;
+	ulong ah, al, bh, bl;
+
+	sign = ((a^b) < 0) ? -1 : 1;
+
+	aa = labs(a); bb = labs(b);
+
+	ah = aa>>16;  al = aa&0xffff;
+	bh = bb>>16;  bl = bb&0xffff;
+
+	t = ah*bl + bh*al;
+
+	return (fix)(sign * (((al * bl) >> 16) + ((ah * bh) << 16) + t));
+}
 #endif
 
 //divide a quad by a fix, returning a fix
