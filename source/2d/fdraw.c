@@ -27,6 +27,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "rle.h"
 #include "pcx.h"
 
+int descent_critical_error = 0;
+
 main(int argc, char * argv[] )
 {
 	int y;
