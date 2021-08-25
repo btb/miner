@@ -14,8 +14,13 @@ INSTALL_TARGS = 3d.lib 3d.h 3d.inc
 LIBS = 3d
 
 # What sources in the lib
-3d_SRCS = globvars.asm setup.asm matrix.asm points.asm draw.asm clipper.asm \
-	horizon.asm instance.asm rod.asm interp.asm
+3d_SRCS = $(if $(NO_ASSEMBLY), \
+	globvarc.c setupc.c matrixc.c pointsc.c drawc.c clipperc.c \
+	horizonc.c instancc.c rodc.c interpc.c \
+, \
+	globvars.asm setup.asm matrix.asm points.asm draw.asm clipper.asm \
+	horizon.asm instance.asm rod.asm interp.asm \
+)
 
 # What test programs to make
 TEST_PROGS = 3dtest
