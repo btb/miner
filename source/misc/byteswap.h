@@ -36,7 +36,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _BYTESWAP_
 #define _BYTESWAP_
 
-#include "dtypes.h"
+#include "types.h"
 
 extern ushort swapshort(ushort s);
 extern uint swapint(uint i);
