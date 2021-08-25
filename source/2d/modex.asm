@@ -77,9 +77,9 @@
 
 _DATA   SEGMENT BYTE PUBLIC USE32 'DATA'
 
-INCLUDE psmacros.inc
-INCLUDE TWEAK.INC
-INCLUDE VGAREGS.INC
+include psmacros.inc
+include tweak.inc
+include vgaregs.inc
 
 extd _gr_var_bwidth
 
