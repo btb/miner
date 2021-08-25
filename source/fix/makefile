@@ -17,7 +17,7 @@ LIBS = fix
 TEST_PROGS = fixtest
 
 # What source files for the lib
-fix_SRCS = fix.asm
+fix_SRCS = $(if $(NO_ASSEMBLY),fixc.c tables.c,fix.asm)
 
 # What source files and libs for the test programs
 fixtest_SRCS = fixtest.c
