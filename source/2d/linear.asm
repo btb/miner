@@ -90,7 +90,7 @@
 _DATA   SEGMENT BYTE PUBLIC USE32 'DATA'
 
 
-INCLUDE VGAREGS.INC
+include vgaregs.inc
 
 
 		; Put data here

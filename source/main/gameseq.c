@@ -320,7 +320,7 @@ static char rcsid[] = "$Id: gameseq.c 2.10 1995/12/19 15:48:25 john Exp $";
 #include "texmerge.h"
 #include "paging.h"
 #include "mission.h"
-#include "State.h"
+#include "state.h"
 #include "songs.h"
 #include "netmisc.h"
 
