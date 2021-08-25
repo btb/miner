@@ -75,7 +75,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _FIX_H
 #define _FIX_H
 
+#ifndef NASM
 #define USE_INLINE 1
+#endif
 
 #include "types.h"
 
