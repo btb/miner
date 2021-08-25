@@ -10,11 +10,8 @@
       "cacheVariables": {
         "CMAKE_INSTALL_PREFIX": "${sourceDir}/game",
         "CMAKE_SYSTEM_NAME": "DOS",
-        "CMAKE_ASM_MASM_COMPILER": "/usr/local/bin/jwasm",
+        "CMAKE_ASM_MASM_COMPILER": "jwasm",
         "CMAKE_BUILD_TYPE":"Release"
-      },
-      "environment": {
-        "WATCOM": "/usr/local/opt/open-watcom-v2"
       }
     },
     {
@@ -29,10 +26,7 @@
   "buildPresets": [
     {
       "name": "default",
-      "configurePreset": "default",
-      "environment": {
-        "WATCOM": "/usr/local/opt/open-watcom-v2"
-      }
+      "configurePreset": "default"
     }
   ]
 }
