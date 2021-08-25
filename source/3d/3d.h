@@ -11,14 +11,20 @@ AND AGREES TO THE TERMS HEREIN AND ACCEPTS THE SAME BY USE OF THIS FILE.
 COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 /*
- * $Source: f:/miner/source/3d/rcs/3d.h $
- * $Revision: 1.34 $
- * $Author: matt $
- * $Date: 1994/11/11 19:22:14 $
+ * $Source: Smoke:miner:source:3d::RCS:3d.h $
+ * $Revision: 1.2 $
+ * $Author: allender $
+ * $Date: 1995/09/14 14:08:58 $
  *
  * Header file for 3d library
  *
  * $Log: 3d.h $
+ * Revision 1.2  1995/09/14  14:08:58  allender
+ * return value for g3_draw_sphere
+ *
+ * Revision 1.1  1995/05/05  08:48:41  allender
+ * Initial revision
+ *
  * Revision 1.34  1994/11/11  19:22:14  matt
  * Added new function, g3_calc_point_depth()
  * 
@@ -147,6 +153,7 @@ typedef struct g3s_codes {
 #define PF_OVERFLOW		2	//can't project
 #define PF_TEMP_POINT	4	//created during clip
 #define PF_UVS				8	//has uv values set
+#define PF_LS				16	//has lighting values set
 
 //clipping codes flags
 
@@ -173,6 +180,11 @@ typedef struct g3s_point {
 	ubyte p3_flags;		//projected?
 	short p3_pad;			//keep structure longwork aligned
 } g3s_point;
+
+//macros to reference x,y,z elements of a 3d point
+#define p3_x p3_vec.x
+#define p3_y p3_vec.y
+#define p3_z p3_vec.z
 
 //An object, such as a robot
 typedef struct g3s_object {
@@ -287,7 +299,7 @@ bool g3_draw_tmap(int nv,g3s_point **pointlist,g3s_uvl *uvl_list,grs_bitmap *bm)
 
 //draw a sortof sphere - i.e., the 2d radius is proportional to the 3d
 //radius, but not to the distance from the eye
-g3_draw_sphere(g3s_point *pnt,fix rad);
+int g3_draw_sphere(g3s_point *pnt, fix rad);
 
 //@@//return ligting value for a point
 //@@fix g3_compute_lighting_value(g3s_point *rotated_point,fix normval);
@@ -306,17 +318,20 @@ bool g3_check_and_draw_tmap(int nv,g3s_point **pointlist,g3s_uvl *uvl_list,grs_b
 bool g3_draw_line(g3s_point *p0,g3s_point *p1);
 
 //draw a polygon that is always facing you
-g3_draw_rod_flat(g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width);
+//returns 1 if off screen, 0 if drew
+bool g3_draw_rod_flat(g3s_point *bot_point, fix bot_width, g3s_point *top_point, fix top_width);
 
 //draw a bitmap object that is always facing you
-g3_draw_rod_tmap(grs_bitmap *bitmap,g3s_point *bot_point,fix bot_width,g3s_point *top_point,fix top_width,fix light);
+//returns 1 if off screen, 0 if drew
+bool g3_draw_rod_tmap(grs_bitmap *bitmap, g3s_point *bot_point, fix bot_width, g3s_point *top_point, fix top_width, fix light);
 
 //draws a bitmap with the specified 3d width & height 
-g3_draw_bitmap(vms_vector *pos,fix width,fix height,grs_bitmap *bm);
+//returns 1 if off screen, 0 if drew
+bool g3_draw_bitmap(vms_vector *pos, fix width, fix height, grs_bitmap *bm);
 
 //specifies 2d drawing routines to use instead of defaults.  Passing
 //NULL for either or both restores defaults
-g3_set_special_render(void (*tmap_drawer)(), void (*flat_drawer)(), int (*line_drawer)());
+void g3_set_special_render(void (*tmap_drawer)(), void (*flat_drawer)(), int (*line_drawer)());
 
 //Object functions:
 
@@ -332,6 +347,9 @@ void g3_init_polygon_model(void *model_ptr);
 
 //alternate interpreter for morphing object
 bool g3_draw_morphing_model(void *model_ptr,grs_bitmap **model_bitmaps,vms_angvec *anim_angles,fix light,vms_vector *new_points);
+
+// routine to convert little to big endian in polygon model data
+void swap_polygon_model_data(ubyte *data);
 
 //Pragmas
 
