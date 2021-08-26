@@ -30,10 +30,10 @@ void main (void)
 
 	printf( "This tests the mouse interface. ESC exits.\n" );
 
-	dpmi_init();
+	dpmi_init(0);
 	key_init();
 	timer_init();
-	b = mouse_init();
+	b = mouse_init(0);
 	if (!b)  {
 		printf( "No mouse installed.\n" );
 		exit(1);

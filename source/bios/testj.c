@@ -21,7 +21,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "joy.h"
 #include "key.h"
 #include "mouse.h"
-#include "swift.h"
+// #include "swift.h"
 #include "fix.h"
 #include "timer.h"
 
