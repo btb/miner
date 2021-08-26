@@ -14,7 +14,7 @@ INSTALL_TARGS = ui.lib ui.h func.h
 LIBS = ui
 
 # What programs to make
-TEST_PROGS = testg
+TEST_PROGS = testgui
 
 # What source files for the lib
 ui_SRCS = ui.c mouse.c window.c uidraw.c button.c \
@@ -22,12 +22,13 @@ ui_SRCS = ui.c mouse.c window.c uidraw.c button.c \
 		  radio.c checkbox.c inputbox.c userbox.c menu.c \
 		  harderr.c file.c keytrap.c icon.c keypress.c \
 		  menubar.c keypad.c 
-#func.c #Couldn't find func.c - where are the functions??
+
+testgui_DIRS = ../main/editor
 
 # What source files and libs for the test programs
-testg_SRCS = testg.c
-testg_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib readfile.lib iff.lib func.lib cflib.lib cfile.lib
-testg_LFLAGS = option stack=50k
+testgui_SRCS = testg.c func.c
+testgui_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib iff.lib cflib.lib cfile.lib # readfile.lib func.lib
+testgui_LFLAGS = option stack=50k
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

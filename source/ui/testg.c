@@ -26,6 +26,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "mem.h"
 #include "cflib.h"
 
+int descent_critical_error = 0;
+
 char TempFilename[100];
 
 extern int ui_button_any_drawn;
@@ -191,8 +193,8 @@ void RestoreCurrent()
 void SaveTables( )
 {
 	WriteFile( "PALETTE.256", gr_palette, 256*3 );
-	AppendFile( "PALETTE.256", gr_inverse_table, 32*32*32 );
-	AppendFile( "PALETTE.256", gr_blend_table, 256*256 );
+	// AppendFile( "PALETTE.256", gr_inverse_table, 32*32*32 );
+	// AppendFile( "PALETTE.256", gr_blend_table, 256*256 );
 	AppendFile( "PALETTE.256", gr_fade_table, 256*16 );
 	MessageBox( -2, -2, 1, "Palette saved successfully.", "Ok" );
 	Changed = 0;
@@ -205,13 +207,14 @@ main()
 	minit();
 	gr_init( SM_320x200C );
 	gr_use_palette_table( "PALETTE.256");
+	gr_palette_load(gr_palette);
 	for (i=0; i<256; i++ )	{
 		gr_fade_table[15*256+i] = i;	// Make all fades start at the right color
 		for (j=0; j<16; j++ )
 			SavedFadeTable[256*j+i] = gr_fade_table[256*j+i];
 	}
 
-	my_font = gr_init_font( "xm4x5.fnt" );
+	my_font = gr_init_font( "font3-1.fnt" );
 	ui_init();
 
 	MainWindow = ui_open_window( 0 , 0, 320, 200, 0 );
