@@ -154,7 +154,7 @@ grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm, int x, int y, int w, int h )
 }
 
 
-gr_free_bitmap(grs_bitmap *bm )
+void gr_free_bitmap(grs_bitmap *bm)
 {
 	if (bm->bm_data!=NULL)	
     free(bm->bm_data);
@@ -163,7 +163,7 @@ gr_free_bitmap(grs_bitmap *bm )
     free(bm);
 }
 
-gr_free_sub_bitmap(grs_bitmap *bm )
+void gr_free_sub_bitmap(grs_bitmap *bm)
 {
 	if (bm!=NULL)
     free(bm);
