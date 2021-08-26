@@ -28,4 +28,4 @@ include $(MINER)/init/makefile.def
 
 $(OBJDIR)/div0.obj: div0.asm
 $(OBJDIR)/testd.obj: testd.c div0.h
-$(OBJDIR)/testda.obj: testda.c
+$(OBJDIR)/testda.obj: testda.asm
