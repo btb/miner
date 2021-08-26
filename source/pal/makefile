@@ -4,7 +4,7 @@
 # $Author: matt $
 # $Date: 1993/07/21 20:12:19 $
 #
-# Makefile for bios functions
+# Makefile for pal functions
 #
 
 # What to install, and where to install it
@@ -16,9 +16,11 @@ LIBS =
 # What test programs to make
 TEST_PROGS = testp
 
+testp_DIRS = ../main/editor
+
 # What source files and libs for the test programs
-testp_SRCS = testp.c iff.c iff15bpp.c
-testp_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib bm.lib iff.lib readfile.lib
+testp_SRCS = testp.c iff.c iff15bpp.c func.c
+testp_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib iff.lib cfile.lib #readfile.lib #bm.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

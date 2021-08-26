@@ -13,6 +13,7 @@ INSTALL_TARGS = mem.lib mem.h
 # What libs to make
 LIBS = mem
 
+# What source files for the lib
 mem_SRCS = mem.c
 
 #rules and targets common to all Miner makefiles

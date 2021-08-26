@@ -26,8 +26,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "ui.h"
 #include "key.h"
 
+int descent_critical_error = 0;
 
-extern void gr_pal_setblock(int start, int stop, void * colors );
+extern void gr_pal_setblock(int start, int stop, unsigned char * colors );
 
 typedef unsigned char   BYTE;
 typedef unsigned short  WORD;
@@ -908,7 +909,7 @@ void DoInterface()
 	ColRegs[255].Blue  = 30;
 	ColRegs[255].Green = 0;
 
-	gr_set_palette(0, 256, (BYTE *)ColRegs );
+	// gr_set_palette(0, 256, (BYTE *)ColRegs );
 
 
 	gr_setcolor(255);
@@ -925,7 +926,7 @@ void DoInterface()
 	MenuItems[NumItems1++] = strdup( "Show palette" );
 	MenuItems[NumItems1++] = strdup( "Quit program" );
 
-	gr_pal_fade_in( grd_curscreen->pal );
+	// gr_pal_fade_in( grd_curscreen->pal );
 
 	menu1 = 2;
 

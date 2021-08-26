@@ -15,21 +15,13 @@ LIBS = cflib
 
 # What source files for the lib
 cflib_SRCS = lzw.c bitio.c library.c 
-#cf.obj
 
 # What programs to make
 PROGS = pslib
 
-# What test programs to make
-TEST_PROGS = cftest cftest2
-
-# What source files and libs for the test programs
+# What source files and libs for the programs
 pslib_SRCS = pslib.c
 pslib_LIBS = cflib.lib misc.lib mem.lib io.lib
-cftest_SRCS = cftest.c
-cftest_LIBS = cflib.lib misc.lib mem.lib io.lib
-cftest2_SRCS = cftest2.c
-cftest2_LIBS = cflib.lib misc.lib mem.lib io.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
