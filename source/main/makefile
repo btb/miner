@@ -2,6 +2,12 @@
 # Makefile for DESCENT execuable
 #
 
+# What programs to make
+PROGS = findtext
+
+# What source files and libs for the programs
+findtext_SRCS = findtext.c
+
 # Where to find libraries we didn't write
 EXTLIB_DIR = $(MINER)/extlib
 EXTLIBS = $(if $(USE_SOS),$(EXTLIB_DIR)/sos,)
