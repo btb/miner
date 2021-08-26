@@ -13,7 +13,7 @@ INSTALL_TARGS = ui.lib ui.h func.h
 # What libs to make
 LIBS = ui
 
-# What programs to make
+# What test programs to make
 TEST_PROGS = testgui
 
 # What source files for the lib

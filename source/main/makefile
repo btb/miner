@@ -8,6 +8,12 @@ PROGS = findtext
 # What source files and libs for the programs
 findtext_SRCS = findtext.c
 
+# What test programs to make
+TEST_PROGS = t
+
+# What source files and libs for the test programs
+t_SRCS = t.c
+
 # Where to find libraries we didn't write
 EXTLIB_DIR = $(MINER)/extlib
 EXTLIBS = $(if $(USE_SOS),$(EXTLIB_DIR)/sos,)
@@ -27,13 +33,13 @@ descent_SRCS = inferno.c game.c gauges.c mglobal.c \
 			 gameseg.c wall.c collide.c lighting.c \
 			 robot.c morph.c vclip.c weapon.c fvi.c newdemo.c titles.c \
 			 vfx.c gameseq.c controls.c automap.c text.c \
-			 network.c newmenu.c netmisc.c victor.c\
+			 network.c newmenu.c netmisc.c victor.c \
 			 gamefont.c joydefs.c hud.c playsave.c \
-			 endlevel.c terrain.c kconfig.c modem.c  \
-			 multi.c cntrlcen.c credits.c config.c soscodec.c kmatrix.c	\
-			 paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c nocomlib.c slew.c dumpmine.c \
+			 endlevel.c terrain.c kconfig.c modem.c \
+			 multi.c cntrlcen.c credits.c config.c kmatrix.c \
+			 paging.c mission.c iglasses.c songs.c bmread.c state.c \
+			 multibot.c nocomlib.c slew.c dumpmine.c \
 			 $(if $(USE_SOS),digi.c,nodigi.c)
-#demo.c garage.c radar.c coindev.c serial.c vfxread.c victor.c
 
 descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
