@@ -22,13 +22,13 @@ target_sources(demo PRIVATE demo.c)
 target_link_libraries(demo io)
 
 target_sources(testj PRIVATE testj.c)
-target_link_libraries(testj io)
+target_link_libraries(testj io fix)
 
 target_sources(testk PRIVATE testk.c)
 target_link_libraries(testk io)
 
 target_sources(testm PRIVATE testm.c)
-target_link_libraries(testm io)
+target_link_libraries(testm io fix)
 
 target_sources(testmem PRIVATE testmem.c)
 target_link_libraries(testmem io)

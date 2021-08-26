@@ -22,11 +22,13 @@ LIBS = texmap
 #texmap_SRCS = ntmap.c tmapsky.c tmapv.c tmapflat.c tmap_per.asm tmap_p2.asm tmap_lin.asm tmap_ll.asm tmap_kl.asm\
 #		tmap_ld.asm tmap_flt.asm tmap_sky.asm tmap_skv.asm tmap_fl1.asm tmapz.c tmap_z.asm tmapfade.asm tmap_mul.asm
 
-texmap_SRCS = ntmap.c tmapflat.c $(if $(NO_ASSEMBLY), \
-	scanline.c \
-, \
-	tmap_per.asm tmap_lin.asm tmap_ll.asm tmap_flt.asm tmapfade.asm tmap_fl1.asm \
-)
+texmap_SRCS = ntmap.c tmapflat.c \
+	$(if $(NO_ASSEMBLY), \
+		scanline.c \
+	, \
+		tmap_per.asm tmap_lin.asm tmap_ll.asm tmap_flt.asm tmapfade.asm \
+		tmap_fl1.asm \
+	)
 
 texmap_DIRS = ../main
 

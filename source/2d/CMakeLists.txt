@@ -21,11 +21,11 @@ target_sources(gr PRIVATE
 
 # What source files and libs for the programs
 target_sources(fdraw PRIVATE fdraw.c)
-target_link_libraries(fdraw io gr misc cfile fix)
+target_link_libraries(fdraw io gr misc cfile fix mem)
 
 # What object files and libs for the test programs
 target_sources(testg PRIVATE testg.c tmapbits.c)
-target_link_libraries(testg io gr misc mem iff cfile)
+target_link_libraries(testg io gr misc mem iff cfile fix)
 
 target_sources(vesatest PRIVATE vesatest.c)
-target_link_libraries(vesatest io gr misc mem cfile)
+target_link_libraries(vesatest io gr misc mem cfile fix)
