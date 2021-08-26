@@ -24,7 +24,7 @@ void main (void)
 {
 	int i,c, j, j1;
 
-	short jx, jy, jb;
+	int jx, jy, jb;
 
 	key_init();
 	keyd_buffer_type = 1;
@@ -35,19 +35,19 @@ void main (void)
 	mopen( 3,13,1,37,10, "Mouse" );
 	mopen( 4,13,41,37,10,"Instructions" );
 
-	mprintf( 4, "F1 - turn off buffering.\n" );
-	mprintf( 4, "F2 - turn on ASCII buffering.\n" );
-	mprintf( 4, "F3 - turn on scan code buffering.\n" );
-	mprintf( 4, "F4 - flush keyboard.\n" );
-	mprintf( 4, "F5 - turn repeat off.\n");
-	mprintf( 4, "F6 - turn repeat on.\n");
-	mprintf( 4, "F7 - do an INT 3.\n" );
-	mprintf( 4, "F10 - to display some boxes.\n" );
-	//mprintf( 4, "Arrows - example unbuffered.\n");
-	//mprintf( 4, "ESC - exit program.\n" );
+	mprintf(( 4, "F1 - turn off buffering.\n" ));
+	mprintf(( 4, "F2 - turn on ASCII buffering.\n" ));
+	mprintf(( 4, "F3 - turn on scan code buffering.\n" ));
+	mprintf(( 4, "F4 - flush keyboard.\n" ));
+	mprintf(( 4, "F5 - turn repeat off.\n"));
+	mprintf(( 4, "F6 - turn repeat on.\n"));
+	mprintf(( 4, "F7 - do an INT 3.\n" ));
+	mprintf(( 4, "F10 - to display some boxes.\n" ));
+	//mprintf(( 4, "Arrows - example unbuffered.\n"));
+	//mprintf(( 4, "ESC - exit program.\n" ));
 
 	if ( (j1=joy_init())==0 )   {
-		mprintf( 2, "Not installed.\n" );
+		mprintf(( 2, "Not installed.\n" ));
 	}
 
 
@@ -56,11 +56,11 @@ void main (void)
 		if (j1) {
 			joy_get_pos( &jx, &jy );
 			jb = joy_get_btns();
-			mprintf( 2,"(%d,%d)\tB1:%d\tB2:%d\n", jx, jy, jb&1, jb&2 );
+			mprintf(( 2,"(%d,%d)\tB1:%d\tB2:%d\n", jx, jy, jb&1, jb&2 ));
 		}
 
 		//ms_read();
-		//mprintf( 3, "(%d,%d)\tB1:%d\tB2:%d\tB3:%d\n", (int)msd_deltax, (int)msd_deltay, 1&msd_button_status, 2&msd_button_status, 4&msd_button_status);
+		//mprintf(( 3, "(%d,%d)\tB1:%d\tB2:%d\tB3:%d\n", (int)msd_deltax, (int)msd_deltay, 1&msd_button_status, 2&msd_button_status, 4&msd_button_status));
 
 		//mDumpX(1, j1);
 
@@ -89,8 +89,8 @@ void main (void)
 		if (keyd_pressed[KEY_F6])
 			keyd_repeat = 1;
 
-		if (keyd_pressed[KEY_F7] )
-			key_debug();
+//		if (keyd_pressed[KEY_F7] )
+//			key_debug();
 
 		if (keyd_pressed[KEY_UP])
 			mputc( 1, 24 );
@@ -114,7 +114,7 @@ void main (void)
 			}
 			else
 			{
-				mprintf( 1, "[%2X]\n", c );
+				mprintf(( 1, "[%2X]\n", c ));
 
 			}
 		}

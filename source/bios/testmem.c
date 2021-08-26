@@ -20,6 +20,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 void main (void)
 {
 
-	dpmi_init();
+	dpmi_init(1);
 
 }

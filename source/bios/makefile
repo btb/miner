@@ -14,8 +14,7 @@ INSTALL_TARGS = io.lib joy.h key.h mono.h mouse.h timer.h dpmi.h ipx.h #swift.h
 LIBS = io
 
 # What test programs to make
-TEST_PROGS = demo
-# testj testk testm testms
+TEST_PROGS = demo testj testk testm testmem testms testt
 
 # What source files for the lib
 io_SRCS = key.c joy.asm mouse.c timer.asm mono.c joyc.c dpmi.c ipx.c
@@ -23,6 +22,24 @@ io_SRCS = key.c joy.asm mouse.c timer.asm mono.c joyc.c dpmi.c ipx.c
 # What source files and libs for the test programs
 demo_SRCS = demo.c
 demo_LIBS = io.lib 
+
+testj_SRCS = testj.c
+testj_LIBS = io.lib
+
+testk_SRCS = testk.c
+testk_LIBS = io.lib
+
+testm_SRCS = testm.c
+testm_LIBS = io.lib
+
+testmem_SRCS = testmem.c
+testmem_LIBS = io.lib
+
+testms_SRCS = testms.c
+testms_LIBS = io.lib
+
+testt_SRCS = testt.c
+testt_LIBS = io.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
