@@ -42,6 +42,8 @@ static char rcsid[] = "$Id: vesatest.c 1.3 1993/12/21 11:40:47 john Exp $";
 
 #include "gr.h"
 
+int descent_critical_error = 0;
+
 char palette[256*3];
 extern void gr_pal_setblock( int start, int number, unsigned char * pal );
 
@@ -117,7 +119,8 @@ main()
 
 	getch();
 
-	gr_pal_setblock( 0, 256, palette );
+	// gr_pal_setblock( 0, 256, palette );
+	gr_palette_load(palette);
 
 	gr_setcolor( 0 );
 	gr_urect( 0, 0, grd_curcanv->cv_bitmap.bm_w-1, grd_curcanv->cv_bitmap.bm_h-1 );
