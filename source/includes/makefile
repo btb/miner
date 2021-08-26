@@ -10,12 +10,5 @@
 # What to install
 INSTALL_TARGS = types.h types.inc psmacros.inc
 
-# What test programs to make
-TEST_PROGS = test
-
-# What source files and libs for the test programs
-test_SRCS = test.c mactest.c
-test_LIBS = io.lib
-
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

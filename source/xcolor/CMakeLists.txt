@@ -1,20 +1,11 @@
 #
-# Master makefile for Miner source
-#
-# Makes all the executable by visiting subdirs and making there
+# Makefile for xcolor
 #
 
-CLEAN_TARGS = $(OBJDIR)\*.obj
+# What programs to make
+add_executable(xcolor)
 
-PROGS = xcolor
-
+# What source files and libs for the programs
 target_sources(xcolor PRIVATE xcolor.c )
-
-target_link_libraries(xcolor gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib)
-
-XCOLOR_LFLAGS = option stack=150k
-
-xcolor.exe: xcolor.obj
-	wl386 xcolor.c 
-xcolor.obj: xcolor.c
-	wcc386 xcolor.c
+target_link_libraries(xcolor gr misc mem iff ui io cflib cfile)
+target_link_options(xcolor PRIVATE option stack=150k)

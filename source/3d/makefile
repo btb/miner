@@ -23,11 +23,11 @@ LIBS = 3d
 )
 
 # What test programs to make
-TEST_PROGS = 3dtest
+# TEST_PROGS = 3dtest
 
 # What source files and libs for the test programs
-3dtest_SRCS = 3dtest.c segment.c trakball.c
-3dtest_LIBS = 3d.lib vecmat.lib gr.lib io.lib fix.lib div0.lib texmap.lib misc.lib bm.lib
+# 3dtest_SRCS = 3dtest.c segment.c trakball.c
+# 3dtest_LIBS = 3d.lib vecmat.lib gr.lib io.lib fix.lib div0.lib texmap.lib misc.lib bm.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

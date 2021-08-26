@@ -17,11 +17,11 @@ LIBS = vecmat
 vecmat_SRCS = $(if $(NO_ASSEMBLY),vecmatc.c,vecmat.asm)
 
 # What test programs to make
-TEST_PROGS = vectest 
+# TEST_PROGS = vectest 
 
 # What source files and libs for the test programs
-vectest_SRCS = vectest.c
-vectest_LIBS = vecmat.lib io.lib fix.lib
+# vectest_SRCS = vectest.c
+# vectest_LIBS = vecmat.lib io.lib fix.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

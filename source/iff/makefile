@@ -17,14 +17,14 @@ LIBS = iff
 iff_SRCS = iff.c
 
 # What test programs to make
-TEST_PROGS = ifftest ifftestv
+# TEST_PROGS = ifftest ifftestv
 
 # What source files and libs for the test programs
-ifftest_SRCS = ifftest.c
-ifftest_LIBS = iff.lib gr.lib mem.lib bm.lib misc.lib cflib.lib cfile.lib
+# ifftest_SRCS = ifftest.c
+# ifftest_LIBS = iff.lib gr.lib mem.lib bm.lib misc.lib cflib.lib cfile.lib
 
-ifftestv_SRCS = ifftestv.c
-ifftestv_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
+# ifftestv_SRCS = ifftestv.c
+# ifftestv_LIBS = iff.lib vesa.lib cflib.lib cfile.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

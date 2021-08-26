@@ -1,5 +1,5 @@
 #
-# Makefile for bios functions
+# Makefile for pal functions
 #
 
 # What test programs to make

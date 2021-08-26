@@ -17,14 +17,14 @@ LIBS = misc
 misc_SRCS = parsarg.c error.c
 
 # What test programs to make
-TEST_PROGS = errtest parstest
+# TEST_PROGS = errtest parstest
 
 # What source files and libs for the test programs
-parstest_SRCS = parstest.c
-parstest_LIBS = misc.lib
+# parstest_SRCS = parstest.c
+# parstest_LIBS = misc.lib
 
-errtest_SRCS = errtest.c
-errtest_LIBS = misc.lib
+# errtest_SRCS = errtest.c
+# errtest_LIBS = misc.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def
