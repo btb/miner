@@ -41,7 +41,7 @@ set(DESCENT_SRCS inferno.c game.c gauges.c mglobal.c
 	network.c newmenu.c netmisc.c victor.c
 	gamefont.c joydefs.c hud.c playsave.c
 	endlevel.c terrain.c kconfig.c modem.c
-	multi.c cntrlcen.c credits.c config.c soscodec.asm kmatrix.c
+	multi.c cntrlcen.c credits.c config.c kmatrix.c
 	paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c nocomlib.c
 	$<$<NOT:$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>>>:slew.c>
 	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:dumpmine.c>)
