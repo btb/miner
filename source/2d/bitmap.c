@@ -196,6 +196,7 @@ void gr_free_sub_bitmap(grs_bitmap *bm)
 //NO_INVERSE_TABLE 	"dec	ecx"					\
 //NO_INVERSE_TABLE 	"jne	again2x"				\
 
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
 #pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
 "again_ddn:"							\
@@ -207,6 +208,18 @@ void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count 
 	"inc	esi"					\
 	"dec	ecx"					\
 	"jne	again_ddn"
+#else
+void decode_data_asm(ubyte *data, int num_pixels, ubyte *colormap, int *count)
+{
+	int i;
+	
+	for (i = 0; i < num_pixels; i++) {
+		count[*data]++;
+		*data = colormap[*data];
+		data++;
+	}
+}
+#endif
 
 void gr_remap_bitmap( grs_bitmap * bmp, ubyte * palette, int transparent_color, int super_transparent_color )
 {
