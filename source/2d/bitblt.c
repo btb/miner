@@ -115,6 +115,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "grdef.h"
 #include "rle.h"
 #include "mono.h"
+#include "error.h"
 
 int gr_bitblt_dest_step_shift = 0;
 int gr_bitblt_double = 0;
@@ -124,6 +125,7 @@ extern void gr_vesa_bitmap( grs_bitmap * source, grs_bitmap * dest, int x, int y
 
 // This code aligns edi so that the destination is aligned to a dword boundry before rep movsd
 void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_linear_movsd parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx] = \
 " cld "					\
 " mov		ebx, ecx	"	\
@@ -141,8 +143,56 @@ void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels );
 " mov		ecx, ebx"	\
 " and 	ecx, 11b"	\
 " rep 	movsb";
+#else
+
+#define THRESHOLD	8
+
+#ifdef RELEASE
+#define test_byteblit	0
+#else
+ubyte test_byteblit = 0;
+#endif
+
+void gr_linear_movsd(ubyte * src, ubyte * dest, int num_pixels )	
+{
+	int i;
+	uint n, r;
+	double *d, *s;
+	ubyte *d1, *s1;
+
+// check to see if we are starting on an even byte boundry
+// if not, move appropriate number of bytes to even
+// 8 byte boundry
+
+	if ( (num_pixels < THRESHOLD) || (((int)src & 0x7) != ((int)dest & 0x7)) || test_byteblit ) {
+		for (i = 0; i < num_pixels; i++)
+			*dest++ = *src++;
+		return;
+	}
+
+	i = 0;
+	if ((r = (int)src & 0x7)) {
+		for (i = 0; i < 8 - r; i++)
+			*dest++ = *src++;
+	}
+	num_pixels -= i;
+
+	n = num_pixels / 8;
+	r = num_pixels % 8;
+	s = (double *)src;
+	d = (double *)dest;
+	for (i = 0; i < n; i++)
+		*d++ = *s++;
+	s1 = (ubyte *)s;
+	d1 = (ubyte *)d;
+	for (i = 0; i < r; i++)
+		*d1++ = *s1++;
+}
+#endif
+
 
 void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_linear_rep_movsdm parm [esi] [edi] [ecx] modify exact [ecx esi edi eax] = \
 "nextpixel:"					\
 	"mov	al,[esi]"			\
@@ -154,8 +204,22 @@ void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels );
 	"inc	edi"					\
 	"dec	ecx"					\
 	"jne	nextpixel";
+#else
+void gr_linear_rep_movsdm(ubyte * src, ubyte * dest, int num_pixels )	
+{
+	int i;
+	for (i=0; i<num_pixels; i++ )	{
+		if (*src != TRANSPARENCY_COLOR )
+			*dest = *src;
+		dest++;
+		src++;	
+	}
+}
+#endif
+
 
 void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_linear_rep_movsdm_faded parm [esi] [edi] [ecx] [ebx] modify exact [ecx esi edi eax ebx] = \
 "  xor eax, eax"	\
 "  mov ah, bl"  \
@@ -170,9 +234,29 @@ void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte
 	"inc	edi"					\
 	"dec	ecx"					\
 	"jne	nextpixel";
+#else
+void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, int num_pixels, ubyte fade_value )
+{
+	int i;
+	ubyte source;
+	ubyte *fade_base;
+	
+	fade_base = gr_fade_table + (fade_value * 256);
+	
+	for (i=num_pixels; i != 0; i-- )
+	{
+		source = *src;
+		if (source != (ubyte)TRANSPARENCY_COLOR )
+			*dest = *(fade_base + source);
+		dest++;
+		src++;	
+	}
+}
+#endif
 
 
 void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_linear_rep_movsd_2x parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx] = \
 	"shr	ecx, 1"				\
 	"jnc	nextpixel"			\
@@ -192,10 +276,43 @@ void gr_linear_rep_movsd_2x(ubyte * src, ubyte * dest, int num_dest_pixels );
 	"dec	ecx"					\
 	"jne	nextpixel"			\
 "done:"
+#else
+void gr_linear_rep_movsd_2x(ubyte *src, ubyte *dest, int num_pixels)
+{
+	double	*d = (double *)dest;
+	uint	*s = (uint *)src;
+	uint	doubletemp[2];
+	uint	temp, work;
+	int		i;
 
+	if (num_pixels & 0x3) {					// not a multiple of 4?  do single pixel at a time
+		for (i=0; i<num_pixels; i++) {
+			*dest++ = *src;
+			*dest++ = *src++;
+		}
+		return;
+	}
+
+	for (i = 0; i < num_pixels / 4; i++) {
+		temp = work = *s++;
+
+		temp = ((temp >> 8) & 0x00FFFF00) | (temp & 0xFF0000FF); // 0xABCDEFGH -> 0xABABCDEF
+		temp = ((temp >> 8) & 0x000000FF) | (temp & 0xFFFFFF00); // 0xABABCDEF -> 0xABABCDCD
+		doubletemp[0] = temp;
+
+		work = ((work << 8) & 0x00FFFF00) | (work & 0xFF0000FF); // 0xABCDEFGH -> 0xABEFGHGH
+		work = ((work << 8) & 0xFF000000) | (work & 0x00FFFFFF); // 0xABEFGHGH -> 0xEFEFGHGH
+		doubletemp[1] = work;
+
+		*d = *(double *) &(doubletemp[0]);
+		d++;
+	}
+}
+#endif
 
 
 void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux modex_copy_column parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
 "nextpixel:"							\
 	"mov	al,[esi]"			\
@@ -204,8 +321,21 @@ void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsiz
 	"add	edi, edx"	\
 	"dec	ecx"			\
 	"jne	nextpixel"	
+#else
+void modex_copy_column(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+{
+	src = src;
+	dest = dest;
+	num_pixels = num_pixels;
+	src_rowsize = src_rowsize;
+	dest_rowsize = dest_rowsize;
+	Int3();
+}
+#endif
+
 
 void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux modex_copy_column_m parm [esi] [edi] [ecx] [ebx] [edx] modify exact [ecx esi edi] = \
 "nextpixel:"							\
 	"mov	al,[esi]"			\
@@ -217,6 +347,17 @@ void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rows
 	"add	edi, edx"	\
 	"dec	ecx"			\
 	"jne	nextpixel"	
+#else
+void modex_copy_column_m(ubyte * src, ubyte * dest, int num_pixels, int src_rowsize, int dest_rowsize )
+{
+	src = src;
+	dest = dest;
+	num_pixels = num_pixels;
+	src_rowsize = src_rowsize;
+	dest_rowsize = dest_rowsize;
+	Int3();
+}
+#endif
 
 
 void gr_ubitmap00( int x, int y, grs_bitmap *bm )
@@ -287,6 +428,7 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 //"aligned4:							"	\
 
 void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux modex_copy_scanline parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \
 "		mov	ebx, ecx				"	\
 "		and	ebx, 11b				"	\
@@ -315,8 +457,19 @@ void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels );
 "		dec	ebx					"	\
 "		jne	finishend			"	\
 "done2:								";
+#else
+void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels )
+{
+	src = src;
+	dest = dest;
+	npixels = npixels;
+	Int3();
+}
+#endif
+
 
 void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux modex_copy_scanline_2x parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \
 "		mov	ebx, ecx				"	\
 "		and	ebx, 11b				"	\
@@ -345,7 +498,15 @@ void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels );
 "		dec	ebx					"	\
 "		jne	finishend			"	\
 "done2:								";
-
+#else
+void modex_copy_scanline_2x( ubyte * src, ubyte * dest, int npixels )
+{
+	src = src;
+	dest = dest;
+	npixels = npixels;
+	Int3();
+}
+#endif
 
 
 // From Linear to ModeX
@@ -452,7 +613,7 @@ void gr_ubitmap012m( int x, int y, grs_bitmap *bm )
 
 	for (y1=y; y1 < (y+bm->bm_h); y1++ )    {
 		for (x1=x; x1 < (x+bm->bm_w); x1++ )    {
-			if ( *src != 255 )	{
+			if ( *src != TRANSPARENCY_COLOR )	{
 				gr_setcolor( *src );
 				gr_upixel( x1, y1 );
 			}
@@ -482,7 +643,7 @@ void gr_ubitmapGENERICm(int x, int y, grs_bitmap * bm)
 	for (y1=0; y1 < bm->bm_h; y1++ )    {
 		for (x1=0; x1 < bm->bm_w; x1++ )    {
 			c = gr_gpixel(bm,x1,y1);
-			if ( c != 255 )	{
+			if ( c != TRANSPARENCY_COLOR )	{
 				gr_setcolor( c );
 				gr_upixel( x+x1, y+y1 );
 			}
@@ -850,7 +1011,7 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 
 	for (y1=0; y1 < h; y1++ )    {
 		for (x1=0; x1 < w; x1++ )    {
-			if ((c=gr_gpixel(src,sx+x1,sy+y1))!=255)
+			if ((c=gr_gpixel(src,sx+x1,sy+y1))!=TRANSPARENCY_COLOR)
 				gr_bm_pixel( dest, dx+x1, dy+y1,c  );
 		}
 	}

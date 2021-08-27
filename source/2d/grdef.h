@@ -49,6 +49,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
+#ifndef NASM
+#define USE_2D_ASM 1
+#endif
+
 extern void gr_sync_display(void);
 extern int  gr_modex_setmode(short mode);
 extern void gr_modex_setplane(short plane);

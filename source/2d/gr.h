@@ -162,6 +162,14 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "types.h"
 #include "fix.h"
 
+#ifdef MACINTOSH
+#define SWAP_0_255			1			// swap black and white
+#define TRANSPARENCY_COLOR	0			// palette entry of transparency color -- 0 on the mac
+#else
+#define SWAP_0_255			0			// no swapping for PC people
+#define TRANSPARENCY_COLOR	255			// palette entry of transparency color -- 255 on the PC
+#endif
+
 #define GR_FADE_LEVELS 34
 #define GR_ACTUAL_FADE_LEVELS 32
 
@@ -363,10 +371,10 @@ grs_bitmap *gr_create_bitmap_raw(int w, int h, unsigned char * raw_data );
 grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm,int x,int y,int w, int h);
 
 // Free the bitmap and its pixel data
-gr_free_bitmap(grs_bitmap *bm);
+void gr_free_bitmap(grs_bitmap *bm);
 
 // Free the bitmap, but not the pixel data buffer
-gr_free_sub_bitmap(grs_bitmap *bm);
+void gr_free_sub_bitmap(grs_bitmap *bm);
 
 void gr_bm_pixel( grs_bitmap * bm, int x, int y, unsigned char color );
 void gr_bm_upixel( grs_bitmap * bm, int x, int y, unsigned char color );

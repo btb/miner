@@ -52,6 +52,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 int Gr_scanline_darkening_level = GR_FADE_LEVELS;
 
 void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_linear_darken parm [edi] [eax] [ecx] [edx] modify exact [eax ebx ecx edx edi] = \
 "					xor	ebx, ebx					"	\
 "					mov	bh, al					"  \
@@ -61,6 +62,17 @@ void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fad
 "					inc	edi						"	\
 "					dec	ecx						"	\
 "					jnz	gld_loop					"	
+#else
+void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fade_table )
+{
+	int i;
+
+	for (i=0; i<count; i++ )	{
+		*dest = fade_table[*dest+(darkening_level*256)];
+		dest++;
+	}
+}
+#endif
 
 void gr_uscanline( int x1, int x2, int y )
 {
