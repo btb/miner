@@ -991,6 +991,7 @@ void gr_close_font( grs_font * font )
 }
 
 void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux decode_data_asm parm [esi] [ecx] [edi] [ebx] modify exact [esi edi eax ebx ecx] = \
 "again_ddn:"							\
 	"xor	eax,eax"				\
@@ -1001,6 +1002,7 @@ void decode_data_asm(ubyte *data, int num_pixels, ubyte * colormap, int * count 
 	"inc	esi"					\
 	"dec	ecx"					\
 	"jne	again_ddn"
+#endif
 
 grs_font * gr_init_font( char * fontname )
 {

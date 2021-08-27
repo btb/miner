@@ -78,8 +78,6 @@ static char rcsid[] = "$Id: scale.c 1.12 1995/03/14 15:14:11 john Exp $";
 #include "error.h"
 #include "rle.h"
 
-#define TRANSPARENCY_COLOR 255;
-
 static int Transparency_color = TRANSPARENCY_COLOR;
 
 extern char scale_trans_color;
@@ -97,7 +95,7 @@ extern void rls_stretch_scanline_asm();
 extern void scale_do_cc_scanline();
 extern void rls_do_cc_setup_asm();
 
-void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta );
+void rls_stretch_scanline(void);
 void rls_stretch_scanline_setup( int XDelta, int YDelta );
 
 void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
@@ -122,6 +120,7 @@ void scale_row_c( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
 // edx = du
 
 void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux scale_row_asm_transparent parm [esi] [edi] [ecx] [ebx] [edx] modify exact [edi eax ebx ecx] = \
 "newpixel:	mov	eax, ebx			" \
 "				shr	eax, 16			" \
@@ -133,8 +132,81 @@ void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, 
 "				inc	edi				" \
 "				dec	ecx				" \
 "				jne	newpixel			"
+#else
+void scale_row_asm_transparent( ubyte * sbits, ubyte * dbits, int width, fix u, fix du )
+{
+#if 0
+	int i;
+	ubyte c;
+
+	for (i=0; i<width; i++ )	{
+		c = sbits[ u >> 16 ];
+		if ( c!=TRANSPARENCY_COLOR) 
+			*dbits = c;
+		dbits++;
+		u += du;
+	}
+#endif
+	int i;
+	ubyte c;
+	ubyte *dbits_end = &dbits[width-1];
+
+	if ( du < F1_0 )	{
+		// Scaling up.
+		fix next_u;
+		int next_u_int;
+
+		next_u_int = f2i(u)+1;
+		c = sbits[ next_u_int ];
+		next_u = i2f(next_u_int);
+		if ( c != TRANSPARENCY_COLOR ) goto NonTransparent;
+
+Transparent:
+		while (1)	{
+			dbits++;
+			if ( dbits > dbits_end ) return;
+			u += du;
+			if ( u > next_u )	{
+				next_u_int = f2i(u)+1;
+				c = sbits[ next_u_int ];
+				next_u = i2f(next_u_int);
+				if ( c != TRANSPARENCY_COLOR ) goto NonTransparent;
+			}
+		}
+		return;
+
+NonTransparent:
+		while (1)	{
+			*dbits++ = c;
+			if ( dbits > dbits_end ) return;
+			u += du;
+			if ( u > next_u )	{
+				next_u_int = f2i(u)+1;
+				c = sbits[ next_u_int ];
+				next_u = i2f(next_u_int);
+				if ( c == TRANSPARENCY_COLOR ) goto Transparent;
+			}
+		}
+		return;
+
+
+
+	} else {
+		for ( i=0; i<width; i++ )	{
+			c = sbits[ f2i(u) ];
+	
+			if ( c != TRANSPARENCY_COLOR )
+				*dbits = c;
+				
+			dbits++;
+			u += du;
+		}
+	}
+}
+#endif
 
 void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux scale_row_asm parm [esi] [edi] [ecx] [ebx] [edx] modify exact [edi eax ebx ecx] = \
 "newpixel1:	mov	eax, ebx			" \
 "				shr	eax, 16			" \
@@ -144,11 +216,14 @@ void scale_row_asm( ubyte * sbits, ubyte * dbits, int width, fix u, fix du );
 "				inc	edi				" \
 "				dec	ecx				" \
 "				jne	newpixel1		"
+#endif
 
 
 void rep_movsb( ubyte * sbits, ubyte * dbits, int width );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux rep_movsb parm [esi] [edi] [ecx] modify exact [esi edi ecx] = \
 "rep movsb"
+#endif
 
 #define FIND_SCALED_NUM(x,x0,x1,y0,y1) (fixmuldiv((x)-(x0),(y1)-(y0),(x1)-(x0))+(y0))
 
@@ -244,7 +319,11 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 		if ( (dtemp < (f2i(clipped_x1)-f2i(clipped_x0))) && (dtemp>0) )
 			scale_bitmap_cc_asm(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
 		else
+#ifdef USE_2D_ASM
 			scale_bitmap_asm(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
+#else
+			scale_bitmap_c(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
+#endif
 	}
 }
 
@@ -253,7 +332,7 @@ void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0
 {
 	fix u, v, du, dv;
 	int x, y;
-	ubyte * sbits, * dbits;
+	ubyte * sbits, * dbits, c;
 
 	du = (u1-u0) / (x1-x0);
 	dv = (v1-v0) / (y1-y0);
@@ -266,12 +345,16 @@ void scale_bitmap_c(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0
 		u = u0; 
 		v += dv;
 		for (x=x0; x<=x1; x++ )			{
-			*dbits++ = sbits[ u >> 16 ];
+			c = sbits[u >> 16];
+			if (c != TRANSPARENCY_COLOR)
+				*dbits = c;
+			dbits++;
 			u += du;
 		}
 	}
 }
 
+#ifdef USE_2D_ASM
 void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int y0, int x1, int y1, fix u0, fix v0,  fix u1, fix v1  )
 {
 	fix du, dv, v;
@@ -287,6 +370,7 @@ void scale_bitmap_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, int 
 		v += dv;
 	}
 }
+#endif
 
 ubyte scale_rle_data[640];
 
@@ -329,7 +413,9 @@ void scale_bitmap_cc_asm(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, i
 		
 	rls_stretch_scanline_setup( (int)(x1-x0), f2i(u1)-f2i(u0) );
 	if ( scale_ydelta_minus_1 < 1 ) return;
+#ifdef USE_2D_ASM
 	rls_do_cc_setup_asm();
+#endif
 
 	v = v0;
 
@@ -350,7 +436,9 @@ void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x
 		
 	rls_stretch_scanline_setup( (int)(x1-x0), f2i(u1)-f2i(u0) );
 	if ( scale_ydelta_minus_1 < 1 ) return;
+#ifdef USE_2D_ASM
 	rls_do_cc_setup_asm();
+#endif
 
 	v = v0;
 
@@ -362,7 +450,11 @@ void scale_bitmap_cc_asm_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x
 		//scale_source_ptr = &source_bmp->bm_data[source_bmp->bm_rowsize*f2i(v)+f2i(u0)];
 		scale_source_ptr = &scale_rle_data[f2i(u0)];
 		scale_dest_ptr = &dest_bmp->bm_data[dest_bmp->bm_rowsize*y+x0];
+#ifdef USE_2D_ASM
 		scale_do_cc_scanline();
+#else
+		rls_stretch_scanline();
+#endif
 		v += dv;
 	}
 }
@@ -380,85 +472,63 @@ void DrawHorizontalRun(char *ScreenPtr, int RunLength, int Color)
 }
 
 void rep_stosb(char *ScreenPtr, int RunLength, int Color);
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux rep_stosb = \
 "				rep	stosb"	\
 parm [EDI] [ECX] [EAX]\
 modify [];
+#endif
 
-void rls_stretch_scanline( char * source, char * dest, int XDelta, int YDelta )
+void rls_stretch_scanline(void)
 {
-	   int AdjUp, AdjDown, ErrorTerm;
-   	int WholeStep, InitialPixelCount, FinalPixelCount, i, RunLength;
+	ubyte	c, *src_ptr, *dest_ptr;
+	int i, j, len, x, ErrorTerm, initial_count, final_count;
 
-      /* X major line */
-      /* Minimum # of pixels in a run in this line */
-      WholeStep = XDelta / YDelta;
+	// Draw the first, partial run of pixels
 
-      /* Error term adjust each time Y steps by 1; used to tell when one
-         extra pixel should be drawn as part of a run, to account for
-         fractional steps along the X axis per 1-pixel steps along Y */
-      AdjUp = (XDelta % YDelta) * 2;
+	src_ptr = scale_source_ptr;
+	dest_ptr = scale_dest_ptr;
+	ErrorTerm = scale_error_term;
+	initial_count = scale_initial_pixel_count;
+	final_count = scale_final_pixel_count;
+	
+	c = *src_ptr++;
+	if ( c != TRANSPARENCY_COLOR )	{
+		for (i=0; i<initial_count; i++ )
+			*dest_ptr++ = c;
+	} else {
+		dest_ptr += initial_count;
+	}
 
-      /* Error term adjust when the error term turns over, used to factor
-         out the X step made at that time */
-      AdjDown = YDelta * 2;
+	// Draw all full runs 
 
-      /* Initial error term; reflects an initial step of 0.5 along the Y
-         axis */
-      ErrorTerm = (XDelta % YDelta) - (YDelta * 2);
+	for (j=0; j<scale_ydelta_minus_1; j++)	{
+		len = scale_whole_step;		// run is at least this long
 
-      /* The initial and last runs are partial, because Y advances only 0.5
-         for these runs, rather than 1. Divide one full run, plus the
-         initial pixel, between the initial and last runs */
-      InitialPixelCount = (WholeStep / 2) + 1;
-      FinalPixelCount = InitialPixelCount;
+ 		// Advance the error term and add an extra pixel if the error term so indicates
+		if ((ErrorTerm += scale_adj_up) > 0)	{
+			len++;
+			ErrorTerm -= scale_adj_down;   // reset the error term
+		}
+         
+		// Draw this run o' pixels
+		c = *src_ptr++;
+		if ( c != TRANSPARENCY_COLOR )	{
+			for (i=len; i>0; i-- )
+				*dest_ptr++ = c;
+		} else {
+			dest_ptr += len;
+		}
+	}
 
-      /* If the basic run length is even and there's no fractional
-         advance, we have one pixel that could go to either the initial
-         or last partial run, which we'll arbitrarily allocate to the
-         last run */
-      if ((AdjUp == 0) && ((WholeStep & 0x01) == 0))
-      {
-         InitialPixelCount--;
-      }
-     /* If there're an odd number of pixels per run, we have 1 pixel that can't
-     be allocated to either the initial or last partial run, so we'll add 0.5
-     to error term so this pixel will be handled by the normal full-run loop */
-      if ((WholeStep & 0x01) != 0)
-      {
-         ErrorTerm += YDelta;
-      }
-      /* Draw the first, partial run of pixels */
-		//if ( *source != Transparency_color )
-      	rep_stosb(dest, InitialPixelCount, *source );
-		dest += InitialPixelCount;
-		source++;
-
-      /* Draw all full runs */
-      for (i=0; i<(YDelta-1); i++)
-      {
-         RunLength = WholeStep;  /* run is at least this long */
-
-         /* Advance the error term and add an extra pixel if the error term so indicates */
-         if ((ErrorTerm += AdjUp) > 0)
-         {
-            RunLength++;
-            ErrorTerm -= AdjDown;   /* reset the error term */
-         }
-         /* Draw this scan line's run */
-
-			//if ( *source != Transparency_color )
-	      	rep_stosb(dest, RunLength, *source );
-			dest += RunLength;
-			source++;
-
-      }
-
-      /* Draw the final run of pixels */
-		//if ( *source != Transparency_color )
-	      rep_stosb(dest, FinalPixelCount, *source );
-
-      return;
+	// Draw the final run of pixels
+	c = *src_ptr++;
+	if ( c != TRANSPARENCY_COLOR )	{
+		for (i=0; i<final_count; i++ )
+			*dest_ptr++ = c;
+	} else {
+		dest_ptr += final_count;
+	}
 }
 
 

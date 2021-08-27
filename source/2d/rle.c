@@ -110,6 +110,7 @@ static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
 #define RLE_CODE 			0xE0
 #define NOT_RLE_CODE		31
 
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 int gr_rle_decode_asm( ubyte * src, ubyte * dest );
 #pragma aux gr_rle_decode_asm parm [esi] [edi] value [edi] modify exact [eax ebx ecx edx esi edi] = \
 "  cld					"\
@@ -151,9 +152,38 @@ void gr_rle_decode( ubyte * src, ubyte * dest )
 {
 	gr_rle_decode_asm( src, dest );
 }
+#else
+void gr_rle_decode( ubyte * src, ubyte * dest )
+{
+	int i;
+	ubyte data, count = 0;
+
+	while(1)	{
+		data = *src++;
+		if ( (data & RLE_CODE) != RLE_CODE ) {
+			*dest++ = data;
+		} else {
+			count = data & NOT_RLE_CODE;
+			if (count==0) return;
+			data = *src++;
+			for (i=0; i<count; i++ )	
+				*dest++ = data;
+		}
+	}
+}
+#endif
 
 void rle_stosb(char *dest, int len, int color);
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux rle_stosb = /*"cld",*/ "rep	stosb" parm [edi] [ecx] [eax] modify exact [edi ecx];
+#else
+void rle_stosb(char *dest, int len, int color)
+{
+	int i;
+	for (i=0; i<len; i++ )
+		*dest++ = color;
+}
+#endif
 
 // Given pointer to start of one scanline of rle data, uncompress it to
 // dest, from source pixels x1 to x2.
@@ -512,10 +542,16 @@ void rle_expand_texture_sub( grs_bitmap * bmp, grs_bitmap * rle_temp_bitmap_1 )
 	rle_temp_bitmap_1->bm_flags = bmp->bm_flags & (~BM_FLAG_RLE);
 
 	for (i=0; i < 64; i++ )    {
+#ifdef USE_2D_ASM
 		dbits1=(unsigned char *)gr_rle_decode_asm( sbits, dbits );
+#else
+		gr_rle_decode( sbits, dbits );
+#endif
 		sbits += (int)bmp->bm_data[4+i];
 		dbits += 64;
+#ifdef USE_2D_ASM
 		Assert( dbits == dbits1 );		// Get John, bogus rle data!
+#endif
 	}
 }
 
