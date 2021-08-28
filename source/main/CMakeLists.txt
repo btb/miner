@@ -26,7 +26,10 @@ if(BUILD_EDITOR)
 	add_subdirectory(editor)
 	target_link_libraries(descent ui editor)
 endif()
-		#iglasses.lib gclfr32.lib loadpats.lib
+if(CMAKE_SYSTEM_NAME STREQUAL "DOS")
+   target_link_libraries(descent vga)
+endif()
+#iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
 include_directories(../pslib ../ui) # should really only be needed for editor
 

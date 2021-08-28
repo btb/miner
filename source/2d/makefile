@@ -21,21 +21,21 @@ PROGS = fdraw
 TEST_PROGS = testg vesatest
 
 # What source files for the lib
-gr_SRCS = linear.asm vesa.asm modex.asm canvas.c bitmap.c gr.c font.c \
+gr_SRCS = linear.asm canvas.c bitmap.c gr.c font.c \
 	bitblt.c scanline.c pixel.c poly.c disc.c rect.c box.c  \
-	gpixel.c palette.c line.c lbitblt.asm        \
+	gpixel.c line.c lbitblt.asm \
 	scale.c scalea.asm circle.c ibitblt.c rle.c pcx.c
 
 # What source files and libs for the programs
 fdraw_SRCS = fdraw.c
-fdraw_LIBS = io.lib gr.lib misc.lib cfile.lib fix.lib mem.lib
+fdraw_LIBS = io.lib gr.lib misc.lib cfile.lib fix.lib mem.lib vga.lib
 
 # What source files and libs for the test programs
 testg_SRCS = testg.c tmapbits.c
-testg_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib cfile.lib fix.lib
+testg_LIBS = io.lib gr.lib misc.lib mem.lib iff.lib cfile.lib fix.lib vga.lib
 
 vesatest_SRCS = vesatest.c
-vesatest_LIBS = io.lib gr.lib misc.lib mem.lib cfile.lib fix.lib
+vesatest_LIBS = io.lib gr.lib misc.lib mem.lib cfile.lib fix.lib vga.lib
 
 #rules and targets common to all Miner makefiles
 include $(MINER)/init/makefile.def

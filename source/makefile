@@ -5,11 +5,11 @@
 #
 
 SUBDIRS = 2d 3d bios cfile div fix hogfile iff includes lbmcomp main mem \
-	misc pal pslib texmap ui vecmat xcolor
+	misc pal pslib texmap ui vecmat vga xcolor
 	# pcxview unused
 
 # The only thing to make is the subdirs
-SUBSYSTEMS = misc includes fix cfile 2d bios iff div mem vecmat 3d texmap \
+SUBSYSTEMS = misc includes fix cfile 2d vga bios iff div mem vecmat 3d texmap \
 	pslib ui
 #sosdigi sosmidi
 

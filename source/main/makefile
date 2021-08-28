@@ -45,6 +45,7 @@ descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
 				div0.lib misc.lib texmap.lib \
+				vga.lib \
 				$(if $(USE_SOS),sosdigi.lib sosmidi.lib,)
 		#iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
