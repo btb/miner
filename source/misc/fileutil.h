@@ -36,7 +36,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _FILEUTIL_
 #define _FILEUTIL_
 
-#include "dtypes.h" 
+#include "types.h" 
 #include "cfile.h"
 #include "fix.h"
  
