@@ -12,6 +12,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct hogfile {
 	char	name[13];
