@@ -904,7 +904,7 @@ void DoInterface()
 
 	vga_init();
 	gr_init();
-	gr_set_mode( SM_640x480V );
+	vga_set_mode( SM_640x480V );
 	gr_init_font( "/miner/fonts/pc8x16.fnt" );
 
 	ColRegs[255].Red   = 0;

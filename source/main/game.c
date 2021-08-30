@@ -1070,7 +1070,7 @@ int set_screen_mode(int sm)
 	case SCREEN_MENU:
 
 		if (grd_curscreen->sc_mode != SM_320x200C)	{
-			if (gr_set_mode(SM_320x200C)) Error("Cannot set screen mode for game!");
+			if (vga_set_mode(SM_320x200C)) Error("Cannot set screen mode for game!");
 	 		gr_palette_load( gr_palette );
 		}
 
@@ -1085,7 +1085,7 @@ int set_screen_mode(int sm)
 		break;
 	case SCREEN_GAME:
 		if (grd_curscreen->sc_mode != VR_screen_mode)	
-			if (gr_set_mode(VR_screen_mode))	{
+			if (vga_set_mode(VR_screen_mode))	{
 				if ( VR_screen_mode != SM_640x480V )	
 					Error("Cannot set screen mode for game!");
 				else
@@ -1120,7 +1120,7 @@ int set_screen_mode(int sm)
 	case SCREEN_EDITOR:
 		if (grd_curscreen->sc_mode != SM_800x600V)	{
 			int gr_error;
-			if ((gr_error=gr_set_mode(SM_800x600V))!=0) { //force into game scrren
+			if ((gr_error=vga_set_mode(SM_800x600V))!=0) { //force into game scrren
 				Warning("Cannot init editor screen (error=%d)",gr_error);
 				return 0;
 			}
@@ -3903,7 +3903,7 @@ void vr_reset_display()
 	if (VR_render_mode == VR_NONE ) return;
 
 	if (VR_screen_mode == SCREEN_MENU)	// low res 320x200 (overall) mode
-		gr_set_mode( SM_320x400U );
+		vga_set_mode( SM_320x400U );
 	set_screen_mode (SCREEN_MENU);
 	set_screen_mode (SCREEN_GAME);
 }

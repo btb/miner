@@ -288,7 +288,7 @@ typedef struct _grs_screen {     // This is a video screen
 
 int gr_init(void);
 short vga_init(void);
-int gr_set_mode(int mode);
+int vga_set_mode(int mode);
 void gr_enable_default_palette_loading();
 void gr_disable_default_palette_loading();
 
@@ -318,7 +318,7 @@ void gr_close(void);
 // 10=Error allocating selector for A0000h
 // 11=Not a valid mode support by gr.lib
 // Returns one of the above without setting mode
-int gr_check_mode(int mode);	
+int vga_check_mode(int mode);	
 
 
 extern int gr_save_mode();

@@ -822,10 +822,10 @@ int init_graphics()
 
 	vga_init();
 
-	result=gr_check_mode(SM_320x200C);
+	result=vga_check_mode(SM_320x200C);
 #ifdef EDITOR
 	if ( result==0 )	
-		result=gr_check_mode(SM_800x600V);
+		result=vga_check_mode(SM_800x600V);
 #endif
 
 	switch( result )	{
@@ -1582,7 +1582,7 @@ int main(int argc,char **argv)
 		Error(TXT_CANT_INIT_GFX,t);
 	// Load the palette stuff. Returns non-zero if error.
 	mprintf( (0, "Going into graphics mode..." ));
-	gr_set_mode(SM_320x200C);
+	vga_set_mode(SM_320x200C);
 	mprintf( (0, "\nInitializing palette system..." ));
    gr_use_palette_table( "PALETTE.256" );
 	mprintf( (0, "\nInitializing font system..." ));

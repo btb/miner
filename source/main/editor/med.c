@@ -779,7 +779,7 @@ int DosShell()
 	ok = spawnl(P_WAIT,getenv("COMSPEC"), NULL );
 	key_init();
 
-	gr_set_mode(grd_curscreen->sc_mode);
+	vga_set_mode(grd_curscreen->sc_mode);
 	gr_bm_ubitblt(w, h, 0, 0, 0, 0, save_bitmap, &(grd_curscreen->sc_canvas.cv_bitmap));
 	gr_free_bitmap( save_bitmap );
 	//gr_pal_setblock( 0, 256, grd_curscreen->pal );

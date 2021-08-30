@@ -207,7 +207,7 @@ main()
 	minit();
 	vga_init();
 	gr_init();
-	gr_set_mode( SM_320x200C );
+	vga_set_mode( SM_320x200C );
 	gr_use_palette_table( "PALETTE.256");
 	gr_palette_load(gr_palette);
 	for (i=0; i<256; i++ )	{

@@ -212,7 +212,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 unsigned char * gr_video_memory = (unsigned char *)0xA0000;
 
-char gr_pal_default[768];
+char vga_pal_default[768];
 
 int vga_installed = 0;
 
@@ -237,11 +237,11 @@ typedef struct screen_save {
 	ushort * video_memory;
 } screen_save;
 
-screen_save gr_saved_screen;
+screen_save vga_saved_screen;
 
-int gr_show_screen_info = 0;
+int vga_show_screen_info = 0;
 
-void gr_set_cellheight( ubyte height )
+void vga_set_cellheight( ubyte height )
 {
 	ubyte temp;
 
@@ -252,14 +252,14 @@ void gr_set_cellheight( ubyte height )
 	outp( 0x3d5, temp );
 }
 
-void gr_set_linear()
+void vga_set_linear()
 {
 	outpw( 0x3c4, 0xE04 );		  // enable chain4 mode
 	outpw( 0x3d4, 0x4014 );		  // turn on dword mode
 	outpw( 0x3d4, 0xa317 );		  // turn off byte mode
 }
 
-void gr_16_to_256()
+void vga_16_to_256()
 {
 	outpw( 0x3ce, 0x4005 );	 	// set Shift reg to 1
 
@@ -274,21 +274,21 @@ void gr_16_to_256()
 	outp( 0x3c0, 0 );
 }
 
-void gr_turn_screen_off()
+void vga_turn_screen_off()
 {
 	ubyte temp;
 	temp = inp( 0x3da );
 	outp( 0x3c0, 0 );
 }
 
-void gr_turn_screen_on()
+void vga_turn_screen_on()
 {
 	ubyte temp;
 	temp = inp( 0x3da );
 	outp( 0x3c0, 0x20 );
 }
 
-void gr_set_misc_mode( uint mode )
+void vga_set_misc_mode( uint mode )
 {
 	union REGS regs;
 
@@ -298,7 +298,7 @@ void gr_set_misc_mode( uint mode )
 
 }
 
-void gr_set_3dbios_mode( uint mode )
+void vga_set_3dbios_mode( uint mode )
 {
 	union REGS regs;
 	memset( &regs, 0, sizeof(regs) );
@@ -309,7 +309,7 @@ void gr_set_3dbios_mode( uint mode )
 
 
 
-void gr_set_text_25()
+void vga_set_text_25()
 {
 	union REGS regs;
 
@@ -318,7 +318,7 @@ void gr_set_text_25()
 
 }
 
-void gr_set_text_43()
+void vga_set_text_43()
 {
 	union REGS regs;
 
@@ -334,7 +334,7 @@ void gr_set_text_43()
 	int386( 0x10, &regs, &regs );
 }
 
-void gr_set_text_50()
+void vga_set_text_50()
 {
 	union REGS regs;
 
@@ -359,7 +359,7 @@ ubyte is_graphics_mode()
 	return tmp & 1;
 }
 
-void gr_setcursor(ubyte x, ubyte y, ubyte sline, ubyte eline)
+void vga_setcursor(ubyte x, ubyte y, ubyte sline, ubyte eline)
 {
 	union REGS regs;
 
@@ -377,7 +377,7 @@ void gr_setcursor(ubyte x, ubyte y, ubyte sline, ubyte eline)
 	int386( 0x10, &regs, &regs );
 }
 
-void gr_getcursor(ubyte *x, ubyte *y, ubyte * sline, ubyte * eline)
+void vga_getcursor(ubyte *x, ubyte *y, ubyte * sline, ubyte * eline)
 {
 	union REGS regs;
 
@@ -392,32 +392,32 @@ void gr_getcursor(ubyte *x, ubyte *y, ubyte * sline, ubyte * eline)
 }
 
 
-int gr_save_mode()
+int vga_save_mode()
 {
 	int i;
 
-	gr_saved_screen.is_graphics = is_graphics_mode();
-	gr_saved_screen.video_mode = *pVideoMode;
+	vga_saved_screen.is_graphics = is_graphics_mode();
+	vga_saved_screen.video_mode = *pVideoMode;
 	
-	if (!gr_saved_screen.is_graphics)	{
-		gr_saved_screen.width = *pNumColumns;
-		gr_saved_screen.height = *pNumRows+1;
-		gr_saved_screen.char_height = *pCharHeight;
-		gr_getcursor(&gr_saved_screen.cursor_x, &gr_saved_screen.cursor_y, &gr_saved_screen.cursor_sline, &gr_saved_screen.cursor_eline );
-		MALLOC(gr_saved_screen.video_memory,ushort, gr_saved_screen.width*gr_saved_screen.height );
-		for (i=0; i < gr_saved_screen.width*gr_saved_screen.height; i++ )
-			gr_saved_screen.video_memory[i] = pTextMemory[i];
+	if (!vga_saved_screen.is_graphics)	{
+		vga_saved_screen.width = *pNumColumns;
+		vga_saved_screen.height = *pNumRows+1;
+		vga_saved_screen.char_height = *pCharHeight;
+		vga_getcursor(&vga_saved_screen.cursor_x, &vga_saved_screen.cursor_y, &vga_saved_screen.cursor_sline, &vga_saved_screen.cursor_eline );
+		MALLOC(vga_saved_screen.video_memory,ushort, vga_saved_screen.width*vga_saved_screen.height );
+		for (i=0; i < vga_saved_screen.width*vga_saved_screen.height; i++ )
+			vga_saved_screen.video_memory[i] = pTextMemory[i];
 	}
 
-	if (gr_show_screen_info )	{
-		printf( "Current video mode 0x%x:\n",  gr_saved_screen.video_mode );
-		if (gr_saved_screen.is_graphics)
+	if (vga_show_screen_info )	{
+		printf( "Current video mode 0x%x:\n",  vga_saved_screen.video_mode );
+		if (vga_saved_screen.is_graphics)
 			printf( "Graphics mode\n" );
 		else	{
 			printf( "Text mode\n" );
-			printf( "( %d columns by %d rows)\n", gr_saved_screen.width, gr_saved_screen.height );
-			printf( "Char height is %d pixel rows\n", gr_saved_screen.char_height );
-			printf( "Cursor of type 0x%x,0x%x is at (%d, %d)\n", gr_saved_screen.cursor_sline, gr_saved_screen.cursor_eline,gr_saved_screen.cursor_x, gr_saved_screen.cursor_y );
+			printf( "( %d columns by %d rows)\n", vga_saved_screen.width, vga_saved_screen.height );
+			printf( "Char height is %d pixel rows\n", vga_saved_screen.char_height );
+			printf( "Cursor of type 0x%x,0x%x is at (%d, %d)\n", vga_saved_screen.cursor_sline, vga_saved_screen.cursor_eline,vga_saved_screen.cursor_x, vga_saved_screen.cursor_y );
 		}
 	}
 
@@ -438,36 +438,36 @@ int isvga()
 	return 0;
 }
 
-void gr_restore_mode()
+void vga_restore_mode()
 {
 	int i;
 
-	//gr_set_text_25(); 
+	//vga_set_text_25(); 
 
 	gr_palette_fade_out( gr_palette, 32, 0 );
 	gr_palette_set_gamma(0);
 
-	if ( gr_saved_screen.video_mode == 3 )	{
-		switch( gr_saved_screen.height )	  {
-		case 43:	gr_set_text_43(); break;
-		case 50:	gr_set_text_50(); break;
-		default:	gr_set_text_25(); break;
+	if ( vga_saved_screen.video_mode == 3 )	{
+		switch( vga_saved_screen.height )	  {
+		case 43:	vga_set_text_43(); break;
+		case 50:	vga_set_text_50(); break;
+		default:	vga_set_text_25(); break;
 		}
 	} else {
-		gr_set_misc_mode(gr_saved_screen.video_mode);	
+		vga_set_misc_mode(vga_saved_screen.video_mode);	
 	}
 
-	if (gr_saved_screen.is_graphics==0)	{
+	if (vga_saved_screen.is_graphics==0)	{
 		gr_sync_display();
 		gr_sync_display();
-		gr_palette_read( gr_pal_default );
+		gr_palette_read( vga_pal_default );
 		gr_palette_clear();
 
-		for (i=0; i < gr_saved_screen.width*gr_saved_screen.height; i++ )	
-			pTextMemory[i]=gr_saved_screen.video_memory[i];
-		gr_setcursor( gr_saved_screen.cursor_x, gr_saved_screen.cursor_y, gr_saved_screen.cursor_sline, gr_saved_screen.cursor_eline );
+		for (i=0; i < vga_saved_screen.width*vga_saved_screen.height; i++ )	
+			pTextMemory[i]=vga_saved_screen.video_memory[i];
+		vga_setcursor( vga_saved_screen.cursor_x, vga_saved_screen.cursor_y, vga_saved_screen.cursor_sline, vga_saved_screen.cursor_eline );
 		gr_palette_faded_out = 1;
-		gr_palette_fade_in( gr_pal_default, 32, 0 );
+		gr_palette_fade_in( vga_pal_default, 32, 0 );
 	}
 
 }
@@ -477,10 +477,10 @@ void vga_close(void)
 	if (vga_installed==1)
 	{
 		vga_installed = 0;
-		gr_restore_mode();
-		if( gr_saved_screen.video_memory ) {
-			free(gr_saved_screen.video_memory);
-			gr_saved_screen.video_memory = NULL;
+		vga_restore_mode();
+		if( vga_saved_screen.video_memory ) {
+			free(vga_saved_screen.video_memory);
+			vga_saved_screen.video_memory = NULL;
 		}
 	}
 }
@@ -491,18 +491,18 @@ void gr_close(void)
 	gr_installed = 0;
 }
 
-int gr_vesa_setmode( int mode )
+int vga_vesa_setmode( int mode )
 {
 	int retcode;
 
 	retcode=gr_vesa_checkmode( mode );
 	if ( retcode ) return retcode;
 
-	return gr_vesa_setmodea( mode );
+	return vga_vesa_setmode( mode );
 }
 
 
-int gr_set_mode(int mode)
+int vga_set_mode(int mode)
 {
 	int retcode;
 	unsigned int w,h,t,data, r;
@@ -515,73 +515,73 @@ int gr_set_mode(int mode)
 		return 0;
 	case 0:
 		if (!isvga()) return 1;
-		gr_set_misc_mode(0x13);	
+		vga_set_misc_mode(0x13);	
 		w = 320; r = 320; h = 200; t=BM_LINEAR; data = 0xA0000;
 		break;
 	case SM_640x400V:
-		retcode = gr_vesa_setmode( 0x100 ); 
+		retcode = vga_vesa_setmode( 0x100 ); 
 		if (retcode !=0 ) return retcode;
 		w = 640; r = 640; h = 400; t=BM_SVGA; data = 0;
 		break;
 	case SM_640x480V:
-		retcode = gr_vesa_setmode( 0x101 ); 
+		retcode = vga_vesa_setmode( 0x101 ); 
 		if (retcode !=0 ) return retcode;
 		w = 640; r = 640; h = 480; t=BM_SVGA; data = 0;
 		break;
 	case SM_800x600V:
-		retcode = gr_vesa_setmode( 0x103 ); 
+		retcode = vga_vesa_setmode( 0x103 ); 
 		if (retcode !=0 ) return retcode;
 		w = 800; r = 800; h = 600; t=BM_SVGA; data = 0;
 		break;
 	case SM_1024x768V:
-		retcode = gr_vesa_setmode( 0x105 ); 
+		retcode = vga_vesa_setmode( 0x105 ); 
 		if (retcode !=0 ) return retcode;
 		w = 1024; r = 1024; h = 768; t=BM_SVGA; data = 0;
 		break;
 	case SM_640x480V15:
-		retcode = gr_vesa_setmode( 0x110 ); 
+		retcode = vga_vesa_setmode( 0x110 ); 
 		if (retcode !=0 ) return retcode;
 		w = 640; r = 640*2; h=480; t=BM_SVGA15; data = 0;
 		break;
 	case SM_800x600V15:
-		retcode = gr_vesa_setmode( 0x113 ); 
+		retcode = vga_vesa_setmode( 0x113 ); 
 		if (retcode !=0 ) return retcode;
 		w = 800; r = 800*2; h=600; t=BM_SVGA15; data = 0;
 		break;
 	case 19:
 		if (!isvga()) return 1;
-		gr_set_misc_mode(0x13);	
+		vga_set_misc_mode(0x13);	
 //		{
 //			ubyte x;
 //			x = inp( 0x3c5 );
 //			x |= 8;
 //			outp( 0x3c5, x );
 //		}
-		gr_set_cellheight( 3 );
+		vga_set_cellheight( 3 );
 
 		w = 320; r = 320; h = 100; t=BM_LINEAR; data = 0xA0000;
 		break;
 	case 20:
-		retcode = gr_vesa_setmode( 0x102 ); 
+		retcode = vga_vesa_setmode( 0x102 ); 
 		//gr_enable_default_palette_loading();
 		if (retcode !=0 ) return retcode;
-		gr_16_to_256();
-		gr_set_linear();
-		//gr_set_cellheight( 1 );
+		vga_16_to_256();
+		vga_set_linear();
+		//vga_set_cellheight( 1 );
 		gr_vesa_setlogical( 400 );
 		w = 400; r = 400; h = 600; t=BM_SVGA; data = 0;
 		break;
 	case 21:
 		if (!isvga()) return 1;
-		gr_set_misc_mode(0xd);	
-		gr_16_to_256();
-		gr_set_linear();
-		gr_set_cellheight( 3 );
+		vga_set_misc_mode(0xd);	
+		vga_16_to_256();
+		vga_set_linear();
+		vga_set_cellheight( 3 );
 		w = 160; r = 160; h = 100; t=BM_LINEAR; data = 0xA0000;
 		break;
 	case 22:			// 3dmax 320x400
 		if (!isvga()) return 1;
-		gr_set_3dbios_mode(0x31);
+		vga_set_3dbios_mode(0x31);
 		//w = 320; r = 320/4; h = 400; t=BM_MODEX; data = 0;
 		w = 320; r = 320; h = 400; t=BM_SVGA; data = 0;
 		break;
@@ -607,7 +607,7 @@ short vga_init()
 		return 10;
 
 	// Save the current text screen mode
-	if (gr_save_mode()==1)
+	if (vga_save_mode()==1)
 		return 1;
 
 	if (!dpmi_allocate_selector( &gr_fade_table, 256*GR_FADE_LEVELS, &gr_fade_table_selector ))
@@ -636,20 +636,20 @@ int gr_init(void)
 		return 1;
 
 	// // Save the current palette, and fade it out to black.
-	// gr_palette_read( gr_pal_default );
+	// gr_palette_read( vga_pal_default );
 	// gr_palette_faded_out = 0;
 	// org_gamma = gr_palette_get_gamma();
 	// gr_palette_set_gamma( 0 );
-	// gr_palette_fade_out( gr_pal_default, 32, 0 );
+	// gr_palette_fade_out( vga_pal_default, 32, 0 );
 	// gr_palette_clear();
 	// gr_palette_set_gamma( org_gamma );
 	// gr_sync_display();
 	// gr_sync_display();
 
 	// // Set the mode.
-	// if (retcode=gr_set_mode(mode))
+	// if (retcode=vga_set_mode(mode))
 	// {
-	// 	gr_restore_mode();
+	// 	vga_restore_mode();
 	// 	return retcode;
 	// }
 
@@ -705,7 +705,7 @@ int gr_init_screen(int bitmap_type, int w, int h, int x, int y, int rowsize, uby
 	return 0;
 }
 
-int gr_mode13_checkmode()
+int vga_mode13_checkmode()
 {
 	if (isvga()) 
 		return 0;
@@ -726,7 +726,7 @@ int gr_mode13_checkmode()
 // 10=Error allocating selector for A0000h
 // 11=Not a valid mode support by gr.lib
 
-int gr_check_mode(int mode)
+int vga_check_mode(int mode)
 {
 	switch(mode)
 	{
@@ -743,13 +743,13 @@ int gr_check_mode(int mode)
 	case SM_360x480U:
 	case SM_360x360U:
 	case SM_376x308U:
-	case SM_376x564U:		return gr_mode13_checkmode();
+	case SM_376x564U:		return vga_mode13_checkmode();
 	case SM_640x400V:		return gr_vesa_checkmode( 0x100 ); 
 	case SM_640x480V: 	return gr_vesa_checkmode( 0x101 ); 
 	case SM_800x600V: 	return gr_vesa_checkmode( 0x103 ); 
-	case SM_1024x768V:	return gr_vesa_setmode( 0x105 ); 
-	case SM_640x480V15:	return gr_vesa_setmode( 0x110 ); 
-	case SM_800x600V15:	return gr_vesa_setmode( 0x113 ); 
+	case SM_1024x768V:	return vga_vesa_setmode( 0x105 ); 
+	case SM_640x480V15:	return vga_vesa_setmode( 0x110 ); 
+	case SM_800x600V15:	return vga_vesa_setmode( 0x113 ); 
 	}
 	return 11;
 }

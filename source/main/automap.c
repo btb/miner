@@ -534,7 +534,7 @@ void do_automap( int key_code )	{
 	mprintf( (0, "Num_vertices=%d, Max_edges=%d, (MAX:%d)\n", Num_vertices, Max_edges, MAX_EDGES ));
 	mprintf( (0, "Allocated %d K for automap edge list\n", (sizeof(Edge_info)+sizeof(short))*Max_edges/1024 ));
 
-	gr_set_mode( SM_320x400U );
+	vga_set_mode( SM_320x400U );
 	gr_palette_clear();
 
 	gr_init_sub_canvas(&Pages[0],grd_curcanv,0,0,320,400);

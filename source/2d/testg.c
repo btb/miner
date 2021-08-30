@@ -121,7 +121,7 @@ main(int argc, char * argv[] )
 	printf( "Reading %s...\n", "john.pcx" );
 	vga_init();
 	gr_init();
-	gr_set_mode( SM_320x200U );
+	vga_set_mode( SM_320x200U );
 	bmp.bm_data = NULL;
 	pcx_read_bitmap( "big.pcx", &bmp, BM_LINEAR, palette );
 	gr_palette_load( palette );
