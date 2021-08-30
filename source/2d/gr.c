@@ -476,7 +476,7 @@ int gr_close()
 	{
 		gr_installed = 0;
 		gr_restore_mode();
-		free(grd_curscreen);
+		gr_close_screen();
   		if( gr_saved_screen.video_memory ) {
 			free(gr_saved_screen.video_memory);
 			gr_saved_screen.video_memory = NULL;
@@ -589,23 +589,7 @@ int gr_set_mode(int mode)
 	}
 	gr_palette_clear();
 
-	memset( grd_curscreen, 0, sizeof(grs_screen));
-	grd_curscreen->sc_mode = mode;
-	grd_curscreen->sc_w = w;
-	grd_curscreen->sc_h = h;
-	grd_curscreen->sc_aspect = fixdiv(grd_curscreen->sc_w*3,grd_curscreen->sc_h*4);
-	grd_curscreen->sc_canvas.cv_bitmap.bm_x = 0;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_y = 0;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_w = w;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_h = h;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_rowsize = r;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_type = t;
-	grd_curscreen->sc_canvas.cv_bitmap.bm_data = (unsigned char *)data;
-	gr_set_current_canvas(NULL);
-
-	//gr_enable_default_palette_loading();
-
-	return 0;
+	return gr_init_screen(t, w, h, 0, 0, r, (unsigned char *)data);
 }
 
 int gr_init(int mode)
@@ -635,25 +619,12 @@ int gr_init(int mode)
 	gr_sync_display();
 	gr_sync_display();
 
-	MALLOC( grd_curscreen,grs_screen,1 );
-	memset( grd_curscreen, 0, sizeof(grs_screen));
-
 	// Set the mode.
 	if (retcode=gr_set_mode(mode))
 	{
 		gr_restore_mode();
 		return retcode;
 	}
-	//JOHNgr_disable_default_palette_loading();
-
-	// Set all the screen, canvas, and bitmap variables that
-	// aren't set by the gr_set_mode call:
-	grd_curscreen->sc_canvas.cv_color = 0;
-	grd_curscreen->sc_canvas.cv_drawmode = 0;
-	grd_curscreen->sc_canvas.cv_font = NULL;
-	grd_curscreen->sc_canvas.cv_font_fg_color = 0;
-	grd_curscreen->sc_canvas.cv_font_bg_color = 0;
-	gr_set_current_canvas( &grd_curscreen->sc_canvas );
 
 	if (!dpmi_allocate_selector( &gr_fade_table, 256*GR_FADE_LEVELS, &gr_fade_table_selector ))
 		Error( "Error allocating fade table selector!" );
@@ -668,6 +639,43 @@ int gr_init(int mode)
 	// Set flags indicating that this is installed.
 	gr_installed = 1;
 	atexit((void *)gr_close);
+
+	return 0;
+}
+
+int gr_close_screen()
+{
+	free(grd_curscreen);
+
+	return 0;
+}
+
+int gr_init_screen(int bitmap_type, int w, int h, int x, int y, int rowsize, ubyte *screen_addr)
+{
+	MALLOC( grd_curscreen,grs_screen,1 );
+
+	memset( grd_curscreen, 0, sizeof(grs_screen));
+
+	grd_curscreen->sc_mode = bitmap_type;
+	grd_curscreen->sc_w = w;
+	grd_curscreen->sc_h = h;
+	grd_curscreen->sc_aspect = fixdiv(grd_curscreen->sc_w*3,grd_curscreen->sc_h*4);
+
+	grd_curscreen->sc_canvas.cv_bitmap.bm_x = x;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_y = y;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_w = w;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_h = h;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_rowsize = rowsize;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_type = bitmap_type;
+	grd_curscreen->sc_canvas.cv_bitmap.bm_data = (bitmap_type==BM_LINEAR)?screen_addr:NULL;
+
+	grd_curscreen->sc_canvas.cv_color = 0;
+	grd_curscreen->sc_canvas.cv_drawmode = 0;
+	grd_curscreen->sc_canvas.cv_font = NULL;
+	grd_curscreen->sc_canvas.cv_font_fg_color = 0;
+	grd_curscreen->sc_canvas.cv_font_bg_color = 0;
+
+	gr_set_current_canvas( &grd_curscreen->sc_canvas );
 
 	return 0;
 }
