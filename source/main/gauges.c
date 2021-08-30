@@ -1002,7 +1002,8 @@ void hud_show_weapons(void)
 #endif
 
 	strcat(weapon_str, " ");
-	strcat(weapon_str, itoa(Players[Player_num].secondary_ammo[Secondary_weapon], temp_str, 10));
+	printf(temp_str, "%d", Players[Player_num].secondary_ammo[Secondary_weapon]);
+	strcat(weapon_str, temp_str);
 	gr_get_string_size(weapon_str, &w, &h, &aw );
 	gr_printf(grd_curcanv->cv_w-5-w, y, weapon_str);
 }
