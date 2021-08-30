@@ -13,7 +13,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include "dtypes.h"
+#include "types.h"
 #include "fix.h"
 
 int min( int a, int b )

@@ -40,8 +40,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#include "dtypes.h"
+#include "types.h"
 #include "fileutil.h"
 #include "cfile.h"
 #include "fix.h"
