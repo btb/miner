@@ -463,7 +463,9 @@ void main() {
     scanf("%f", &y);
     t0 = y*F1_0;
 
-    gr_init(15);  // 800x600 mode
+    vga_init();
+    gr_init();
+    gr_set_mode(15);  // 800x600 mode
     plot_parametric(&coeffs, 0*F1_0, 1*F1_0, 0.05*F1_0);
 
     test = evaluate_curve(&coeffs, 3, t0);

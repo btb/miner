@@ -49,7 +49,9 @@ main(int argc, char * argv[] )
 		exit(1);
 	}
 
-	gr_init( SM_320x200C );
+	vga_init();
+	gr_init();
+	gr_set_mode(SM_320x200C);
    gr_use_palette_table( "PALETTE.256" );
 	gr_palette_load( gr_palette );
 

@@ -91,7 +91,9 @@ main()
 
 	CreatePalette();
 
-	i = gr_init( SM_800x600V );
+	vga_init();
+	gr_init();
+	i = gr_set_mode( SM_800x600V );
 
 	if (i)	{
 		printf( "Couldn't initialize because " );

@@ -820,6 +820,8 @@ int init_graphics()
 {
 	int result;
 
+	vga_init();
+
 	result=gr_check_mode(SM_320x200C);
 #ifdef EDITOR
 	if ( result==0 )	
@@ -1576,7 +1578,7 @@ int main(int argc,char **argv)
 	}
 
 	if (Inferno_verbose) printf( "\n%s\n\n", TXT_INITIALIZING_GRAPHICS);
-	if ((t=gr_init( SM_ORIGINAL ))!=0)
+	if ((t = gr_init()) != 0)
 		Error(TXT_CANT_INIT_GFX,t);
 	// Load the palette stuff. Returns non-zero if error.
 	mprintf( (0, "Going into graphics mode..." ));

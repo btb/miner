@@ -214,6 +214,8 @@ unsigned char * gr_video_memory = (unsigned char *)0xA0000;
 
 char gr_pal_default[768];
 
+int vga_installed = 0;
+
 int gr_installed = 0;
 
 ubyte * pVideoMode =  (volatile ubyte *)0x449;
@@ -470,20 +472,23 @@ void gr_restore_mode()
 
 }
 
-int gr_close()
+void vga_close(void)
 {
-	if (gr_installed==1)
+	if (vga_installed==1)
 	{
-		gr_installed = 0;
+		vga_installed = 0;
 		gr_restore_mode();
-		gr_close_screen();
-  		if( gr_saved_screen.video_memory ) {
+		if( gr_saved_screen.video_memory ) {
 			free(gr_saved_screen.video_memory);
 			gr_saved_screen.video_memory = NULL;
 		}
 	}
+}
 
-	return 0;
+void gr_close(void)
+{
+	gr_close_screen();
+	gr_installed = 0;
 }
 
 int gr_vesa_setmode( int mode )
@@ -592,13 +597,10 @@ int gr_set_mode(int mode)
 	return gr_init_screen(t, w, h, 0, 0, r, (unsigned char *)data);
 }
 
-int gr_init(int mode)
+short vga_init()
 {
-	int org_gamma;
-	int retcode;
-
 	// Only do this function once!
-	if (gr_installed==1)
+	if (vga_installed==1)
 		return 1;
 
 	if (gr_init_A0000())
@@ -607,24 +609,6 @@ int gr_init(int mode)
 	// Save the current text screen mode
 	if (gr_save_mode()==1)
 		return 1;
-
-	// Save the current palette, and fade it out to black.
-	gr_palette_read( gr_pal_default );
-	gr_palette_faded_out = 0;
-	org_gamma = gr_palette_get_gamma();
-	gr_palette_set_gamma( 0 );
-	gr_palette_fade_out( gr_pal_default, 32, 0 );
-	gr_palette_clear();
-	gr_palette_set_gamma( org_gamma );
-	gr_sync_display();
-	gr_sync_display();
-
-	// Set the mode.
-	if (retcode=gr_set_mode(mode))
-	{
-		gr_restore_mode();
-		return retcode;
-	}
 
 	if (!dpmi_allocate_selector( &gr_fade_table, 256*GR_FADE_LEVELS, &gr_fade_table_selector ))
 		Error( "Error allocating fade table selector!" );
@@ -635,24 +619,65 @@ int gr_init(int mode)
 //	if (!dpmi_allocate_selector( &gr_inverse_table, 32*32*32, &gr_inverse_table_selector ))
 //		Error( "Error allocating inverse table selector!" );
 
+	// Set flags indicating that this is installed.
+	vga_installed = 1;
+	atexit(vga_close);
+
+	return 0;
+}
+
+int gr_init(void)
+{
+	// int org_gamma;
+	// int retcode;
+
+	// Only do this function once!
+	if (gr_installed==1)
+		return 1;
+
+	// // Save the current palette, and fade it out to black.
+	// gr_palette_read( gr_pal_default );
+	// gr_palette_faded_out = 0;
+	// org_gamma = gr_palette_get_gamma();
+	// gr_palette_set_gamma( 0 );
+	// gr_palette_fade_out( gr_pal_default, 32, 0 );
+	// gr_palette_clear();
+	// gr_palette_set_gamma( org_gamma );
+	// gr_sync_display();
+	// gr_sync_display();
+
+	// // Set the mode.
+	// if (retcode=gr_set_mode(mode))
+	// {
+	// 	gr_restore_mode();
+	// 	return retcode;
+	// }
 
 	// Set flags indicating that this is installed.
 	gr_installed = 1;
-	atexit((void *)gr_close);
+
+	atexit(gr_close);
 
 	return 0;
 }
 
 int gr_close_screen()
 {
-	free(grd_curscreen);
+	if (grd_curscreen) {
+		free(grd_curscreen);
+		grd_curscreen = NULL;
+	}
 
 	return 0;
 }
 
 int gr_init_screen(int bitmap_type, int w, int h, int x, int y, int rowsize, ubyte *screen_addr)
 {
-	MALLOC( grd_curscreen,grs_screen,1 );
+	if (!gr_installed)
+		return 1;
+
+	if (grd_curscreen == NULL)
+		MALLOC( grd_curscreen,grs_screen,1 );
 
 	memset( grd_curscreen, 0, sizeof(grs_screen));
 

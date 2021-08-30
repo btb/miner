@@ -902,7 +902,9 @@ void DoInterface()
 	int menu1, NumItems1;
 	char * MenuItems[256];
 
-	gr_init( SM_640x480V );
+	vga_init();
+	gr_init();
+	gr_set_mode( SM_640x480V );
 	gr_init_font( "/miner/fonts/pc8x16.fnt" );
 
 	ColRegs[255].Red   = 0;

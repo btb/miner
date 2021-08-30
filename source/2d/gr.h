@@ -286,7 +286,8 @@ typedef struct _grs_screen {     // This is a video screen
 // grd_curscreen to point to it.  grs_curcanv points to this screen's
 // canvas.  Saves the current VGA state and screen mode.
 
-int gr_init(int mode);
+int gr_init(void);
+short vga_init(void);
 int gr_set_mode(int mode);
 void gr_enable_default_palette_loading();
 void gr_disable_default_palette_loading();
@@ -302,7 +303,7 @@ extern int gr_init_A0000();         // Initializes _A0000. Returns true if faile
 extern unsigned short _A0000;       // Selector for screen segment
 
 //shut down the 2d.  Restore the screen mode.
-int gr_close();
+void gr_close(void);
 
 //  0=Mode set OK
 //  1=No VGA adapter installed
