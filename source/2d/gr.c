@@ -205,6 +205,8 @@ unsigned char * gr_video_memory = (unsigned char *)0xA0000;
 
 int gr_installed = 0;
 
+int gr_close_screen(void);
+
 void gr_close(void)
 {
 	gr_close_screen();
@@ -246,7 +248,7 @@ int gr_init(void)
 	return 0;
 }
 
-int gr_close_screen()
+int gr_close_screen(void)
 {
 	if (grd_curscreen) {
 		free(grd_curscreen);
