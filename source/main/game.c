@@ -379,7 +379,7 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #endif
 
 //#define _MARK_ON 1
-#include <wsample.h>            //should come after inferno.h to get mark setting
+#include "profiler.h"
 
 int	Speedtest_on = 0;
 

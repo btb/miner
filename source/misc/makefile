@@ -8,7 +8,7 @@
 #
 
 # What to install
-INSTALL_TARGS = misc.lib parsarg.h error.h
+INSTALL_TARGS = misc.lib parsarg.h error.h profiler.h
 
 # What libs to build
 LIBS = misc

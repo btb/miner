@@ -225,7 +225,7 @@ static char rcsid[] = "$Id: med.c 2.3 1995/03/06 18:23:52 john Exp $";
 #include "newmenu.h"
 
 //#define _MARK_ON 1
-#include <wsample.h>		//should come after inferno.h to get mark setting
+#include "profiler.h"
 
 #define COMPRESS_INTERVAL	5			// seconds
 
