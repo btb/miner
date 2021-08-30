@@ -14,7 +14,7 @@ if(USE_SOS)
 endif()
 
 add_executable(descent)
-target_link_libraries(descent 3d gr fix io iff vecmat cfile misc texmap
+target_link_libraries(descent 3d gr fix iff vecmat cfile misc texmap
 	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:mem>)
 if(NOT NO_ASSEMBLY)
 	target_link_libraries(descent div0)
@@ -27,7 +27,7 @@ if(BUILD_EDITOR)
 	target_link_libraries(descent ui editor)
 endif()
 if(CMAKE_SYSTEM_NAME STREQUAL "DOS")
-   target_link_libraries(descent vga)
+   target_link_libraries(descent vga io)
 endif()
 #iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
