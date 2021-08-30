@@ -240,7 +240,9 @@ static char rcsid[] = "$Id: scores.c 2.2 1995/06/15 12:13:54 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#ifdef __DOS__
 #include <io.h>
+#endif
 #include <stdarg.h>
 
 #include "scores.h"

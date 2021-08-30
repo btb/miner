@@ -81,8 +81,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#ifdef __DOS__
 #include <conio.h>
 #include <dos.h>
+#endif
 
 #include "types.h"
 #include "game.h"
@@ -136,7 +138,7 @@ extern byte	Object_complexity, Object_detail, Wall_detail, Wall_render_depth, De
 
 void set_custom_detail_vars(void);
 
-
+#ifdef __DOS__
 #define CL_MC0 0xF8F
 #define CL_MC1 0xF8D
 
@@ -173,6 +175,7 @@ void CrystalLakeSetWSS()
 	tmp |= 0x80;
 	CrystalLakeWriteMCP( CL_MC1, tmp );
 }
+#endif
 
 int ReadConfigFile()
 {
@@ -319,11 +322,13 @@ int ReadConfigFile()
 	// HACK!!! 
 	//Hack to make the Crytal Lake look like Microsoft Sound System
 	if ( digi_driver_board == 0xe200 )	{
+#ifdef __DOS__
 		ubyte tmp;
 		tmp = CrystalLakeReadMCP( CL_MC1 );
 		if ( !(tmp & 0x80) )
 			atexit( CrystalLakeSetSB );		// Restore to SB when done.
 	 	CrystalLakeSetWSS();
+#endif
 		digi_driver_board = 0;//_MICROSOFT_8_ST;<was this microsoft thing, but its irrelevant, because we have no sound here yet,being that its also undefined, I set it to 0 -KRB
 	}
 

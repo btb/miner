@@ -293,7 +293,9 @@ static char rcsid[] = "$Id: kconfig.c 2.11 1995/08/23 16:08:04 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __DOS__
 #include <dos.h>
+#endif
 #include <unistd.h>
 #include <stdarg.h>
 #include <ctype.h>
@@ -1476,6 +1478,7 @@ void kconfig_init_external_controls(int intno, int address)
 
 void kconfig_read_external_controls()
 {
+#ifdef __DOS__
 	union REGS r;
 
 	if ( !kc_enable_external_control ) return;
@@ -1548,6 +1551,7 @@ void kconfig_read_external_controls()
 	Controls.drop_bomb_down_count += kc_external_control->drop_bomb_down_count;	
 	Controls.automap_down_count += kc_external_control->automap_down_count;
 	Controls.automap_state |= kc_external_control->automap_state;
+#endif
 }
 
 void controls_read_all()
@@ -2161,6 +2165,7 @@ void kc_set_controls()
 }
 
 
+#ifdef __DOS__
 int SenseStatus1( void )
 {
 	union  REGS     regs;
@@ -2223,18 +2228,21 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 //--unused--     
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
+#endif
 
 void kconfig_center_headset()
 {
+#ifdef __DOS__
 	if (vfx1_installed)
 		SenseSetZero( sense_function1, DCHTD );                    
 //	} else if (iglasses_headset_installed)	{
 //	} else if (Victor_headset_installed)   {
 //	} else {
 //	}
-
+#endif
 }
 
+#ifdef __DOS__
 int SenseSetZero( int function, int cls )
 {
 	union  REGS     regs;
@@ -2262,9 +2270,11 @@ int SenseSetZero( int function, int cls )
 //--unused--     
 //--unused-- 	return( (int)(regs.x.eax >> 8) );
 //--unused-- }
+#endif
 
 void kconfig_sense_init()
 {
+#ifdef __DOS__
 	int ret;
 	fix htd_y,htd_p,htd_r;
 	int htd_b;
@@ -2283,5 +2293,6 @@ void kconfig_sense_init()
 	} else {
 		printf( TXT_VFX1_ERROR2 );
 	}
+#endif
 }
 

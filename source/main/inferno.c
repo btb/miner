@@ -641,18 +641,17 @@ static char rcsid[] = "$Id: inferno.c 2.36 1996/01/05 16:52:16 john Exp $";
 static char copyright[] = "DESCENT   COPYRIGHT (C) 1994,1995 PARALLAX SOFTWARE CORPORATION";
 #pragma on (unreferenced)
 
-#include <io.h>
-#include <dos.h>
 #include <stdio.h>
 #ifndef NDEBUG
 #include <malloc.h>
 #endif
 #include <stdlib.h>
 #include <string.h>
+#ifdef __DOS__
 #include <conio.h>
-#include <time.h>
 #include <dos.h>
 #include <direct.h>
+#endif
 
 #include "gr.h"
 #include "ui.h"
@@ -871,6 +870,7 @@ extern fix fixed_frametime;
 // Returns 1 if ok, 0 if failed...
 int init_gameport()
 {
+#ifdef __DOS__
 	union REGS regs;
 
 	memset(&regs,0,sizeof(regs));
@@ -879,10 +879,12 @@ int init_gameport()
    int386( 0x15, &regs, &regs );
 	if ( ( regs.x.eax & 0xFFFF ) == 'SG' )
 		return 1;
-	else
-		return 0;
+#endif
+
+	return 0;
 }
 
+#ifdef __DOS__
 void check_dos_version()
 {
 	int major, minor;
@@ -1030,6 +1032,7 @@ void check_memory()
 	}
 
 }
+#endif
 
 
 int Inferno_verbose = 0;
@@ -1067,6 +1070,7 @@ int Inferno_verbose = 0;
 
 extern int digi_timer_rate;
 
+#ifdef __DOS__
 int descent_critical_error = 0;
 unsigned descent_critical_deverror = 0;
 unsigned descent_critical_errcode = 0;
@@ -1086,6 +1090,7 @@ void chandler_end (void)  // dummy functions
 {
 }
 #pragma on (check_stack)
+#endif
 
 extern int Network_allow_socket_changes;
 
@@ -1131,6 +1136,7 @@ int main(int argc,char **argv)
 	dpmi_init(Inferno_verbose);		// Before anything
 	if (Inferno_verbose) printf( "\n" );
 
+#ifdef __DOS__
 	if (Inferno_verbose) printf( "\n%s...", TXT_INITIALIZING_CRIT);
 	if (!dpmi_lock_region((void near *)descent_critical_error_handler,(char *)chandler_end - (char near *)descent_critical_error_handler))	{
 		Error( "Unable to lock critial error handler" );
@@ -1150,6 +1156,7 @@ int main(int argc,char **argv)
 	_harderr((void *) descent_critical_error_handler );
 	//Above line modified by KRB, added (void *) cast
 	//for the compiler.
+#endif
 #endif
 
 #ifdef USE_CD
@@ -1205,7 +1212,9 @@ int main(int argc,char **argv)
 		printf( "%s\n", TXT_COMMAND_LINE_8 );
 //		printf( "\n");
 		printf( "\n%s\n",TXT_PRESS_ANY_KEY3);
+#ifdef __DOS__
 		getch();
+#endif
 		printf( "\n" );
 		printf( "%s\n", TXT_COMMAND_LINE_9);
 		printf( "%s\n", TXT_COMMAND_LINE_10);
@@ -1252,6 +1261,7 @@ int main(int argc,char **argv)
 
 	Lighting_on = 1;
 
+#ifdef __DOS__
 	if ( !FindArg( "-nodoscheck" ))
 		check_dos_version();
 	
@@ -1260,6 +1270,7 @@ int main(int argc,char **argv)
 
 	if ( !FindArg( "-nomemcheck" ))
 		check_memory();
+#endif
 
 	strcpy(Menu_pcx_name, "menu.pcx");	//	Used to be menu2.pcx.
 

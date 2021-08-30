@@ -289,9 +289,11 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 #include <stdarg.h>
+#ifdef __DOS__
+#include <conio.h>
 #include <dos.h>
+#endif
 
 #include "inferno.h"
 #include "game.h"
@@ -994,6 +996,7 @@ void game_init_render_buffers(int screen_mode, int render_w, int render_h, int u
 
 void game_3dmax_off()
 {
+#ifdef __DOS__
 	union REGS regs;
 
 //	memset(&regs,0,sizeof(regs));
@@ -1013,10 +1016,12 @@ void game_3dmax_off()
 
 	mprintf(( 0, "3dmax off\n" ));
 	return;
+#endif
 }
 
 void game_3dmax_on()
 {
+#ifdef __DOS__
 	union REGS regs;
 
 //	memset(&regs,0,sizeof(regs));
@@ -1036,6 +1041,7 @@ void game_3dmax_on()
 
 	mprintf(( 0, "3dmax on\n" ));
 	return;
+#endif
 }
 
 
@@ -2188,6 +2194,7 @@ void diminish_palette_towards_normal(void)
 
 	//mprintf(0, "%2i %2i %2i\n", PaletteRedAdd, PaletteGreenAdd, PaletteBlueAdd);
 
+#ifdef __DOS__
 	// need to reset black and white palette colors for SVR registration
 	if (Game_simuleyes_flag)  {
 		// make black be black		
@@ -2203,6 +2210,7 @@ void diminish_palette_towards_normal(void)
 		outp( 0x3c9, 63 );
 		outp( 0x3c9, 63 );
 	}
+#endif
 }
 
 int	Redsave, Bluesave, Greensave;
