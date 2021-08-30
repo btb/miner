@@ -76,7 +76,7 @@ extern void gr_vesa_pixel( unsigned char color, unsigned int offset );
 void gr_linear_movsb( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsw( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsd(ubyte *source, ubyte *dest, int nbytes);
-void gr_linear_stosd( void * source, unsigned char color, unsigned short nbytes);
+void gr_linear_stosd(ubyte * source, unsigned char color, unsigned short nbytes);
 
 void build_colormap_good(ubyte *palette, ubyte *colormap, int *freq);
 

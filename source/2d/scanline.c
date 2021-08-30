@@ -72,6 +72,23 @@ void gr_linear_darken( ubyte * dest, int darkening_level, int count, ubyte * fad
 		dest++;
 	}
 }
+
+void gr_linear_stosd( ubyte * dest, ubyte color, unsigned short count )
+{
+	int i, x;
+
+	if (count > 3) {
+		while ((int)(dest) & 0x3) { *dest++ = color; count--; };
+		if (count >= 4) {
+			x = (color << 24) | (color << 16) | (color << 8) | color;
+			while (count > 4) { *(int *)dest = x; dest += 4; count -= 4; };
+		}
+		while (count > 0) { *dest++ = color; count--; };
+	} else {
+		for (i=0; i<count; i++ )
+			*dest++ = color;
+	}
+}
 #endif
 
 void gr_uscanline( int x1, int x2, int y )
