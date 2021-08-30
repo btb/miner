@@ -234,6 +234,9 @@ static char rcsid[] = "$Id: endlevel.c 2.2 1995/03/21 14:40:14 john Exp $";
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "profiler.h"
 #include "3d.h"

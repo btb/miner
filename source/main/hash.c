@@ -48,6 +48,9 @@ static char rcsid[] = "$Id: hash.c 2.0 1995/02/27 11:28:01 john Exp $";
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "error.h"
 #include "mono.h"

@@ -131,6 +131,9 @@ static char rcsid[] = "$Id: morph.c 2.1 1995/02/27 18:26:33 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "texmap.h"
 #include "error.h"

@@ -32,6 +32,9 @@ static char rcsid[] = "$Id: multi.c 2.10 1995/05/29 16:18:26 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "game.h"
 #include "modem.h"

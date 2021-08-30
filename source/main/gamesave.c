@@ -279,11 +279,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: gamesave.c 2.2 1995/04/23 14:53:12 john Exp $";
 #pragma on (unreferenced)
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "mono.h"
 #include "key.h"

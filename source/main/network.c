@@ -29,6 +29,9 @@ static char rcsid[] = "$Id: network.c 2.11 1995/07/18 10:57:56 john Exp $";
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "types.h"
 #include "args.h"

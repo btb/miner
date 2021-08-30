@@ -247,6 +247,9 @@ static char rcsid[] = "$Id: ai.c 2.11 1995/07/09 11:15:48 john Exp $";
 
 #include <stdio.h>
 #include <stdlib.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "inferno.h"
 #include "game.h"

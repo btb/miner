@@ -319,6 +319,9 @@ static char rcsid[] = "$Id: object.c 2.3 1995/06/15 12:30:51 john Exp $";
 
 #include <string.h>	// for memset
 #include <stdio.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "inferno.h"
 #include "game.h"

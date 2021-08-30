@@ -178,6 +178,9 @@ static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "error.h"
 #include "3d.h"

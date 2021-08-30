@@ -412,6 +412,9 @@ static char rcsid[] = "$Id: collide.c 2.5 1995/07/26 12:07:46 john Exp $";
 #include <string.h>	// for memset
 #include <stdlib.h>
 #include <stdio.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "rle.h"
 #include "inferno.h"

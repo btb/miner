@@ -216,6 +216,9 @@ static char rcsid[] = "$Id: fvi.c 2.3 1995/03/24 14:49:04 john Exp $";
 
 #include <stdlib.h>
 #include <string.h>
+#ifndef __DOS__
+#include "misc.c"
+#endif
 
 #include "error.h"
 #include "mono.h"

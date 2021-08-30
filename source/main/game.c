@@ -293,6 +293,8 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #ifdef __DOS__
 #include <conio.h>
 #include <dos.h>
+#else
+#include "misc.h"
 #endif
 
 #include "inferno.h"

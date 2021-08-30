@@ -227,6 +227,9 @@ static char rcsid[] = "$Id: playsave.c 2.3 1995/05/26 16:16:23 john Exp $";
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "error.h"
 

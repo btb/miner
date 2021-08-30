@@ -131,6 +131,9 @@ static char rcsid[] = "$Id: lighting.c 2.1 1995/07/24 13:21:56 john Exp $";
 
 #include <stdlib.h>
 #include <string.h>	// for memset()
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "inferno.h"
 #include "segment.h"

@@ -208,6 +208,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <malloc.h>	//for stackavail()
 #endif
 #include <string.h>	//	for memset()
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "inferno.h"
 #include "game.h"

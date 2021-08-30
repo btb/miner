@@ -300,6 +300,9 @@ static char rcsid[] = "$Id: render.c 2.5 1995/12/19 15:31:36 john Exp $";
 
 #include <stdlib.h>
 #include <string.h>
+#ifndef __DOS__
+#include "misc.h"
+#endif
 
 #include "inferno.h"
 #include "segment.h"

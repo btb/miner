@@ -340,6 +340,9 @@ static char rcsid[] = "$Id: piggy.c 2.10 1995/10/07 13:17:26 john Exp $";
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#ifndef __DOS__
+#include "strutil.h"
+#endif
 
 #include "types.h"
 #include "inferno.h"
