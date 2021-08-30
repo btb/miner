@@ -47,5 +47,12 @@ typedef ubyte bool;
 #define NULL 0
 #endif
 
+#ifndef __DOS__
+#define far
+#define _far
+#define __far
+#define near
+#endif
+
 #endif
 
