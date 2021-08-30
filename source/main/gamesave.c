@@ -280,7 +280,6 @@ static char rcsid[] = "$Id: gamesave.c 2.2 1995/04/23 14:53:12 john Exp $";
 #pragma on (unreferenced)
 
 
-#include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

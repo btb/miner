@@ -69,7 +69,6 @@ static char rcsid[] = "$Id: scale.c 1.12 1995/03/14 15:14:11 john Exp $";
 #include <math.h>
 #include <limits.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 #include "mono.h"

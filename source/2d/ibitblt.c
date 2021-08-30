@@ -49,8 +49,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: ibitblt.c 1.6 1994/11/28 17:07:29 john Exp $";
 #pragma on (unreferenced)
 
-#include <conio.h>
-#include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
 

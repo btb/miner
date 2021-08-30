@@ -100,7 +100,6 @@ static char rcsid[] = "$Id: mem.c 1.18 1995/01/24 20:49:18 matt Exp $";
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include <dos.h>
 
 #include "mono.h"
 #include "error.h"

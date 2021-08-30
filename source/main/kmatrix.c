@@ -104,10 +104,7 @@ static char rcsid[] = "$Id: kmatrix.c 2.3 1995/05/02 17:01:22 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <io.h>
 #include <stdarg.h>
-#include <dos.h>
-#include <conio.h>
 
 #include "error.h"
 #include "types.h"

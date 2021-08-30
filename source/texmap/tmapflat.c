@@ -73,7 +73,6 @@ static char rcsid[] = "$Id: tmapflat.c 1.13 1995/02/20 18:23:24 john Exp $";
 // #include <graph.h>
 #include <limits.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 // #include "hack3df.h"

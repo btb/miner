@@ -101,7 +101,6 @@ static char rcsid[] = "$Id: effects.c 2.0 1995/02/27 11:32:49 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <conio.h>
 #include <string.h>
 
 #include "gr.h"

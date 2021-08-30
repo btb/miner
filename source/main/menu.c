@@ -32,8 +32,6 @@ static char rcsid[] = "$Id: menu.c 2.5 1995/10/07 13:19:09 john Exp $";
 #include <string.h>
 #include <ctype.h>
 #include <stdarg.h>
-#include <conio.h>
-#include <dos.h>
 #include <errno.h>
 
 #include "menu.h"

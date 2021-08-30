@@ -183,7 +183,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: hostage.c 2.0 1995/02/27 11:28:36 john Exp $";
 #pragma on (unreferenced)
 
-#include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

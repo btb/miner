@@ -145,7 +145,6 @@ static char rcsid[] = "$Id: credits.c 2.2 1995/06/14 17:26:08 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dos.h>
 #include <stdarg.h>
 #include <ctype.h>
 

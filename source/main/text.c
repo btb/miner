@@ -67,7 +67,6 @@ static char rcsid[] = "$Id: text.c 2.0 1995/02/27 11:33:09 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <io.h>
 
 //#include "cfile.h"
 #include "cfile.h"

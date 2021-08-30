@@ -108,7 +108,6 @@ static char rcsid[] = "$Id: polyobj.c 2.1 1995/05/26 16:10:37 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <io.h>
 
 #ifdef DRIVE
 #include "drive.h"

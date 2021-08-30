@@ -136,7 +136,6 @@ static char rcsid[] = "$Id: ntmap.c 1.52 1995/03/14 15:13:06 john Exp $";
 #include <math.h>
 #include <limits.h>
 #include <stdio.h>
-#include <conio.h>
 #include <stdlib.h>
 
 #include "mono.h"

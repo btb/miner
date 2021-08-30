@@ -272,12 +272,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: joydefs.c 2.2 1995/06/30 12:30:22 john Exp $";
 #pragma on (unreferenced)
 
-#include <conio.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <io.h>
 #include <string.h>
-#include <dos.h>
 
 #include "mono.h"
 #include "key.h"
