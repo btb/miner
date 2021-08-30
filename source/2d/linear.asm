@@ -90,7 +90,6 @@
 _DATA   SEGMENT BYTE PUBLIC USE32 'DATA'
 
 
-include vgaregs.inc
 
 
 		; Put data here

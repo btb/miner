@@ -52,7 +52,7 @@ $(OBJDIR)/gr.obj: gr.c dpmi.h error.h fix.h gr.h grdef.h mem.h mono.h palette.h 
 $(OBJDIR)/ibitblt.obj: ibitblt.c error.h fix.h gr.h ibitblt.h mem.h types.h
 $(OBJDIR)/lbitblt.obj: lbitblt.asm fix.inc gr.inc psmacros.inc types.inc
 $(OBJDIR)/line.obj: line.c clip.h fix.h gr.h grdef.h mem.h types.h
-$(OBJDIR)/linear.obj: linear.asm psmacros.inc vgaregs.inc
+$(OBJDIR)/linear.obj: linear.asm psmacros.inc
 $(OBJDIR)/modex.obj: modex.asm psmacros.inc tweak.inc vgaregs.inc
 $(OBJDIR)/palette.obj: palette.c cfile.h error.h fix.h gr.h grdef.h key.h mem.h mono.h types.h
 $(OBJDIR)/pcx.obj: pcx.c cfile.h fix.h gr.h mem.h pcx.h types.h
