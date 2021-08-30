@@ -27,7 +27,7 @@ testgui_DIRS = ../main/editor
 
 # What source files and libs for the test programs
 testgui_SRCS = testg.c func.c
-testgui_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib iff.lib cflib.lib cfile.lib # readfile.lib func.lib
+testgui_LIBS = io.lib gr.lib ui.lib misc.lib mem.lib iff.lib cflib.lib cfile.lib vga.lib # readfile.lib func.lib
 testgui_LFLAGS = option stack=50k
 
 #rules and targets common to all Miner makefiles

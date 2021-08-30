@@ -13,5 +13,5 @@ target_sources(ui PRIVATE ui.c mouse.c window.c uidraw.c button.c gadget.c listb
 
 # What object files and libs for the test programs
 target_sources(testgui PRIVATE testg.c func.c)
-target_link_libraries(testgui io gr ui misc mem iff cflib cfile) #readfile func
+target_link_libraries(testgui io gr ui misc mem iff cflib cfile vga) #readfile func
 target_link_options(testgui PRIVATE option stack=50k)

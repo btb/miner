@@ -8,7 +8,7 @@ PROGS = lbmcomp
 # What source files and libs for the programs
 lbmcomp_SRCS = lbmcomp.c 
 # lbmcomp_LIBS = gr.lib misc.lib mem.lib iff.lib readfile.lib ui.lib io.lib func.lib cflib.lib cfile.lib 
-lbmcomp_LIBS = gr.lib misc.lib mem.lib iff.lib ui.lib io.lib cflib.lib cfile.lib 
+lbmcomp_LIBS = gr.lib misc.lib mem.lib iff.lib ui.lib io.lib cflib.lib cfile.lib vga.lib
 lbmcomp_LFLAGS = option stack=150k
 
 #rules and targets common to all Miner makefiles
