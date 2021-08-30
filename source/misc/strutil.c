@@ -33,6 +33,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "mem.h"
 
@@ -81,3 +82,71 @@ void strrev( char *s1 )
 	free(s2);
 }
 
+void _splitpath(char *name, char *drive, char *path, char *base, char *ext)
+{
+	char *s, *p;
+
+	p = name;
+	s = strchr(p, ':');
+	if ( s != NULL ) {
+		if (drive) {
+			*s = '\0';
+			strcpy(drive, p);
+			*s = ':';
+		}
+		p = s+1;
+		if (!p)
+			return;
+	} else if (drive)
+		*drive = '\0';
+
+	s = strrchr(p, '\\');
+	if ( s != NULL) {
+		if (path) {
+			char c;
+
+			c = *(s+1);
+			*(s+1) = '\0';
+			strcpy(path, p);
+			*(s+1) = c;
+		}
+		p = s+1;
+		if (!p)
+			return;
+	} else if (path)
+		*path = '\0';
+
+	s = strchr(p, '.');
+	if ( s != NULL) {
+		if (base) {
+			*s = '\0';
+			strcpy(base, p);
+			*s = '.';
+		}
+		p = s+1;
+		if (!p)
+			return;
+	} else if (base)
+		*base = '\0';
+
+	if (ext)
+		strcpy(ext, p);
+}
+
+#if 0
+void main()
+{
+	char drive[10], path[50], name[16], ext[5];
+
+	drive[0] = path[0] = name[0] = ext[0] = '\0';
+	_splitpath("f:\\tmp\\x.out", drive, path, name, ext);
+	drive[0] = path[0] = name[0] = ext[0] = '\0';
+	_splitpath("tmp\\x.out", drive, path, name, ext);
+	drive[0] = path[0] = name[0] = ext[0] = '\0';
+	_splitpath("f:\\tmp\\a.out", NULL, NULL, name, NULL);
+	drive[0] = path[0] = name[0] = ext[0] = '\0';
+	_splitpath("tmp\\*.dem", drive, path, NULL, NULL);
+	drive[0] = path[0] = name[0] = ext[0] = '\0';
+	_splitpath(".\\tmp\\*.dem", drive, path, NULL, NULL);
+}
+#endif

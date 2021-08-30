@@ -38,4 +38,6 @@ void strlwr( char *s1 );
 void strrev( char *s1 );
 #endif
 
+void _splitpath(char *name, char *drive, char *path, char *base, char *ext);
+
 #endif
