@@ -570,6 +570,7 @@ int load_mine_data(CFILE *LoadFile)
 #define COMPILED_MINE_VERSION 0
 
 int	New_file_format_load = 1;
+int load_mine_data_compiled_new(CFILE *LoadFile);
 
 int load_mine_data_compiled(CFILE *LoadFile)
 {

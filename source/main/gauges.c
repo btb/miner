@@ -1067,7 +1067,7 @@ void hud_show_shield(void)
 }
 
 //draw the icons for number of lives
-hud_show_lives()
+void hud_show_lives(void)
 {
 	if ((HUD_nmessages > 0) && (strlen(HUD_messages[hud_first]) > 38))
 		return;
@@ -1087,7 +1087,7 @@ hud_show_lives()
 
 }
 
-sb_show_lives()
+void sb_show_lives(void)
 {
 	int x,y;
 	grs_bitmap * bm = &GameBitmaps[Gauges[GAUGE_LIVES].index];
@@ -1819,7 +1819,7 @@ rgb player_rgb[] = {
 
 
 //draw the reticle
-show_reticle(int force_big_one)
+void show_reticle(int force_big_one)
 {
 	int x,y;
 	int laser_ready,missile_ready,laser_ammo,missile_ammo;

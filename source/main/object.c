@@ -1520,6 +1520,9 @@ int obj_create_copy(int objnum, vms_vector *new_pos, int newsegnum)
 }
 #endif
 
+void obj_detach_one(object *sub);
+void obj_detach_all(object *parent);
+
 //remove object from the world
 void obj_delete(int objnum)
 {

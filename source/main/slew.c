@@ -131,7 +131,7 @@ object *slew_obj=NULL;	//what object is slewing, or NULL if none
 short old_joy_x,old_joy_y;	//position last time around
 
 //say start slewing with this object
-slew_init(object *obj)
+void slew_init(object *obj)
 {
 	slew_obj = obj;
 

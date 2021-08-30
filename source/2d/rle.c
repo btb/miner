@@ -110,8 +110,8 @@ static char rcsid[] = "$Id: rle.c 1.19 1995/01/14 19:18:31 john Exp $";
 #define RLE_CODE 			0xE0
 #define NOT_RLE_CODE		31
 
-#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 int gr_rle_decode_asm( ubyte * src, ubyte * dest );
+#if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux gr_rle_decode_asm parm [esi] [edi] value [edi] modify exact [eax ebx ecx edx esi edi] = \
 "  cld					"\
 "	xor	ecx, ecx		"\		

@@ -330,6 +330,7 @@ void draw_player( object * obj )
 	g3_draw_line( &sphere_point, &arrow_point );
 }
 
+void draw_all_edges(void);
 
 void draw_automap()
 {
@@ -490,6 +491,8 @@ void modex_print_message(int x, int y, char *str)
 
 extern void GameLoop(int, int );
 extern int set_segment_depths(int start_seg, ubyte *segbuf);
+void automap_build_edge_list(void);
+void adjust_segment_limit(int SegmentLimit);
 
 void do_automap( int key_code )	{
 	int done=0;

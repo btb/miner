@@ -512,7 +512,7 @@ fix flash_scale;
 fix flash_rate = FLASH_CYCLE_RATE;
 
 //cycle the flashing light for when mine destroyed
-flash_frame()
+void flash_frame(void)
 {
 	static fixang flash_ang=0;
 
@@ -806,7 +806,7 @@ render_object_search(object *obj)
 }
 #endif
 
-do_render_object(int objnum)
+void do_render_object(int objnum)
 {
 	#ifdef EDITOR
 	int save_3d_outline;
@@ -1438,7 +1438,7 @@ int sort_seg_children(segment *seg,int n_children,short *child_list)
 	return count;
 }
 
-add_obj_to_seglist(int objnum,int listnum)
+void add_obj_to_seglist(int objnum, int listnum)
 {
 	int i,checkn,marker;
 
@@ -1673,6 +1673,8 @@ int Rear_view=0;
 #ifdef JOHN_ZOOM
 fix Zoom_factor=F1_0;
 #endif
+void render_mine(int start_seg_num, fix eye_offset);
+
 //renders onto current canvas
 void render_frame(fix eye_offset)
 {

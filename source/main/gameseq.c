@@ -473,6 +473,8 @@ void gameseq_remove_unused_players()
 	}
 }
 
+void init_player_stats_new_ship(void);
+
 // Setup player for new game
 void init_player_stats_game()
 {
@@ -1141,6 +1143,8 @@ DoEndlevelMenu()
 #endif
 }
 
+int AdvanceLevel(int secret_flag);
+
 //called when the player has finished a level
 PlayerFinishedLevel(int secret_flag)
 {
@@ -1299,8 +1303,10 @@ died_in_mine_message(void)
 	Function_mode = old_fmode;
 }
 
+void StartLevel(int random);
+
 //called when the player has died
-DoPlayerDead()
+void DoPlayerDead(void)
 {
 	reset_palette_add();
 
@@ -1391,8 +1397,10 @@ DoPlayerDead()
 
 }
 
+void copy_defaults_to_robot_all(void);
+
 //called when the player is starting a new level for normal game mode and restore state
-StartNewLevelSub(int level_num, int page_in_textures)
+void StartNewLevelSub(int level_num, int page_in_textures)
 {
 	if (!(Game_mode & GM_MULTI)) {
 		last_drawn_cockpit = -1;
@@ -1625,7 +1633,7 @@ extern void vr_reset_display();
 
 //	-----------------------------------------------------------------------------------------------------
 //called when the player is starting a level (new game or new ship)
-StartLevel(int random)
+void StartLevel(int random)
 {
 	Assert(!Player_is_dead);
 

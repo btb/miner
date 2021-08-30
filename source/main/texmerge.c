@@ -203,6 +203,8 @@ void texmerge_close()
 }
 
 //--unused-- int info_printed = 0;
+void merge_textures_super_xparent(int type, grs_bitmap *bottom_bmp, grs_bitmap *top_bmp, ubyte *dest_data);
+void merge_textures_new(int type, grs_bitmap *bottom_bmp, grs_bitmap *top_bmp, ubyte *dest_data);
 
 grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 {

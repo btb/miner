@@ -485,7 +485,9 @@ multi_new_game(void)
 	Player_exploded = 0;
 	Dead_player_camera = 0;
 }
-	
+
+void multi_reset_player_object(object *objp);
+
 void
 multi_make_player_ghost(int playernum)
 {
@@ -1798,6 +1800,8 @@ void multi_do_hostage_door_status(char *buf)
 }
 #endif
 
+void multi_save_game(ubyte slot, uint id, char *desc);
+
 void multi_do_save_game(char *buf)
 {
 	int count = 1;
@@ -1812,6 +1816,8 @@ void multi_do_save_game(char *buf)
 	multi_save_game( slot, id, desc );
 }
 
+void multi_restore_game(ubyte slot, uint id);
+
 void multi_do_restore_game(char *buf)
 {
 	int count = 1;
@@ -1823,6 +1829,8 @@ void multi_do_restore_game(char *buf)
 
 	multi_restore_game( slot, id );
 }
+
+void extract_netplayer_stats(netplayer_stats *ps, player *pd);
 
 // 
 void multi_do_req_player(char *buf)
@@ -2547,6 +2555,8 @@ multi_send_hostage_door_status(int wallnum)
 	multi_send_data(multibuf, count, 0);
 }
 #endif
+
+void multi_set_robot_ai(void);
 
 void
 multi_prep_level(void)

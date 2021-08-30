@@ -87,7 +87,7 @@ void morph_start(object *obj);
 void draw_morph_object(object *obj);
 
 //process the morphing object for one frame
-do_morph_frame(object *obj);
+void do_morph_frame(object *obj);
 
 //called at the start of a level
 init_morphs();

@@ -622,6 +622,9 @@ int last_drawn_cockpit[2] = { -1, -1 };
 
 extern int Rear_view;
 
+void fill_background(int x, int y, int w, int h, int dx, int dy);
+void game_init_render_sub_buffers(int x, int y, int w, int h);
+
 // This actually renders the new cockpit onto the screen.
 void update_cockpits(int force_redraw)
 {
@@ -767,7 +770,7 @@ void reset_cockpit()
 
 void HUD_clear_messages();
 
-toggle_cockpit()
+void toggle_cockpit(void)
 {
 	int new_mode;
 
@@ -803,7 +806,7 @@ toggle_cockpit()
 
 #define WINDOW_MIN_W		160
 
-grow_window()
+void grow_window(void)
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -891,7 +894,7 @@ copy_background_rect(int left,int top,int right,int bot)
 
 }
 
-fill_background(int x,int y,int w,int h,int dx,int dy)
+void fill_background(int x, int y, int w, int h, int dx, int dy)
 {
 	gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
 	copy_background_rect(x-dx,y-dy,x-1,y+h+dy-1);
@@ -900,7 +903,7 @@ fill_background(int x,int y,int w,int h,int dx,int dy)
 	copy_background_rect(x,y+h,x+w-1,y+h+dy-1);
 }
 
-shrink_window()
+void shrink_window(void)
 {
 	if (Cockpit_mode == CM_FULL_COCKPIT) {
 		Game_window_h = max_window_h;
@@ -1405,6 +1408,8 @@ void render_countdown_gauge()
 }
 
 #ifdef NETWORK
+void draw_centered_text(int y, char * s);
+
 void game_draw_multi_message()
 {
 	char temp_string[MAX_MULTI_MESSAGE_LEN+25];
@@ -2643,6 +2648,8 @@ extern void do_lunacy_on(), do_lunacy_off();
 
 extern int Physics_cheat_flag;
 
+void GameLoop(int RenderFlag, int ReadControlsFlag);
+
 void game_disable_cheats()
 {
 	Game_turbo_mode = 0;
@@ -2863,6 +2870,7 @@ ubyte exploding_flag = 0;
 
 extern dump_used_textures_all();
 extern kconfig_center_headset();
+int create_special_path(void);
 
 void ReadControls()
 {
@@ -3920,7 +3928,7 @@ extern void check_create_player_path(void);
 #endif
 
 extern	int	Do_appearance_effect;
-
+void powerup_grab_cheat_all(void);
 
 
 void GameLoop(int RenderFlag, int ReadControlsFlag )

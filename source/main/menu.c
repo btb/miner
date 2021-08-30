@@ -221,6 +221,8 @@ void create_main_menu(newmenu_item *m, int *menu_choice, int *callers_num_option
 	*callers_num_options = num_options;
 }
 
+void do_option(int select);
+
 //returns number of item chosen
 int DoMenu() 
 {
@@ -258,6 +260,8 @@ int DoMenu()
 }
 
 extern void show_order_form(void);	// John didn't want this in inferno.h so I just externed it.
+void do_multi_player_menu(void);
+void do_new_game_menu(void);
 
 //returns flag, true means quit menu
 void do_option ( int select) 
@@ -458,6 +462,8 @@ void set_detail_level_parameters(int detail_level)
 	}
 }
 
+void do_detail_level_menu_custom(void);
+
 //	-----------------------------------------------------------------------------
 void do_detail_level_menu(void)
 {
@@ -578,7 +584,7 @@ void do_detail_level_menu_custom(void)
 	set_custom_detail_vars();
 }
 
-do_new_game_menu()
+void do_new_game_menu(void)
 {
 	int n_missions,new_level_num,player_highest_level;
 

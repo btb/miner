@@ -216,6 +216,7 @@ int	Skip_briefing_screens=0;
 int	Briefing_foreground_colors[MAX_BRIEFING_COLORS], Briefing_background_colors[MAX_BRIEFING_COLORS];
 int	Current_color = 0;
 int	Erase_color;
+void title_save_game(void);
 
 int local_key_inkey(void)
 {

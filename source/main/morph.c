@@ -323,7 +323,7 @@ update_points(polymodel *pm,int submodel_num,morph_data *md)
 
 
 //process the morphing object for one frame
-do_morph_frame(object *obj)
+void do_morph_frame(object *obj)
 {
 	int i;
 	polymodel *pm;

@@ -692,6 +692,8 @@ void john_cheat_func_2(int key)
 		john_cheats_index_2 = 0;
 }
 
+void init_boss_segments(short segptr[], int *num_segs, int size_check);
+
 // ---------------------------------------------------------------------------------------------------------------------
 void init_ai_objects(void)
 {
@@ -1277,6 +1279,7 @@ void do_ai_robot_hit_attack(object *robot, object *player, vms_vector *collision
 }
 
 extern int Player_exploded;
+void ai_multi_send_robot_position(int objnum, int force);
 
 // --------------------------------------------------------------------------------------------------------------------
 //	Note: Parameter vec_to_player is only passed now because guns which aren't on the forward vector from the

@@ -514,7 +514,7 @@ int apply_damage_to_clutter(object *clutter, fix damage)
 
 
 //given the specified force, apply damage from that force to an object
-apply_force_damage(object *obj,fix force,object *other_obj)
+void apply_force_damage(object *obj, fix force, object *other_obj)
 {
 	int	result;
 	fix damage;

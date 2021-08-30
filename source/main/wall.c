@@ -324,6 +324,7 @@ void wall_set_tmap_num(segment *seg,int side,segment *csegp,int cside,int anim_n
 	}
 }
 
+void kill_stuck_objects(int wallnum);
 
 // -------------------------------------------------------------------------------
 //when the wall has used all its hitpoints, this will destroy it

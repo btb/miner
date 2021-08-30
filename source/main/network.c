@@ -147,6 +147,7 @@ extern obj_position Player_init[MAX_PLAYERS];
 #define DUMP_LEVEL 6
 
 int network_wait_for_snyc();
+void network_flush(void);
 
 void
 network_init(void)
@@ -176,6 +177,9 @@ network_init(void)
 #define ENDLEVEL_SEND_INTERVAL F1_0*2
 #define ENDLEVEL_IDLE_TIME	F1_0*10
 	
+void network_send_endlevel_sub(int player_num);
+void network_listen(void);
+
 void 
 network_endlevel_poll( int nitems, newmenu_item * menus, int * key, int citem )
 {
@@ -305,6 +309,8 @@ network_endlevel_poll2( int nitems, newmenu_item * menus, int * key, int citem )
 			*key = -2;
 	}
 }
+
+void network_update_netgame(void);
 
 int
 network_endlevel(int *secret)
@@ -516,6 +522,9 @@ network_new_player(sequence_packet *their)
 
 //	create_player_appearance_effect(&Objects[objnum]);
 }
+
+void network_dump_player(ubyte *server, ubyte *node, int why);
+void network_send_objects(void);
 
 void network_welcome_player(sequence_packet *their)
 {
@@ -801,6 +810,7 @@ void network_stop_resync(sequence_packet *their)
 }
 
 byte object_buffer[IPX_MAX_DATA_SIZE];
+void network_send_rejoin_sync(int player_num);
 
 void network_send_objects(void)
 {
@@ -1003,6 +1013,7 @@ char * network_get_player_name( int objnum )
 	return Players[Objects[objnum].id].callsign;
 }
 
+void network_send_game_info(sequence_packet *their);
 
 void network_add_player(sequence_packet *p)
 {
@@ -1269,6 +1280,11 @@ void network_process_request(sequence_packet *their)
 			break;
 		}
 }
+
+void network_read_endlevel_packet(ubyte *data);
+void network_read_pdata_packet(frame_info *pd);
+void network_read_sync_packet(netgame_info *sp);
+void network_read_object_packet(ubyte *data);
 
 void network_process_packet(ubyte *data, int length )
 {

@@ -51,7 +51,7 @@ extern int  FastSetPortHardware(short port, int IRQ, int baseaddr);
 extern int  FastGetPortHardware(short port, int *IRQ, int *baseaddr);
 extern void FastSet16550TriggerLevel(int a);
 extern void FastSet16550UseTXFifos(int a);
-extern      FastSavePortParameters(short port);
+extern void FastSavePortParameters(short port);
 extern int  PortClose(PORT *port);
 extern void FastRestorePortParameters(int num);
 extern int  GetCd(PORT *port);

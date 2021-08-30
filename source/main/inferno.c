@@ -1106,6 +1106,9 @@ int find_descent_cd();
 extern int Config_vr_type;
 extern int Config_vr_tracking;
 
+void check_joystick_calibration();
+void show_order_form();
+
 int main(int argc,char **argv)
 {
 	int i,t;

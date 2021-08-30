@@ -538,6 +538,8 @@ void validate_all_paths(void)
 }
 #endif
 
+void maybe_ai_path_garbage_collect(void);
+
 //	-------------------------------------------------------------------------------------------------------
 //	Creates a path from the objects current segment (objp->segnum) to the specified segment for the object to
 //	hide in Ai_local_info[objnum].goal_segment.
@@ -813,6 +815,8 @@ void move_object_to_goal(object *objp, vms_vector *goal_point, int goal_seg)
 	} else
 		obj_relink(objp-Objects, segnum);
 }
+
+void ai_path_set_orient_and_vel(object *objp, vms_vector *goal_point);
 
 //	----------------------------------------------------------------------------------------------------------
 //	Optimization: If current velocity will take robot near goal, don't change velocity

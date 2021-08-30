@@ -654,6 +654,13 @@ int find_next_item_left( kc_item * items, int nitems, int citem )
 #endif
 
 
+void kc_change_mouseaxis(kc_item *item);
+void kc_change_invert(kc_item *item);
+void kc_change_joyaxis(kc_item *item);
+void kc_change_mousebutton(kc_item *item);
+void kc_change_joybutton(kc_item *item);
+void kc_change_key(kc_item *item);
+void kc_drawitem(kc_item *item, int is_current);
 
 void kconfig_sub(kc_item * items,int nitems, char * title)
 {
@@ -1048,6 +1055,8 @@ void kc_change_key( kc_item * item )
 
 }
 
+void kconfig_read_fcs(int raw_axis);
+
 void kc_change_joybutton( kc_item * item )
 {
 	int n,i,k;
@@ -1323,6 +1332,7 @@ void kconfig(int n, char * title)
 
 }
 
+void kconfig_set_fcs_button(int btn, int button);
 
 void kconfig_read_fcs( int raw_axis )
 {
@@ -1392,7 +1402,9 @@ extern int			VR_sensitivity;
 						
 int VR_sense_range[3] = { 25, 50, 75 };
 
-read_head_tracker()
+int SenseGetData(int function, int cls, fix *yaw, fix *pitch, fix *roll, int *buttons);
+
+void read_head_tracker(void)
 {
 	fix yaw, pitch, roll;
 	int buttons;

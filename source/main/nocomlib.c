@@ -78,7 +78,7 @@ void FastSet16550UseTXFifos(int a)
 }
 
 
-FastSavePortParameters(short port)
+void FastSavePortParameters(short port)
 {
 	return;
 }
@@ -115,9 +115,9 @@ void HMWaitForOK(int a, int b)
 {
 	return;
 }
-HMSendString(PORT *port, char *msg)
+int HMSendString(PORT *port, char *msg)
 {
-	return;
+	return 0;
 }
 void HMReset(PORT *port)
 {	

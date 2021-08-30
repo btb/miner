@@ -549,7 +549,7 @@ void do_physics_sim_rot(object *obj)
 
 //	-----------------------------------------------------------------------------------------------------------
 //Simulate a physics object for this frame
-do_physics_sim(object *obj)
+void do_physics_sim(object *obj)
 {
 	int ignore_obj_list[MAX_IGNORE_OBJS],n_ignore_objs;
 	int iseg;
@@ -1159,7 +1159,7 @@ save_p1 = *fq.p1;
 
 //Applies an instantaneous force on an object, resulting in an instantaneous
 //change in velocity.
-phys_apply_force(object *obj,vms_vector *force_vec)
+void phys_apply_force(object *obj,vms_vector *force_vec)
 {
 
 	if (obj->movement_type != MT_PHYSICS)
@@ -1235,7 +1235,7 @@ void physics_turn_towards_vector(vms_vector *goal_vector, object *obj, fix rate)
 //	-----------------------------------------------------------------------------
 //	Applies an instantaneous whack on an object, resulting in an instantaneous
 //	change in orientation.
-phys_apply_rot(object *obj,vms_vector *force_vec)
+void phys_apply_rot(object *obj, vms_vector *force_vec)
 {
 	fix	rate, vecmag;
 

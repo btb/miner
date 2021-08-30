@@ -385,6 +385,8 @@ void free_height_array(void)
 	free(height_array);
 }
 
+void build_light_table(void);
+
 void load_terrain(char *filename)
 {
 	grs_bitmap height_bitmap;
@@ -484,7 +486,7 @@ void free_light_table(void)
 
 }
 
-build_light_table()
+void build_light_table(void)
 {
 	int i,j;
 	fix l,l2,min_l=0x7fffffff,max_l=0;

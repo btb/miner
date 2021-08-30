@@ -84,6 +84,8 @@ byte robot_fire_buf[MAX_ROBOTS_CONTROLLED][18+3];
 //	return( ((objnum % 4) + pnum) % N_players);
 //}
 
+int multi_add_controlled_robot(int objnum, int agitation);
+
 int
 multi_can_move_robot(int objnum, int agitation)
 {
@@ -143,6 +145,9 @@ multi_can_move_robot(int objnum, int agitation)
 
 	return(rval);
 }
+
+void multi_send_release_robot(int objnum);
+void multi_delete_controlled_robot(int objnum);
 
 void
 multi_check_robot_timeout(void)
@@ -372,6 +377,8 @@ multi_send_release_robot(int objnum)
 }
 
 #define MIN_ROBOT_COM_GAP F1_0/12
+
+void multi_send_robot_position_sub(int objnum);
 
 int
 multi_send_robot_frame(int sent)

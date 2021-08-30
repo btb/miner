@@ -363,6 +363,8 @@ void free_endlevel_data(void)
 		free(satellite_bm_instance.bm_data);
 }
 
+void generate_starfield(void);
+
 init_endlevel()
 {
 	//##satellite_bitmap = bm_load("earth.bbm");
@@ -404,7 +406,9 @@ vms_matrix surface_orient;
 
 int endlevel_data_loaded=0;
 
-start_endlevel_sequence()
+int find_exit_side(object *obj);
+
+void start_endlevel_sequence(void)
 {
 	int last_segnum,exit_side,tunnel_length;
 
@@ -624,7 +628,9 @@ get_angs_to_object(vms_angvec *av,vms_vector *targ_pos,vms_vector *cur_pos)
 	vm_extract_angles_vector(av,&tv);
 }
 
-do_endlevel_frame()
+void do_endlevel_flythrough(int n);
+
+void do_endlevel_frame(void)
 {
 	static fix timer;
 	vms_vector save_last_pos;
@@ -1053,6 +1059,8 @@ fix satellite_size = i2f(400);
 #define SATELLITE_WIDTH		satellite_size
 #define SATELLITE_HEIGHT	((satellite_size*9)/4)		//((satellite_size*5)/2)
 
+void draw_stars(void);
+
 render_external_scene(fix eye_offset)
 {
 
@@ -1112,7 +1120,7 @@ render_external_scene(fix eye_offset)
 
 vms_vector stars[MAX_STARS];
 
-generate_starfield()
+void generate_starfield(void)
 {
 	int i;
 
@@ -1125,7 +1133,7 @@ generate_starfield()
 	}
 }
 
-draw_stars()
+void draw_stars(void)
 {
 	int i;
 	int intensity=31;
@@ -1280,7 +1288,7 @@ static vms_angvec *angvec_add2_scale(vms_angvec *dest,vms_vector *src,fix s)
 
 #define MAX_SLIDE_PER_SEGMENT 0x10000
 
-do_endlevel_flythrough(int n)
+void do_endlevel_flythrough(int n)
 {
 	object *obj;
 	segment *pseg;
@@ -1514,7 +1522,7 @@ int convert_ext( char *dest, char *ext )
 }
 
 //called for each level to load & setup the exit sequence
-load_endlevel_data(int level_num)
+void load_endlevel_data(int level_num)
 {
 	char filename[13];
 	char line[LINE_LEN],*p;
