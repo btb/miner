@@ -9,6 +9,9 @@ add_library(misc)
 target_sources(misc PRIVATE byteswap.c error.c
    $<$<BOOL:${BUILD_EDITOR}>:parsarg.c>
 )
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "DOS")
+   target_sources(misc PRIVATE fileutil.c misc.c strutil.c)
+endif()
 
 # What test programs to make
 # add_executable(errtest)
