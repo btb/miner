@@ -27,7 +27,11 @@ int FileFindNext(FILEFINDSTRUCT *ffstruct);
 int FileFindClose(void);
 
 typedef struct FILETIMESTRUCT {
+#if defined(__WATCOMC__) && (__WATCOMC__ < 1280)
 	unsigned short date,time;
+#else
+	unsigned int date, time;
+#endif
 } FILETIMESTRUCT;
 
 //the both return 0 if no error
