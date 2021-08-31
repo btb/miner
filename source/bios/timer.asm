@@ -147,7 +147,7 @@
 
 _DATA   SEGMENT BYTE PUBLIC USE32 'DATA'
 
-rcsid	db	"$Id: timer.asm 1.28 1995/02/15 01:36:56 matt Exp $"
+rcsid	db	"$Id: timer.asm 1.29 1995/05/25 18:26:20 samir Exp $"
 
 TDATA       	EQU 	40h
 TCOMMAND    	EQU 	43h
@@ -196,6 +196,7 @@ _TEXT   SEGMENT BYTE PUBLIC USE32 'CODE'
 		ASSUME  cs:_TEXT
 
 include psmacros.inc
+include fix.inc
 
 TIMER_LOCKED_CODE_START:
 
@@ -386,6 +387,20 @@ timer_set_joyhandler_:
 	mov	TimerData.joystick_poller, eax
 	sti
 	ret
+
+PUBLIC timer_delay_
+timer_delay_:
+	pushad
+	mov	edx, 18
+	mov	ecx, [ds:046Ch]		; Get Current DOS Ticks
+	fixmul	edx	
+	add	ecx, eax
+timeloop:
+	cmp	ecx, [ds:046ch]
+	jg	timeloop
+	popad
+	ret
+
 
 
 ;************************************************************************

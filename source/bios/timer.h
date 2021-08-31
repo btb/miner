@@ -97,5 +97,7 @@ extern fix timer_get_approx_seconds();		// Returns time since program started...
 #define TICKER (*(volatile int *)0x46C)
 #define USECS_PER_READING( start, stop, frames ) (((stop-start)*54945)/frames)
 
+void timer_delay(fix seconds);
+
 #endif
 
