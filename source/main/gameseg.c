@@ -204,7 +204,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef __DOS__
 #include <malloc.h>	//for stackavail()
+#endif
 #include <string.h>	//	for memset()
 
 #include "inferno.h"
@@ -920,7 +922,11 @@ int trace_segs(vms_vector *p0,int oldsegnum)
 
 	Assert((oldsegnum <= Highest_segment_index) && (oldsegnum >= 0));
 
+#ifdef __DOS__
 	if (stackavail() < 1024) {		//if no debugging, we'll get past assert
+#else
+	if (0) {
+#endif
 
 		#ifndef NDEBUG
 		if (!Doing_lighting_hack_flag)

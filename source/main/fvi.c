@@ -1038,11 +1038,13 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 
 	//fvi_hit_object = -1;
 
+#ifdef __DOS__
 	if ( stackavail() < 1024 )                      
 	{
 		mprintf( (0, "In fvi_sub, stack left is < 1k !\n" ));
 		Int3();
 	}
+#endif
 
 	if (flags&FQ_GET_SEGLIST)
 		*seglist = startseg; 
