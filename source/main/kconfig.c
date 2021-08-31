@@ -329,6 +329,7 @@ static char rcsid[] = "$Id: kconfig.c 2.11 1995/08/23 16:08:04 john Exp $";
 #include "menu.h"
 #include "iglasses.h"
 #include "args.h"
+#include "timer.h"
 
 //#define TABLE_CREATION 1
 
@@ -1023,7 +1024,7 @@ void kc_change_key( kc_item * item )
 //		if ( Game_mode & GM_MULTI )
 //			GameLoop( 0, 0 );				// Continue
 		k = key_inkey();
-		delay(10);
+		timer_delay(f1_0 * 10);
 		kc_drawquestion( item );
 	
 		for (i=0; i<256; i++ )	{
@@ -1079,7 +1080,7 @@ void kc_change_joybutton( kc_item * item )
 //		if ( Game_mode & GM_MULTI )
 //			GameLoop( 0, 0 );				// Continue
 		k = key_inkey();
-		delay(10);
+		timer_delay(f1_0 * 10);
 
 		if (k == KEY_PRINT_SCREEN)
 			save_screen_shot(0);
@@ -1147,7 +1148,7 @@ void kc_change_mousebutton( kc_item * item )
 //		if ( Game_mode & GM_MULTI )
 //			GameLoop( 0, 0 );				// Continue
 		k = key_inkey();
-		delay(10);
+		timer_delay(f1_0 * 10);
 
 		if (k == KEY_PRINT_SCREEN)
 			save_screen_shot(0);
@@ -1201,7 +1202,7 @@ void kc_change_joyaxis( kc_item * item )
 //		if ( Game_mode & GM_MULTI )
 //			GameLoop( 0, 0 );				// Continue
 		k = key_inkey();
-		delay(10);
+		timer_delay(f1_0 * 10);
 
 		if (k == KEY_PRINT_SCREEN)
 			save_screen_shot(0);
@@ -1258,7 +1259,7 @@ void kc_change_mouseaxis( kc_item * item )
 //		if ( Game_mode & GM_MULTI )
 //			GameLoop( 0, 0 );				// Continue
 		k = key_inkey();
-		delay(10);
+		timer_delay(f1_0 * 10);
 
 		if (k == KEY_PRINT_SCREEN)
 			save_screen_shot(0);
