@@ -30,7 +30,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: xcolor.c 1.1 1994/01/24 11:09:24 john Exp $";
 #pragma on (unreferenced)
 
-#include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -38,6 +37,7 @@ static char rcsid[] = "$Id: xcolor.c 1.1 1994/01/24 11:09:24 john Exp $";
 #include "gr.h"
 #include "iff.h"
 #include "mem.h"
+#include "findfile.h"
 
 int descent_critical_error;
 
@@ -81,21 +81,22 @@ void dofile( char * filename )
 
 void main(int argc, char * argv[])	{
 	int numfiles = 0;
- 	struct find_t find;
+ 	FILEFINDSTRUCT find;
 	char * cp;
 	char * cp1;
 
 	argv++; argc--;
 	for (;argc--;argv++)
 	{
-		if( !_dos_findfirst( *argv, 0xffff, &find ) )
+		if( !FileFindFirst( *argv,  &find ) )
 		{
 			dofile( find.name );
 			numfiles++;
-			while( !_dos_findnext( &find ) )	{
+			while( !FileFindNext( &find ) )	{
 				numfiles++;
 				dofile( find.name );
 			}
+			FileFindClose();
 	 	}
 	}
 

@@ -19,12 +19,12 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <io.h>
-#include <dos.h>
 #include <ctype.h>
 
 #include "gr.h"
 #include "ui.h"
 #include "key.h"
+#include "findfile.h"
 
 int descent_critical_error = 0;
 
@@ -975,7 +975,7 @@ void DoInterface()
 
 void ParseCommandLine( int argc, char * argv[] )
 {
-	struct find_t find;
+	FILEFINDSTRUCT find;
 	char * cp;
 	char * cp1;
 
@@ -1009,13 +1009,14 @@ void ParseCommandLine( int argc, char * argv[] )
 		}
 		else
 		{
-			if( !_dos_findfirst( *argv, 0xffff, &find ) )
+			if( !FileFindFirst( *argv,  &find ) )
 			{
 				Filename[NumImages++] = strdup( find.name );
-				while( !_dos_findnext( &find ) )
+				while( !FileFindNext( &find ) )
 				{
 					Filename[NumImages++] = strdup( find.name );
 				}
+				FileFindClose();
 			}
 			else
 			{

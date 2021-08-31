@@ -108,7 +108,6 @@ static char rcsid[] = "$Id: mission.c 2.9 1995/05/26 16:16:32 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dos.h>
 #include <ctype.h>
 
 #include "cfile.h"
@@ -119,6 +118,7 @@ static char rcsid[] = "$Id: mission.c 2.9 1995/05/26 16:16:32 john Exp $";
 #include "titles.h"
 #include "mono.h"
 #include "error.h"
+#include "findfile.h"
 
 mle Mission_list[MAX_MISSIONS];
 
@@ -201,7 +201,7 @@ int ml_sort_func(const void *e0, const void *e1)
 int build_mission_list(int anarchy_mode)
 {
 	int count=0;
-	struct find_t find;
+	FILEFINDSTRUCT find;
 
 	//fill in built-in level
 
@@ -214,7 +214,7 @@ int build_mission_list(int anarchy_mode)
 
 	//now search for levels on disk
 
-	if( !_dos_findfirst( "*.MSN", 0, &find ) )	{
+	if( !FileFindFirst( "*.MSN",  &find ) )	{
 		do	{
 			FILE *mfile;
 			int is_anarchy;
@@ -262,7 +262,8 @@ int build_mission_list(int anarchy_mode)
 				count++;
 			}
 
-		} while( !_dos_findnext( &find ) && count<MAX_MISSIONS);
+		} while( !FileFindNext( &find ) && count<MAX_MISSIONS);
+		FileFindClose();
 	}
 #ifdef USE_CD
 	if ( strlen(destsat_cdpath) )	{
@@ -270,7 +271,7 @@ int build_mission_list(int anarchy_mode)
 		char temp_spec[128];
 		strcpy( temp_spec, destsat_cdpath );
 		strcat( temp_spec, "*.MSN" );
-		if( !_dos_findfirst( temp_spec, 0, &find ) )	{
+		if( !FileFindFirst( temp_spec,  &find ) )	{
 			do	{
 				FILE *mfile;
 				int is_anarchy;
@@ -328,7 +329,8 @@ int build_mission_list(int anarchy_mode)
 					count++;
 				}
 	
-			} while( !_dos_findnext( &find ) && count<MAX_MISSIONS);
+			} while( !FileFindNext( &find ) && count<MAX_MISSIONS);
+			FileFindClose();
 		}
 	}
 #endif

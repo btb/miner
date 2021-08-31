@@ -692,10 +692,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: newdemo.c 2.7 1995/05/26 16:16:06 john Exp $";
 #pragma on (unreferenced)
 
-#include <dos.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef __DOS__
 #include <io.h>
+#else
+#include "fileutil.h"
+#endif
 #include <string.h>	// for memset
 #include <ctype.h>
 #include <limits.h>
@@ -753,6 +756,7 @@ static char rcsid[] = "$Id: newdemo.c 2.7 1995/05/26 16:16:06 john Exp $";
 #include "aistruct.h"
 #include "mission.h"
 #include "piggy.h"
+#include "findfile.h"
 
 #ifdef EDITOR
 #include "editor/editor.h"
@@ -3383,16 +3387,8 @@ void newdemo_playback_one_frame()
 
 void newdemo_start_recording()
 {
-	struct diskfree_t dfree;
-	unsigned drive;
+	Newdemo_size = GetDiskFree();
 
-	_dos_getdrive(&drive);
-	if (!_dos_getdiskfree(drive, &dfree))
-		Newdemo_size = dfree.avail_clusters * dfree.sectors_per_cluster * dfree.bytes_per_sector;
-	else {
-		Newdemo_size = ULONG_MAX;					// make be biggest it can be
-		Int3();		// get MARK A!!!!!
-	}
 	if (Newdemo_size < 500000) {
 		nm_messagebox(NULL, 1, TXT_OK, TXT_DEMO_NO_SPACE);
 		return;
@@ -3558,27 +3554,29 @@ try_again:
 
 void newdemo_start_playback(char * filename)
 {
-	struct find_t find;
+	FILEFINDSTRUCT find;
 	int rnd_demo = 0;
 
 	if (filename==NULL) {
 		// Randomly pick a filename 
 		int NumFiles = 0, RandFileNum;
 		rnd_demo = 1;
-		if( !_dos_findfirst( "*.DEM", _A_NORMAL, &find ) )	{
+		if( !FileFindFirst( "*.DEM", &find ) )	{
 			do	{
 				NumFiles++;
-			} while( !_dos_findnext( &find ) );
+			} while( !FileFindNext( &find ) );
+			FileFindClose();
 		}
 #ifdef USE_CD
 		if ( strlen(destsat_cdpath) )	{
 			char temp_spec[128];
 			strcpy( temp_spec, destsat_cdpath );
 			strcat( temp_spec, "*.DEM" );
-			if( !_dos_findfirst( temp_spec, _A_NORMAL, &find ) )	{
+			if( !FileFindFirst( temp_spec, &find ) )	{
 				do	{
 					NumFiles++;
-				} while( !_dos_findnext( &find ) );
+				} while( !FileFindNext( &find ) );
+				FileFindClose();
 			}
 		}
 #endif
@@ -3588,28 +3586,30 @@ void newdemo_start_playback(char * filename)
 		}
 		RandFileNum = rand() % NumFiles;
 		NumFiles = 0;
-		if( !_dos_findfirst( "*.DEM", _A_NORMAL, &find ) )	{
+		if( !FileFindFirst( "*.DEM", &find ) )	{
 			do	{
 				if ( NumFiles==RandFileNum )	{
 					filename = &find.name;
 					break;
 				}
 				NumFiles++;
-			} while( !_dos_findnext( &find ) );
+			} while( !FileFindNext( &find ) );
+			FileFindClose();
 		}
 #ifdef USE_CD
 		if ( strlen(destsat_cdpath) )	{
 			char temp_spec[128];
 			strcpy( temp_spec, destsat_cdpath );
 			strcat( temp_spec, "*.DEM" );
-			if( !_dos_findfirst( temp_spec, _A_NORMAL, &find ) )	{
+			if( !FileFindFirst( temp_spec, &find ) )	{
 				do	{
 					if ( NumFiles==RandFileNum )	{
 						filename = &find.name;
 						break;
 					}
 					NumFiles++;
-				} while( !_dos_findnext( &find ) );
+				} while( !FileFindNext( &find ) );
+				FileFindClose();
 			}
 		}
 #endif

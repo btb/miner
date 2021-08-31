@@ -32,9 +32,9 @@ static char rcsid[] = "$Id: parsarg.c 1.1 1993/09/09 17:32:03 matt Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dos.h>
 
 #include "parsarg.h"
+#include "findfile.h"
 
 #define ARGBUF_SIZE 500
 #define MAX_ARGS 100
@@ -111,7 +111,7 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 		}
 		else
 			if (flags&PA_EXPAND && (**argv != '-')) {
-				struct find_t ffblk;
+				FILEFINDSTRUCT ffblk;
 				char drive[_MAX_DRIVE],dir[_MAX_DIR];
 				char filename[_MAX_DRIVE+_MAX_DIR+13],*nptr;
 				int done;
@@ -121,7 +121,7 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 				strcat(filename,dir);
 				nptr = filename + strlen(filename);			//point at name part
 
-				done = _dos_findfirst(*argv,0,&ffblk);
+				done = FileFindFirst(*argv, &ffblk);
 
 				if (done) handler_func(*argv);
 			
@@ -131,10 +131,10 @@ void parse_args(int argc,char **argv,void (*handler_func)(char *arg),int flags)
 
 					handler_func(filename);
 			
-					done = _dos_findnext(&ffblk);
+					done = FileFindNext(&ffblk);
 			
 				}
-	
+				FileFindClose();
 			}
 			else
 				handler_func(*argv);

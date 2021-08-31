@@ -483,7 +483,6 @@ static char rcsid[] = "$Id: newmenu.c 2.8 1995/05/26 16:16:28 john Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dos.h>
 #include <stdarg.h>
 #include <ctype.h>
 #include <io.h>
@@ -513,6 +512,7 @@ static char rcsid[] = "$Id: newmenu.c 2.8 1995/05/26 16:16:28 john Exp $";
 #include "vfx.h"
 #include "kconfig.h"
 #include "player.h"
+#include "findfile.h"
 
 #define TITLE_FONT  		(Gamefonts[GFONT_BIG_1])
 
@@ -1585,7 +1585,7 @@ int MakeNewPlayerFile(int allow_abort);
 int newmenu_get_filename( char * title, char * filespec, char * filename, int allow_abort_flag )
 {
 	int i;
-	struct find_t find;
+	FILEFINDSTRUCT find;
 	int NumFiles=0, key,done, citem, ocitem;
 	char * filenames = NULL;
 	int NumFiles_displayed = 8;
@@ -1618,7 +1618,7 @@ ReadFileNames:
 		NumFiles++;
 	}
 
-	if( !_dos_findfirst( filespec, 0, &find ) )	{
+	if( !FileFindFirst( filespec, &find ) )	{
 		do	{
 			if (NumFiles<MAX_FILES)	{
 				strncpy( &filenames[NumFiles*14], find.name, 13 );
@@ -1631,7 +1631,8 @@ ReadFileNames:
 			} else {
 				break;
 			}
-		} while( !_dos_findnext( &find ) );
+		} while( !FileFindNext( &find ) );
+		FileFindClose();
 	}
 
 #ifdef USE_CD
@@ -1641,7 +1642,7 @@ ReadFileNames:
 		strcpy( temp_spec, destsat_cdpath );
 		strcat( temp_spec, filespec );
 
-		if( !_dos_findfirst( temp_spec, 0, &find ) )	{
+		if( !FileFindFirst( temp_spec, &find ) )	{
 			do	{
 				if (NumFiles<MAX_FILES)	{
 
@@ -1661,7 +1662,8 @@ ReadFileNames:
 				} else {
 					break;
 				}
-			} while( !_dos_findnext( &find ) );
+			} while( !FileFindNext( &find ) );
+			FileFindClose();
 		}
 	}
 #endif
@@ -2140,10 +2142,10 @@ int newmenu_filelist( char * title, char * filespec, char * filename )
 	int i, NumFiles;
 	char * Filenames[MAX_FILES];
 	char FilenameText[MAX_FILES][14];
-	struct find_t find;
+	FILEFINDSTRUCT find;
 
 	NumFiles = 0;
-	if( !_dos_findfirst( filespec, 0, &find ) )	{
+	if( !FileFindFirst( filespec, &find ) )	{
 		do	{
 			if (NumFiles<MAX_FILES)	{
 				strncpy( FilenameText[NumFiles], find.name, 13 );
@@ -2152,7 +2154,8 @@ int newmenu_filelist( char * title, char * filespec, char * filename )
 			} else {
 				break;
 			}
-		} while( !_dos_findnext( &find ) );
+		} while( !FileFindNext( &find ) );
+		FileFindClose();
 	}
 
 	i = newmenu_listbox( title, NumFiles, Filenames, 1, NULL );
