@@ -62,6 +62,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define N_SAVE_SLOTS		10
 #define GAME_NAME_LEN	25		//+1 for terminating zero = 26
 
+#ifndef EZERO
+#define EZERO 0
+#endif
+
 extern int Default_leveling_on;
 
 //fills in a list of pointers to strings describing saved games
