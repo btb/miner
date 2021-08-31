@@ -38,7 +38,8 @@ descent_SRCS = inferno.c game.c gauges.c mglobal.c \
 			 endlevel.c terrain.c kconfig.c modem.c \
 			 multi.c cntrlcen.c credits.c config.c kmatrix.c \
 			 paging.c mission.c iglasses.c songs.c bmread.c state.c \
-			 multibot.c nocomlib.c slew.c dumpmine.c \
+			 multibot.c nocomlib.c dumpmine.c \
+			 $(if $(RELEASE_VERSION),,slew.c) \
 			 $(if $(USE_SOS),digi.c,nodigi.c)
 
 descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
