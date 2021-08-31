@@ -15,7 +15,8 @@ add_executable(testms)
 add_executable(testt)
 
 # What object files for the lib
-target_sources(io PRIVATE key.c joy.asm mouse.c timer.asm mono.c joyc.c dpmi.c ipx.c)
+target_sources(io PRIVATE
+	key.c joy.asm mouse.c timer.asm mono.c joyc.c dpmi.c ipx.c findfile.c)
 
 # What object files and libs for the test programs
 target_sources(demo PRIVATE demo.c)
