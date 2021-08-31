@@ -78,10 +78,12 @@ configure_file(main/settings.h.in main/settings.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/main)
 
 # The only thing to make is the subdirs
-set(SUBSYSTEMS misc includes fix cfile 2d bios iff mem vecmat 3d texmap)
+set(SUBSYSTEMS misc includes fix cfile 2d iff mem vecmat 3d texmap)
 #sosdigi sosmidi
 if(CMAKE_SYSTEM_NAME STREQUAL "DOS")
-   list(APPEND SUBSYSTEMS vga)
+   list(APPEND SUBSYSTEMS bios vga)
+else()
+   include_directories(bios)
 endif()
 if(NOT NO_ASSEMBLY)
    list(APPEND SUBSYSTEMS div)
