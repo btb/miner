@@ -33,7 +33,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern int stricmp(char *str1, char *str2);
 extern int strnicmp(char *str1, char *str2, int n);
 
-#ifdef _MPW_
+#if 1//def _MPW_
 void strlwr( char *s1 );
 void strrev( char *s1 );
 #endif
