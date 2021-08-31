@@ -31,7 +31,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "DOS")
 endif()
 #iglasses.lib gclfr32.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
-include_directories(../pslib ../ui) # should really only be needed for editor
+include_directories(. ../pslib ../ui) # should really only be needed for editor
 
 set(DESCENT_SRCS inferno.c game.c gauges.c mglobal.c
 	scores.c object.c laser.c physics.c bm.c
