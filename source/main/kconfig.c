@@ -294,7 +294,7 @@ static char rcsid[] = "$Id: kconfig.c 2.11 1995/08/23 16:08:04 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <dos.h>
-#include <io.h>
+#include <unistd.h>
 #include <stdarg.h>
 #include <ctype.h>
 

@@ -250,7 +250,7 @@ static char rcsid[] = "$Id: gameseq.c 2.10 1995/12/19 15:48:25 john Exp $";
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include <io.h>
+#include <unistd.h>
 #include <errno.h>
 #include <time.h>
 

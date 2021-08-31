@@ -485,7 +485,7 @@ static char rcsid[] = "$Id: newmenu.c 2.8 1995/05/26 16:16:28 john Exp $";
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include <io.h>
+#include <unistd.h>
 
 #include "error.h"
 #include "types.h"
