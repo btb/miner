@@ -57,7 +57,7 @@ endif()
 if(USE_SOS)
 	list(APPEND DESCENT_SRCS digi.c)
 else()
-	list(APPEND DESCENT_SRCS no_digi.c)
+	list(APPEND DESCENT_SRCS nodigi.c)
 endif()
 #demo.c garage.c radar.c coindev.c serial.c vfxread.c victor.c
 target_sources(descent PRIVATE ${DESCENT_SRCS})
