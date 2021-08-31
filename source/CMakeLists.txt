@@ -18,6 +18,8 @@ if(WATCOM)
    add_compile_options($<$<COMPILE_LANGUAGE:C>:-fi=settings.h>)
    add_compile_options($<$<COMPILE_LANGUAGE:C>:-zp1>)
    set(CMAKE_SYSTEM_NAME DOS)
+else()
+   add_compile_options($<$<COMPILE_LANGUAGE:C>:-includesettings.h>)
 endif()
 
 # Set up personal settings
