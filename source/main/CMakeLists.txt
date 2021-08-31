@@ -66,7 +66,9 @@ target_sources(descent PRIVATE ${DESCENT_SRCS})
 # There are some symbol references in Descent that have mismatched case.
 # Not so many that they can't be fixed, but some of them are tricky to see
 # exactly what was meant in the original code.
+if(WATCOM)
 target_link_options(descent PRIVATE option nocaseexact)
+endif()
 
 install(TARGETS descent RUNTIME DESTINATION .)
 
