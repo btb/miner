@@ -81,7 +81,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "types.h"
 
-typedef long fix;				//16 bits int, 16 bits frac
+typedef int fix;				//16 bits int, 16 bits frac
 typedef short fixang;		//angles
 
 typedef struct quad {
