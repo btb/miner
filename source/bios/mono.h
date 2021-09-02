@@ -94,7 +94,7 @@ extern void msetcursor( int row, int col );
 
 //==========================================================================
 // Refreshes a window
-void mrefresh(short n);
+void mrefresh(int n);
 
 #else			//null versions for when debugging turned off
 
