@@ -12,6 +12,8 @@
 #include "fix.h"
 #ifdef __DOS__
 #include "graph.h"
+#else
+#include "SDL.h"
 #endif
 
 #define f1_0 0x10000
@@ -53,13 +55,23 @@ sincos_test()
 
 circle_test()
 {
-#ifdef __DOS__
 	int i;
 	fixang f;
 	fix s,c;
 	short x,y;
 
+#ifdef __DOS__
 	_setvideomode(_MRES256COLOR);		// 320x200x256 (mode 13h)
+#else
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	SDL_Event event;
+
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_CreateWindowAndRenderer(320, 200, SDL_WINDOW_SHOWN|SDL_WINDOW_ALWAYS_ON_TOP, &window, &renderer);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_RenderClear(renderer);
+#endif
 
 //printf("fast:\n");
 
@@ -71,13 +83,28 @@ circle_test()
 		y = 100 + fixmul(s,RAD);
 //printf("f=%x, s,c=%x,%x  x,y=%d,%d\n",f,s,c,x,y);
 
+#ifdef __DOS__
 		_setcolor(1);
 		_setpixel(x,y);
+#else
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 0);
+		SDL_RenderDrawPoint(renderer, x, y);
+#endif
 
 
 	}
 
+#ifdef __DOS__
 	getch();
+#else
+	SDL_RenderPresent(renderer);
+	while (1) {
+		if (SDL_PollEvent(&event) && (event.type == SDL_KEYDOWN || event.type == SDL_MOUSEBUTTONDOWN))
+			break;
+	}
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	SDL_RenderClear(renderer);
+#endif
 
 //printf("good:\n");
 	for (i=0,f=0;i<N_POINTS;i++,f+=65536/N_POINTS) {
@@ -88,14 +115,29 @@ circle_test()
 		y = 100 + fixmul(s,RAD);
 //printf("f=%x, s,c=%x,%x  x,y=%d,%d\n",f,s,c,x,y);
 
+#ifdef __DOS__
 		_setcolor(4);
 		_setpixel(x,y);
+#else
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
+		SDL_RenderDrawPoint(renderer, x, y);
+#endif
 
 	}
 
+#ifdef __DOS__
 	getch();
 
 	_setvideomode(_DEFAULTMODE);
+#else
+	SDL_RenderPresent(renderer);
+	while (1) {
+		if (SDL_PollEvent(&event) && (event.type == SDL_KEYDOWN || event.type == SDL_MOUSEBUTTONDOWN))
+			break;
+	}
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 #endif
 }
 
