@@ -675,7 +675,7 @@ ushort long_sqrt(long a)
 
 	} while (!(r==t || r==old_r));
 
-	if (a % r)
+	if (a % old_r)
 		r++;
 
 	return r;
