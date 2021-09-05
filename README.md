@@ -4,7 +4,7 @@
 It's a silly project to revive a "canonical" version of Descent from the original source.
 The original D1 source readme states that it was built with Watcom 9.5 and MASM 6.11.
 Getting a system set up with those tools isn't easy in this day and age, but once you do, it will build with no changes to the source at all.
-All of the changes made should fully preserve the Watcom/DOS build and any other "original" builds I can reproduce.
+All of the changes subsequently made should fully preserve the Watcom/DOS build and any other "original" builds I can reproduce.
 
 ### Tasks
 
