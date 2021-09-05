@@ -13,6 +13,14 @@ if(USE_SOS)
 		IMPORTED_LOCATION ${SOS_DIR}/sosmidi.lib)
 endif()
 
+if(USE_COMMLIB)
+	set(COMMLIB_DIR ${PROJECT_SOURCE_DIR}/extlib/greenlf)
+	include_directories(${COMMLIB_DIR})
+	add_library(gclfr32 STATIC IMPORTED GLOBAL)
+	set_target_properties(gclfr32 PROPERTIES
+		IMPORTED_LOCATION ${COMMLIB_DIR}/gclfr32.lib)
+endif()
+
 add_executable(descent)
 target_link_libraries(descent 3d gr fix io iff vecmat cfile misc texmap
 	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:mem>)
@@ -21,6 +29,9 @@ if(NOT NO_ASSEMBLY)
 endif()
 if(USE_SOS)
 	target_link_libraries(descent sosdigi sosmidi)
+endif()
+if(USE_COMMLIB)
+	target_link_libraries(descent gclfr32)
 endif()
 if(BUILD_EDITOR)
 	add_subdirectory(editor)
@@ -42,7 +53,7 @@ set(DESCENT_SRCS inferno.c game.c gauges.c mglobal.c
 	gamefont.c joydefs.c hud.c playsave.c
 	endlevel.c terrain.c kconfig.c modem.c
 	multi.c cntrlcen.c credits.c config.c kmatrix.c
-	paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c nocomlib.c
+	paging.c mission.c iglasses.c songs.c bmread.c state.c multibot.c
 	$<$<NOT:$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>>>:slew.c>
 	$<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:dumpmine.c>)
 if(ARCADE)
@@ -52,6 +63,9 @@ if(USE_SOS)
 	list(APPEND DESCENT_SRCS digi.c)
 else()
 	list(APPEND DESCENT_SRCS no_digi.c)
+endif()
+if(NOT USE_COMMLIB)
+	list(APPEND DESCENT_SRCS nocomlib.c)
 endif()
 #demo.c garage.c radar.c coindev.c serial.c vfxread.c victor.c
 target_sources(descent PRIVATE ${DESCENT_SRCS})
