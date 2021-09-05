@@ -375,12 +375,11 @@ really-clean: clean
 install: SUBSYSTEMS = $(SUBDIRS)
 install:	$(filter $(PROG_EXES) $(GAME_EXES) $(GAME_DATA),$(INSTALL_TARGS))
 	$(do_subsystems)
-	@TARGETS=($^);\
-	for TARG in "$${TARGETS[@]}"; do\
-	 DEST=$(if $(filter $(GAME_EXES) $(GAME_DATA),$^),$(GAMEDIR),$(TOOLSDIR));\
-	 cp $$TARG $$DEST;\
-	 echo Installing $$TARG to $$DEST;\
-	done
+	$(foreach TARG,$^, \
+	 $(eval DEST=$(if $(filter $(GAME_EXES) $(GAME_DATA),$(TARG)),$(GAMEDIR),$(TOOLSDIR))) \
+	 cp $(TARG) $(DEST); \
+	 echo Installing $(TARG) to $(DEST); \
+	)
 
 
 #_889
