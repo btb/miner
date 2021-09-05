@@ -11,7 +11,6 @@ All of the changes subsequently made should fully preserve the Watcom/DOS build 
 Minor changes to undo the last-minute hacks done by Kevin Bentley specifically for the OG source release.
 - [x] Sound support via SOS
 - [x] Serial support via Greenleaf CommLib
-- [ ] IPX networking
 - [x] Debugging functions
 
 Changes/Code merges to Reproduce other builds
