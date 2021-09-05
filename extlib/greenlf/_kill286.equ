@@ -1,0 +1,34 @@
+;
+; _KILL286.EQU            5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1991-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+; This file contains the definitions that the 16 bit protected mode assembly
+; language should use to access the _asi_kill_time function.  Mostly,
+; this is done via the KILL_TIME macro.
+;
+; MODIFICATIONS
+;  December 1, 1994   5.10A :  Initial release.
+;
+
+;
+; You will note that I have an ifdef that prevents this definition from
+; being assembled when I am inside KILL286.ASM.  This prevents a clash
+; between the EXTRN declaraction here and the PUBLIC definition in
+; KILL286.ASM.
+;
+
+IFNDEF _KILL286
+
+KILL_CODE       SEGMENT BYTE PUBLIC 'CODE'
+                extrn _asi_kill_time:far
+KILL_CODE       ENDS
+
+KILL_TIME       MACRO
+                call  _asi_kill_time
+                ENDM
+ENDIF

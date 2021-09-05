@@ -1,0 +1,46 @@
+;
+; _FAST88.EQU            5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1991-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+; This file contains the structure definition presently being
+; used for the Greenleaf Fast driver under 16 bit DOS Extenders.
+;
+; MODIFICATIONS
+;
+; December 12, 1992  4.00A : Initial release
+;
+
+;
+; The following offsets should mimic the offsets defined
+; in _FAST.H for the struct fast objects.  The only way to screw
+; up these offsets would be to compile with a packing of 4 bytes,
+; since all objects in the structure have sizes of 2 or 4 bytes;
+; You can test for proper packing by compiling and executing
+; MISC\PTEST88.C
+;
+
+FAST_BUFFER_SIZE             = 1024
+FAST_HIGH_WATER_MARK         = ( ( FAST_BUFFER_SIZE * 3 ) / 4 )
+
+FAST_DATA                    STRUC
+FAST_NEXT_PORT               DD         ?
+FAST_REAL_NEXT_PORT          DD         ?
+FAST_ID                      DW         ?
+FAST_UART_BASE               DW         ?
+FAST_HEAD_POINTER            DW         ?
+FAST_TAIL_POINTER            DW         ?
+FAST_INTERRUPT_NUMBER        DW         ?
+FAST_LINE_STATUS             DW         ?
+FAST_MCR_RX_HANDSHAKE_BIT    DW         ?
+FAST_MSR_TX_HANDSHAKE_BIT    DW         ?
+FAST_BLOCKING                DW         ?
+FAST_IS_16550                DW         ?
+FAST_USE_16550_TX_FIFO       DW         ?
+FAST_TRIGGER_LEVEL           DW         ?
+FAST_BUFFER                  DB         FAST_BUFFER_SIZE DUP (?)
+FAST_DATA                    ENDS

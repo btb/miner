@@ -1,0 +1,39 @@
+;
+; _IRQ286.EQU        5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1984-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+;  This file contains all the structures and constants used by the
+;  IRQ manager.  This is all private stuff and end users should not
+;  ever have to include it.
+;
+; MODIFICATIONS
+;
+; December 12, 1992  4.00A : Initial release
+; December 1, 1994   5.10A : We split the IRQ manager into three pieces,
+;                            this being the 16 bit dos extender piece.
+;
+
+MAXIMUM_HANDLERS        EQU     10
+
+irqdata                 STRUC
+old_prot_handler        DD      0
+old_real_handler        DD      0
+prot_handler            DD      0
+real_handler            DD      0
+prot_handler_data       DD      0
+real_handler_data       DD      0
+tear_down_function      DD      0
+interrupt_number        DW      0
+saved_8259_bit          DW      0
+primary_8259            DW      0
+secondary_8259          DW      0
+mask_8259               DW      0
+prot_int_count          DW      0
+real_int_count          DW      0
+irqdata                 ENDS
+

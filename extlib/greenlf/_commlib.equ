@@ -1,0 +1,27 @@
+;
+; _COMMLIB.EQU            5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1991-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+; This is my grab-bag of equates.  At this time, the only thing turned on
+; in here is ISR_DEBUG, if the _DEBUG flag is set.  ISR_DEBUG instructs
+; all the ISR routines to turn on their debug output.  This will be disabled
+; in the production release.
+;
+; MODIFICATIONS
+;
+
+;IFDEF _DEBUG
+;ISR_DEBUG                = 1
+;ENDIF
+
+;  Define for use with Windows standard mode
+;
+; Still trying to figure out this one.
+;
+GF_STANDARD     equ     1
+

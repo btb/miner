@@ -1,0 +1,78 @@
+;
+; _8250.EQU            5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1991-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+; This file contains the constant definitions for all of the 8250
+; registers and bitfields.  It should directly correspond to _8250.H.
+;
+; MODIFICATIONS
+
+;
+;  The 8250 port offsets, relative to base (com1, com2, etc.)
+;
+BASE    equ     0
+TXBUF   equ     0               ; Tx Buffer
+RXBUF   equ     0               ; Rx Buffer
+BRLSB   equ     0               ; baud rate LSB divisor latch
+BRMSB   equ     1               ; baud rate MSB
+INTER   equ     1               ; interrupt enable register
+INTID   equ     2               ; interrupt ID register
+FIFOCTL equ     2               ; 16550 FIFI control register
+LCREG   equ     3               ; line control register
+MCREG   equ     4               ; modem control reg
+LSREG   equ     5               ; line status reg
+MSREG   equ     6               ; modem status reg
+
+; Equates for bits in the line control register
+
+WLS0    equ     00000001b       ; word length select bit 0
+WLS1    equ     00000010b       ; word length select bit 1
+NSB     equ     00000100b       ; number stop bits
+PAREN   equ     00001000b       ; parity enable
+PAREVN  equ     00010000b       ; parity even
+PARSTK  equ     00100000b       ; stick parity
+SBREAK  equ     01000000b       ; send break
+DLAB    equ     10000000b       ; set DLAB
+
+; Equates for bits in Line Status register
+
+DATARDY equ     00000001b       ; data ready
+OVERRN  equ     00000010b       ; overrun error
+PARERR  equ     00000100b       ; parity error
+FRAMERR equ     00001000b       ; framing error
+RBREAK  equ     00010000b       ; break interrupt (received break)
+THRE    equ     00100000b       ; transmitter holding reg empty
+TSRE    equ     01000000b       ; tx shift register empty
+
+;  Equates for bits in Modem Control register
+
+DTR     equ     00000001b       ; DTR
+RTS     equ     00000010b       ; RTS
+OUT1    equ     00000100b       ; aux signal "out1" (not used)
+OUT2    equ     00001000b       ; ditto "out2"
+LOOPIT  equ     00010000b       ; loop mode latch
+
+;  Equates for bits in Modem Status register
+
+DCTS    equ     00000001b       ; delta CTS
+DDSR    equ     00000010b       ; delta DSR
+TERI    equ     00000100b       ; trailing edge RI
+DRLSD   equ     00001000b       ; delta Rx Line Signal Detect
+CTS     equ     00010000b       ; CTS
+DSR     equ     00100000b       ; DRS
+RINGIN  equ     01000000b       ; RI
+RLSD    equ     10000000b       ; Rx Line Signal Detect
+
+;  Equates for bits in Interrupt Enable register
+
+ENRX    equ     00000001b       ; enable Data Available int
+ENTX    equ     00000010b       ; enable Tx Holding Reg Empty int
+ENRXS   equ     00000100b       ; enable Rx Special Conditions int
+ENMS    equ     00001000b       ; enable Modem Status Interrupt
+
+
