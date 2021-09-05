@@ -124,6 +124,7 @@ endif
 	$(eval _IVAR=ROCKWELL_CODE)$(def_setting)
 	$(eval _IVAR=COMPACT_SEGS)$(def_setting)
 	$(eval _IVAR=NO_MULTIPLAYER)$(eval _SVAR=NETWORK)$(def_setting2)
+	$(eval _IVAR=USE_COMMLIB)$(def_setting)
 
 
 # Subroutine to add lines to SETTINGS.H

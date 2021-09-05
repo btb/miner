@@ -16,7 +16,8 @@ t_SRCS = t.c
 
 # Where to find libraries we didn't write
 EXTLIB_DIR = $(MINER)/extlib
-EXTLIBS = $(if $(USE_SOS),$(EXTLIB_DIR)/sos,)
+EXTLIBS = $(if $(USE_COMMLIB),$(EXTLIB_DIR)/greenlf,) \
+			 $(if $(USE_SOS),$(EXTLIB_DIR)/sos,)
 
 # What programs to make
 GAMES = $(if $(BUILD_EDITOR),editor,\
@@ -38,15 +39,17 @@ descent_SRCS = inferno.c game.c gauges.c mglobal.c \
 			 endlevel.c terrain.c kconfig.c modem.c \
 			 multi.c cntrlcen.c credits.c config.c kmatrix.c \
 			 paging.c mission.c iglasses.c songs.c bmread.c state.c \
-			 multibot.c nocomlib.c slew.c dumpmine.c \
+			 multibot.c slew.c dumpmine.c \
+			 $(if $(USE_COMMLIB),,nocomlib.c) \
 			 $(if $(USE_SOS),digi.c,nodigi.c)
 
 descent_LIBS =	3d.lib gr.lib fix.lib io.lib iff.lib vecmat.lib \
         	 	cfile.lib \
         	 	mem.lib \
 				div0.lib misc.lib texmap.lib \
+				$(if $(USE_COMMLIB),gclfr32.lib,) \
 				$(if $(USE_SOS),sosdigi.lib sosmidi.lib,)
-		#iglasses.lib gclfr32.lib loadpats.lib
+		#iglasses.lib loadpats.lib
 		#lzw.lib sosdwxcr.lib sosmwxcr.lib 
 
 descent_DIRS = editor
