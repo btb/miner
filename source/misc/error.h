@@ -73,7 +73,11 @@ void Int3();
 #ifndef NDEBUG		//macros for debugging
 
 //void Int3(void);									//generate int3
+#ifdef __WATCOMC__
 #pragma aux Int3 = "int 3h";
+#elif defined(__has_builtin) && __has_builtin(__builtin_debugtrap)
+#define Int3 __builtin_debugtrap
+#endif
 
 #define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
 
