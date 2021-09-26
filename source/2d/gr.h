@@ -287,6 +287,11 @@ typedef struct _grs_screen {     // This is a video screen
 // canvas.  Saves the current VGA state and screen mode.
 
 int gr_init(void);
+
+// This function sets up the main screen.  It should be called whenever
+// the video mode changes.
+int gr_init_screen(int mode, int w, int h, int x, int y, int rowsize, ubyte *data);
+
 short vga_init(void);
 int vga_set_mode(int mode);
 void gr_enable_default_palette_loading();
