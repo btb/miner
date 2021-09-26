@@ -38,9 +38,12 @@ static char rcsid[] = "$Id: vesatest.c 1.3 1993/12/21 11:40:47 john Exp $";
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef __DOS__
 #include <conio.h>
+#endif
 
 #include "gr.h"
+#include "palette.h"
 
 int descent_critical_error = 0;
 
@@ -87,7 +90,9 @@ main()
 	printf( "and all this surrounded by a white frame.\n" );
 	printf( "Press any key...\n" );
 
+#ifdef __DOS__
 	getch();
+#endif
 
 	CreatePalette();
 
@@ -119,7 +124,9 @@ main()
 	gr_setcolor( 12 );
 	gr_ubox(0,0,799, 599);
 
+#ifdef __DOS__
 	getch();
+#endif
 
 	// gr_pal_setblock( 0, 256, palette );
 	gr_palette_load(palette);
@@ -139,8 +146,9 @@ main()
 	gr_setcolor( 215 ); gr_ubox(4,4,795, 595);
 	gr_setcolor( 205 ); gr_ubox(5,5,794, 594);
 
+#ifdef __DOS__
 	getch();
-
+#endif
 }
 	
 

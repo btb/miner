@@ -12,7 +12,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 */
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef __DOS__
 #include <conio.h>
+#endif
 #include <math.h>
 #include <string.h>
 
@@ -68,7 +70,9 @@ main(int argc, char * argv[] )
 		y += font->ft_h+1;
 	}
 
+#ifdef __DOS__
 	getch();
+#endif
 
 	pcx_write_bitmap( argv[3], &grd_curcanv->cv_bitmap, gr_palette );
 }

@@ -22,7 +22,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef __DOS__
 #include <conio.h>
+#endif
 #include <math.h>
 #include <string.h>
 
@@ -36,6 +38,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "palette.h"
 #include "rle.h"
 #include "pcx.h"
+#include "misc.h"
 
 void ReadBitmap( char * filename, grs_bitmap * bmp, ubyte * palette )
 {
@@ -102,7 +105,9 @@ void circle_in_bitmap( grs_bitmap * bmp )
 			}
 		}
 		myx += 2;
+#ifdef __DOS__
 		getch();
+#endif
 	}
 }
 

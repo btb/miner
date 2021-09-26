@@ -188,11 +188,13 @@ int gr_wait_for_retrace = 1;
 
 void gr_show_canvas( grs_canvas *canv )
 {
+#ifdef __DOS__
 	if (canv->cv_bitmap.bm_type == BM_MODEX )
 		gr_modex_setstart( canv->cv_bitmap.bm_x, canv->cv_bitmap.bm_y, gr_wait_for_retrace );
 
 	else if (canv->cv_bitmap.bm_type == BM_SVGA )
 		gr_vesa_setstart( canv->cv_bitmap.bm_x, canv->cv_bitmap.bm_y );
+#endif
 
 		//	else if (canv->cv_bitmap.bm_type == BM_LINEAR )
 		// Int3();		// Get JOHN!
@@ -206,13 +208,14 @@ void gr_set_current_canvas( grs_canvas *canv )
 	else
 		grd_curcanv = canv;
 
+#ifdef __DOS__
 	if ( (grd_curcanv->cv_color >= 0) && (grd_curcanv->cv_color <= 255) )	{
 		gr_var_color = grd_curcanv->cv_color;
 	} else
 		gr_var_color  = 0;
 	gr_var_bitmap = grd_curcanv->cv_bitmap.bm_data;
 	gr_var_bwidth = grd_curcanv->cv_bitmap.bm_rowsize;
-
+#endif
 }
 
 void gr_clear_canvas(int color)
@@ -225,6 +228,7 @@ void gr_setcolor(int color)
 {
 	grd_curcanv->cv_color=color;
 
+#ifdef __DOS__
 	gr_var_color = color;
-
+#endif
 }

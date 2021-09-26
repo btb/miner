@@ -411,6 +411,7 @@ int gr_internal_string0m(int x, int y, char *s )
 }
 
 
+#ifdef __DOS__
 int gr_internal_string2(int x, int y, char *s )
 {
 	unsigned char * fp;
@@ -766,6 +767,7 @@ int gr_internal_string2m(int x, int y, char *s )
 	}
 	return 0;
 }
+#endif
 
 //a bitmap for the character
 grs_bitmap char_bm = {
@@ -907,11 +909,13 @@ int gr_ustring(int x, int y, char *s )
 				return gr_internal_string0m(x,y,s);
 			else
 				return gr_internal_string0(x,y,s);
+#ifdef __DOS__
 		case BM_SVGA:
 			if ( BG_COLOR == -1)
 				return gr_internal_string2m(x,y,s);
 			else
 				return gr_internal_string2(x,y,s);
+#endif
 		}
 
 	return 0;

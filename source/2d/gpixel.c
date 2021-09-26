@@ -48,6 +48,7 @@ unsigned char gr_ugpixel( grs_bitmap * bitmap, int x, int y )
 	{
 	case BM_LINEAR:
 		return bitmap->bm_data[ bitmap->bm_rowsize*y + x ];
+#ifdef __DOS__
 	case BM_MODEX:
 		x += bitmap->bm_x;
 		y += bitmap->bm_y;
@@ -60,6 +61,7 @@ unsigned char gr_ugpixel( grs_bitmap * bitmap, int x, int y )
 		gr_vesa_setpage( offset >> 16 );
 		return gr_video_memory[offset & 0xFFFF];
 		}
+#endif
 	}
 	return 0;
 }
@@ -72,6 +74,7 @@ unsigned char gr_gpixel( grs_bitmap * bitmap, int x, int y )
 	{
 	case BM_LINEAR:
 		return bitmap->bm_data[ bitmap->bm_rowsize*y + x ];
+#ifdef __DOS__
 	case BM_MODEX:
 		x += bitmap->bm_x;
 		y += bitmap->bm_y;
@@ -84,6 +87,7 @@ unsigned char gr_gpixel( grs_bitmap * bitmap, int x, int y )
 		gr_vesa_setpage( offset >> 16 );
 		return gr_video_memory[offset & 0xFFFF];
 		}
+#endif
 	}
 	return 0;
 }

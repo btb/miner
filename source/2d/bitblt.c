@@ -427,6 +427,7 @@ void gr_ubitmap00m( int x, int y, grs_bitmap *bm )
 //"		jne	alignstart			"	\
 //"aligned4:							"	\
 
+#ifdef __DOS__
 void modex_copy_scanline( ubyte * src, ubyte * dest, int npixels );
 #if defined(__WATCOMC__) && defined(USE_2D_ASM)
 #pragma aux modex_copy_scanline parm [esi] [edi] [ecx] modify exact [ecx esi edi eax ebx edx] = \
@@ -585,7 +586,7 @@ void gr_bm_ubitblt01m(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap *
 			dbits++;
 	}
 }
-
+#endif
 
 
 
@@ -671,6 +672,7 @@ void gr_ubitmap( int x, int y, grs_bitmap *bm )
 			else
 				gr_ubitmap00( x, y, bm );
 			return;
+#ifdef __DOS__
 		case BM_SVGA:
 			if ( bm->bm_flags & BM_FLAG_RLE )
 				gr_bm_ubitblt0x_rle(bm->bm_w, bm->bm_h, x, y, 0, 0, bm, &grd_curcanv->cv_bitmap );
@@ -680,6 +682,7 @@ void gr_ubitmap( int x, int y, grs_bitmap *bm )
 		case BM_MODEX:
 			gr_bm_ubitblt01(bm->bm_w, bm->bm_h, x+XOFFSET, y+YOFFSET, 0, 0, bm, &grd_curcanv->cv_bitmap);
 			return;
+#endif
 		default:
 			gr_ubitmap012( x, y, bm );
 			return;
@@ -704,12 +707,14 @@ void gr_ubitmapm( int x, int y, grs_bitmap *bm )
 			else
 				gr_ubitmap00m( x, y, bm );
 			return;
+#ifdef __DOS__
 		case BM_SVGA:
 			gr_ubitmapGENERICm(x, y, bm);
 			return;
 		case BM_MODEX:
 			gr_bm_ubitblt01m(bm->bm_w, bm->bm_h, x+XOFFSET, y+YOFFSET, 0, 0, bm, &grd_curcanv->cv_bitmap);
 			return;
+#endif
 		default:
 			gr_ubitmap012m( x, y, bm );
 			return;
@@ -720,7 +725,7 @@ void gr_ubitmapm( int x, int y, grs_bitmap *bm )
 }
 
 
-
+#ifdef __DOS__
 // From linear to SVGA
 void gr_bm_ubitblt02(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest)
 {
@@ -817,6 +822,7 @@ void gr_bm_ubitblt20(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * 
 
 	}
 }
+#endif
 
 //@extern int Interlacing_on;
 
@@ -930,6 +936,7 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 	 	return;
 	}
 
+#ifdef __DOS__
 	if ( (src->bm_type == BM_LINEAR) && (dest->bm_type == BM_SVGA ))
 	{
 		gr_bm_ubitblt02( w, h, dx, dy, sx, sy, src, dest );
@@ -947,6 +954,7 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 		gr_bm_ubitblt01( w, h, dx+XOFFSET, dy+YOFFSET, sx, sy, src, dest );
 		return;
 	}
+#endif
 
 	for (y1=0; y1 < h; y1++ )    {
 		for (x1=0; x1 < w; x1++ )    {

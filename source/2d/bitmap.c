@@ -283,10 +283,12 @@ void gr_remap_bitmap_good( grs_bitmap * bmp, ubyte * palette, int transparent_co
 
 int gr_bitmap_assign_selector( grs_bitmap * bmp )
 {
+#ifdef __DOS__
 	if (!dpmi_allocate_selector( bmp->bm_data, bmp->bm_w*bmp->bm_h, &bmp->bm_selector )) {
 		bmp->bm_selector = 0;
 		return 1;
 	}
+#endif
 	return 0;
 }
 
