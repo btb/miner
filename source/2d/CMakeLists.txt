@@ -24,17 +24,21 @@ endif()
 
 # What source files and libs for the programs
 target_sources(fdraw PRIVATE fdraw.c)
-target_link_libraries(fdraw io gr misc cfile fix mem)
+target_link_libraries(fdraw gr misc cfile fix mem)
 
 # What object files and libs for the test programs
 target_sources(testg PRIVATE testg.c tmapbits.c)
-target_link_libraries(testg io gr misc mem iff cfile fix)
+target_link_libraries(testg gr misc mem iff cfile fix)
 
 target_sources(vesatest PRIVATE vesatest.c)
-target_link_libraries(vesatest io gr misc mem cfile fix)
+target_link_libraries(vesatest gr misc mem cfile fix)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "DOS")
-	target_link_libraries(fdraw vga)
-	target_link_libraries(testg vga)
-	target_link_libraries(vesatest vga)
+	target_link_libraries(fdraw io vga)
+	target_link_libraries(testg io vga)
+	target_link_libraries(vesatest io vga)
+else()
+	target_link_libraries(fdraw sdl unix)
+	target_link_libraries(testg sdl unix)
+	target_link_libraries(vesatest sdl unix)
 endif()
