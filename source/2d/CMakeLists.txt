@@ -14,10 +14,13 @@ add_executable(vesatest)
 
 # What object files for the lib
 target_sources(gr PRIVATE
-	linear.asm canvas.c bitmap.c gr.c font.c
+	canvas.c bitmap.c gr.c font.c
 	bitblt.c scanline.c pixel.c poly.c disc.c rect.c box.c
-	gpixel.c line.c lbitblt.asm
-	scale.c scalea.asm circle.c ibitblt.c rle.c pcx.c)
+	gpixel.c line.c
+	scale.c circle.c ibitblt.c rle.c pcx.c)
+if(NOT NO_ASSEMBLY)
+	target_sources(gr PRIVATE linear.asm lbitblt.asm scalea.asm)
+endif()
 
 # What source files and libs for the programs
 target_sources(fdraw PRIVATE fdraw.c)
