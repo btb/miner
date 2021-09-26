@@ -64,7 +64,7 @@ static char rcsid[] = "$Id: multi.c 2.10 1995/05/29 16:18:26 john Exp $";
 #include "newdemo.h"
 #include "text.h"
 #include "kmatrix.h"
-#ifdef GREENLEAF
+#ifdef USE_COMMLIB
 #include "glfmodem.h"//This and the next file aren't part of the public release -KRB
 #include "commlib.h"
 #else

@@ -1,0 +1,44 @@
+;
+; _IRQ386.EQU        5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1984-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+;  This file contains the IRQDATA structure used by the 32 bit
+;  IRQ manager.  This is all private stuff and end users should not
+;  ever have to include it.
+;
+; MODIFICATIONS
+;
+;  December 12, 1992  4.00A : Initial release
+;  December 1, 1994   5.10A : We split the irq manager into three pieces.
+;                             This is the piece that gets used for the
+;                             386 IRQ manager.
+;
+
+MAXIMUM_HANDLERS        EQU     10
+
+irqdata                 STRUC
+old_handler_offset      DD      0
+old_handler_selector    DW      0
+old_real_handler        DD      0
+handler_offset          DD      0
+handler_selector        DW      0
+real_handler            DD      0
+handler_data_offset     DD      0
+handler_data_selector   DW      0
+real_handler_data       DD      0
+tear_down_function      DD      0
+interrupt_number        DD      0
+saved_8259_bit          DD      0
+primary_8259            DD      0
+secondary_8259          DD      0
+mask_8259               DD      0
+int_count               DD      0
+real_int_count_low      DW      0
+real_int_count_high     DW      0
+irqdata                 ENDS
+

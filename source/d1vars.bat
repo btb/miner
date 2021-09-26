@@ -17,6 +17,8 @@ rem make options
 set SHOW_REASONS=1
 set SHOW_FLAGS=1
 set USE_SOS=1
+set USE_COMMLIB=1
+set INI_FILE=%MINER%/init/dreg.ini
 
 rem debug
 rem set CFLAGS_DEBUG=/wx /we

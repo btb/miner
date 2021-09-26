@@ -1,0 +1,42 @@
+;
+; _FAST386.EQU            5.20A  June 8, 1995
+;
+; The Greenleaf Comm Library
+;
+; Copyright (C) 1991-94 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+; This file contains the definitions that supply the FAST_DATA
+; structure information to all the assembly language routines.
+;
+; MODIFICATIONS
+;
+;
+
+FAST_BUFFER_SIZE             = 1024
+FAST_HIGH_WATER_MARK         = ( ( FAST_BUFFER_SIZE * 3 ) / 4 )
+
+FAST_DATA                    STRUC
+FAST_NEXT_PORT_OFFSET        DD         ?
+FAST_NEXT_PORT_SELECTOR      DW         ?
+FAST_REAL_NEXT_PORT_OFFSET   DW         ?
+FAST_REAL_NEXT_PORT_SEGMENT  DW         ?
+FAST_ID                      DD         ?
+FAST_UART_BASE               DD         ?
+FAST_HEAD_POINTER            DD         ?
+FAST_TAIL_POINTER            DD         ?
+FAST_INTERRUPT_NUMBER        DD         ?
+FAST_LINE_STATUS             DD         ?
+FAST_MCR_RX_HANDSHAKE_BIT    DD         ?
+FAST_MSR_TX_HANDSHAKE_BIT    DD         ?
+FAST_BLOCKING                DD         ?
+FAST_IS_16550                DD         ?
+FAST_USE_16550_TX_FIFO       DD         ?
+FAST_TRIGGER_LEVEL           DD         ?
+FAST_BUFFER                  DB         FAST_BUFFER_SIZE DUP (?)
+FAST_DATA                    ENDS
+
+PIC_EOI                      EQU        20h
+
+

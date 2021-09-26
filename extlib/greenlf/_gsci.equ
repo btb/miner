@@ -1,0 +1,282 @@
+;
+;  _GSCI.EQU         5.20A  June 8, 1995
+;
+;  The Greenleaf Comm Library
+;
+;  Copyright (C) 1984-1994 Greenleaf Software Inc.  All Rights Reserved.
+;
+; NOTES
+;
+;  This file contains all the ASM equates needed for the Level 1
+;  ASM files.
+;
+;  MODIFICATIONS
+;
+;   December 12, 1992  4.00A : Initial release
+;
+
+        if      @DataSize NE 0
+ptrsize equ     2               ; Number of words in pointer
+        else
+ptrsize equ     1
+        endif
+
+MAX_PORT equ    35
+;  Some ASCII symbols
+NUL     equ     0
+SOH     equ     1
+STX     equ     2
+ETX     equ     3
+EOT     equ     4
+ACK     equ     6
+DLE     equ     10h
+NAK     equ     15h
+
+;
+; Note: it would be good to get rid of all these definitions and
+; replace them with a single include of _8250.equ
+;
+;  The 8250 port offsets, relative to base (com1, com2, etc.)
+
+BASE    equ     0
+TXBUF   equ     0               ; Tx Buffer
+RXBUF   equ     0               ; Rx Buffer
+BRLSB   equ     0               ; baud rate LSB divisor latch
+BRMSB   equ     1               ; baud rate MSB
+INTER   equ     1               ; interrupt enable register
+INTID   equ     2               ; interrupt ID register
+FIFOCTL equ     2               ; 16550 FIFI control register
+LCREG   equ     3               ; line control register
+MCREG   equ     4               ; modem control reg
+LSREG   equ     5               ; line status reg
+MSREG   equ     6               ; modem status reg
+
+; Equates for bits in the line control register
+
+WLS0    equ     00000001b       ; word length select bit 0
+WLS1    equ     00000010b       ; word length select bit 1
+NSB     equ     00000100b       ; number stop bits
+PAREN   equ     00001000b       ; parity enable
+PAREVN  equ     00010000b       ; parity even
+PARSTK  equ     00100000b       ; stick parity
+SBREAK  equ     01000000b       ; send break
+DLAB    equ     10000000b       ; set DLAB
+
+; Equates for bits in Line Status register
+
+DATARDY equ     00000001b       ; data ready
+OVERRN  equ     00000010b       ; overrun error
+PARERR  equ     00000100b       ; parity error
+FRAMERR equ     00001000b       ; framing error
+RBREAK  equ     00010000b       ; break interrupt (received break)
+THRE    equ     00100000b       ; transmitter holding reg empty
+TSRE    equ     01000000b       ; tx shift register empty
+
+;  Equates for bits in Modem Control register
+
+DTR     equ     00000001b       ; DTR
+RTS     equ     00000010b       ; RTS
+OUT1    equ     00000100b       ; aux signal "out1" (not used)
+OUT2    equ     00001000b       ; ditto "out2"
+LOOPIT  equ     00010000b       ; loop mode latch
+
+;  Equates for bits in Modem Status register
+
+DCTS    equ     00000001b       ; delta CTS
+DDSR    equ     00000010b       ; delta DSR
+TERI    equ     00000100b       ; trailing edge RI
+DRLSD   equ     00001000b       ; delta Rx Line Signal Detect
+CTS     equ     00010000b       ; CTS
+DSR     equ     00100000b       ; DRS
+RINGIN  equ     01000000b       ; RI
+RLSD    equ     10000000b       ; Rx Line Signal Detect
+
+;  Equates for bits in Interrupt Enable register
+
+ENRX    equ     00000001b       ; enable Data Available int
+ENTX    equ     00000010b       ; enable Tx Holding Reg Empty int
+ENRXS   equ     00000100b       ; enable Rx Special Conditions int
+ENMS    equ     00001000b       ; enable Modem Status Interrupt
+
+;  chst_bits -- Channel status bits
+;
+ALERT           equ     0000000000000001b  ;any condition needing attention
+RXEMPTY         equ     0000000000000010b  ;receive buffer empty
+RXFULL          equ     0000000000000100b  ;receive buffer full
+RXOVFLOW        equ     0000000000001000b  ;receive buffer overflow
+TXEMPTY         equ     0000000000010000b  ;transmit buffer empty
+TXFULL          equ     0000000000100000b  ;transmit buffer full
+LINERRG         equ     0000000001000000b  ;line error
+MODCHG          equ     0000000010000000b  ;modem status change
+XCHRUN          equ     0000000100000000b  ;transmit interrupts are running
+RCHRUN          equ     0000001000000000b  ;receive interrupts are running
+TXWXON          equ     0000010000000000b  ;transmit side is waiting for xon
+TXWCTS          equ     0000100000000000b  ;transmit side is waiting for cts
+TXWALERT        equ     0001000000000000b  ;transmit side is waiting for alert
+XOFFSENT        equ     0010000000000000b  ;xoff character has been sent
+RTSACTIVE       equ     0100000000000000b  ;reflects current state of RTS
+TXIFLAG         equ     1000000000000000b  ;psuedo interrupt enable bit
+
+;  chmode_bits  (channel mode bits)
+;
+IS_TXINT        equ     0000000000000001b  ;1 = tx interrupts enabled
+IS_RXINT        equ     0000000000000010b  ;1 = rx interrupts enabled
+IS_ASCII        equ     0000000000000100b  ;1 = ascii mode (strip msb)
+IS_RXERROR      equ     0000000000001000b  ;1 = track errors on each rx char.
+IS_RX_XOFFMODE  equ     0000000000010000b  ;1 = RX flow control enabled
+IS_CTSMODE      equ     0000000000100000b  ;1 = cts flow control mode enabled
+IS_IGALERT      equ     0000000001000000b  ;1 = ignore alert
+IS_IGDSR        equ     0000000010000000b  ;1 = ignore DSR
+IS_IGCD         equ     0000000100000000b  ;1 = ignore CD (carrier detect)
+IS_IGMSTAT      equ     0000001000000000b  ;1 = ignore modem status changes
+IS_IGRCVER      equ     0000010000000000b  ;1 = ignore receive error condition
+IS_16550        equ     0000100000000000b  ;1 = This is a 16550 UART
+IS_BLOCKING     equ     0001000000000000b  ;1 = app wants to force handshake
+IS_RCHKING      equ     0010000000000000b  ;1 = isrchk enabled
+IS_RTSCONTROL   equ     0100000000000000b  ;1 = RTS flow control enabled
+IS_TX_XOFFMODE  equ     1000000000000000b  ;1 = Transmitter XON/XOFF enabled
+;  Bit definitions for chkflag (check character flag bits)
+;
+RCHKENABLED     equ     1000000000000000b  ;1 = rchking enabled for character
+RCHKFLAG        equ     0100000000000000b  ;    set by interrupt routine
+RCHKVAL         equ     0000001100000000b  ;    determine checking mode
+RCHKCHAR        equ     0000000011111111b  ;    these bits hold character
+
+;  The following structure contains all the parameters used by a Tx or
+;  Rx process for a given buffer.
+;
+;  Note:  Pointers pi & po are OFFSET ADDRESSES, NOT RELATIVE TO BOB.
+;
+portst  struc
+ intrpt_num     dw      ?       ; 8250 Interrupt # (IRQ)
+ base_8250      dw      ?       ; base i/o address of 8250
+ p_8250lcr      dw      ?       ; previous 8250 line control register
+ p_8250mcr      dw      ?       ; previous 8250 modem control register
+ p_8250ier      dw      ?       ; previous 8250 interrupt enable register
+ p_8250ldl      dw      ?       ; previous divisor least significant byte
+ p_8250mdl      dw      ?       ; previous divisor most significant byte
+ p_vector       dd      ?       ; previous value for interrupt vector
+
+ line_stat      dw      ?       ; line status register
+ modem_stat     dw      ?       ; modem status register
+ wide_stat      dw      ?       ; composite status for wide-track buffer
+
+ irq_8259       dw      ?       ; interrupt # in 8259 (com0=4)
+ saved_8259_bits dw     ?       ; Previous value of irq_8259 bit
+ port_8259      dw      ?       ; I/O address of 8259
+
+ rx_cell        dw      ?       ; Width of rx buffer
+ rx_size        dw      ?       ; Size of rx buffer
+ rx_count       dw      ?       ; Number of characters in receive buffer
+ rx_head        dw      ?       ; Offset into receive buffer for head
+ rx_tail        dw      ?       ; Offset into receive buffer for tail
+                IFDEF   VGFD
+ rx_buffer      dw      2 dup(?); This pointer *always* far under VGFD regime
+                ELSE
+ rx_buffer      dw      ptrsize dup(?)
+                                ; Always points to base of receive buffer
+                ENDIF
+ tx_cell        dw      ?       ; Width of tx buffer
+ tx_size        dw      ?       ; Size of tx buffer
+ tx_count       dw      ?       ; Number of characters in transmit buffer
+ tx_head        dw      ?       ; Offset into transmit buffer for head
+ tx_tail        dw      ?       ; Offset into transmit buffer for tail
+
+                IFDEF   VGFD
+ tx_buffer      dw      2 dup(?); Always a far ptr under VGFD
+                ELSE
+ tx_buffer      dw      ptrsize dup(?)
+                                ; Always points to base of transmit buffer
+                ENDIF
+
+ chst_bits      dw      ?       ; Port status bits
+ chmode_bits    dw      ?       ; Port mode bits
+ rts_lowater    dw      ?       ; When to assert RTS
+ rts_hiwater    dw      ?       ; When to deassert RTS
+ rx_accum       dw      ?       ; Counter for received characters
+ rx_lowater     dw      ?       ; Low water mark, point at which xon get's
+                                ; transmitted.
+ rx_hiwater     dw      ?       ; High water mark, point at which xoff gets
+                                ; transmitted.
+ stop_xmt       dw      ?       ; If xon/xoff enabled character that stops
+                                ; transmitter.
+ start_xmt      dw      ?       ; If xon/xoff enabled character that starts
+                                ; transmitter.
+ stop_rem_xmt   dw      ?       ; Character sent when rx buffer almost full
+ start_rem_xmt  dw      ?       ; Character sent when rx buffer almost empty
+
+ break_delay    dw      ?       ; Amount of delay for break signal
+ aswmodem       dw      ?
+ aswtime        dw      ?       ;
+ asrtime        dw      ?
+
+ chkchr_1       dw      ?       ; Check character #1
+ chkchr_2       dw      ?       ; Check character #2
+ chkchr_3       dw      ?       ; Check character #3
+ mscount        dw      ?
+ lscount        dw      ?
+ txcount        dw      ?
+ rxcount        dw      ?
+ out12_mask     dw      ?
+ ls_ms_ier      dw      ?
+ if             @DataSize NE 0
+   generic_driver dd      ?
+ else
+   generic_driver dw      ?
+ endif
+
+ifndef VGFD
+ tx_16550_limit dw      ?       ; FIFO buffer limit for 16550
+endif
+
+                IFDEF   VGFD
+ reserved1      dw      2 dup(0); for VGFD
+ reserved2      dw      2 dup(0); for VGFD
+                ENDIF
+
+portst  ends
+
+
+PORTINFO        STRUC
+                        IFDEF   VGFD
+  ptb                   DW      2 DUP(?)        ;Vlad wants all large ptrs
+                        ELSE
+  ptb                   DW      ptrsize DUP(?)
+                        ENDIF
+  as_shport             DW      ?
+  as_shbits             DW      ?
+  as_mask               DW      ?
+  as_xorv               DW      ?
+  handler_type          DW      ?  ;0 = new greenleaf handler, via Hook...()
+                                   ;1 = old greenleaf handler, via asihsel()
+                                   ;2 = multiport hanlder, via Hook...()
+                IFDEF   VGFD
+task_handle_port dw      1 dup(0); for VGFD
+vm_id_port       dw      1 dup(0); for VGFD
+reserved3        dw      2 dup(0); for VGFD
+                ENDIF
+
+PORTINFO        ENDS
+
+
+PORTINFO_SIZE   EQU     SIZE PORTINFO
+
+;==>--  Error return codes for assembler functions.
+;
+ASSUCCESS       equ      0      ;/* No error */
+ASGENERALERROR  equ     -1      ;/* Catch-All */
+ASINVPORT       equ     -2      ;/* Requested port out of range */
+ASINUSE         equ     -3      ;/* port already setup */
+ASINVBUFSIZE    equ     -4      ;/* Invalid buffer size requested */
+ASNOMEMORY      equ     -5      ;/* No memory available for buffers */
+ASNOTSETUP      equ     -6      ;/* asifirst() not run on port */
+ASINVPAR        equ     -7      ;/* Invalid parameter */
+ASBUFREMPTY     equ     -8      ;/* Buffer is empty */
+ASBUFRFULL      equ     -9      ;/* Buffer is full */
+ASTIMEOUT       equ     -10     ;/* Function timed out */
+ASNOCTS         equ     -11     ;/* CTS was not active */
+ASNOCD          equ     -12     ;/* CD (Carrier detect) not active */
+ASNODSR         equ     -13     ;/* DSR (Data set ready) not active */
+ASNO8250        equ     -14     ;/* No 8250 installed at i/o address */
+        .list
+

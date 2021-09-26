@@ -24,6 +24,7 @@ endif()
 
 # Set up personal settings
 set(USE_SOS ON CACHE BOOL "Use the Sound Operating System libraries")
+set(USE_COMMLIB ON CACHE BOOL "Use Greenleaf CommLib")
 set(NEWDEMO ON)
 option(BUILD_EDITOR "" OFF)
 if(BUILD_EDITOR)

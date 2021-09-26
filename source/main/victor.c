@@ -98,7 +98,7 @@ static char rcsid[] = "$Id: victor.c 2.5 1995/03/30 16:35:59 mike Exp $";
 //#include "serial.h"
 #include "victor.h"
 #include "text.h"
-#ifdef GREENLEAF
+#ifdef USE_COMMLIB
 #include "commlib.h" //Not included in public release -KRB
 #include "fast.h" //Not included in public release -KRB
 #else

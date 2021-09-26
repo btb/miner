@@ -1,0 +1,146 @@
+;
+; MODEL286.EQU      5.20A  June 8, 1995
+;
+; DESCRIPTION
+;
+; This is the header file used by assembly files to determine
+; model dependent information.  Previously, Greenleaf libraries
+; used the file model.h, which had macros for _LCODE, _LDATA, etc.
+; This new system allows the user to set the model on the command
+; line by defining the GF_MODEL constant.  It also prints out a
+; helpful (I hope) error message if GF_MODEL is not defined.
+;
+; This file also has segment definitions for the code used by
+; the 286 DOS Extender Fast drivers.  If you were to mess with
+; those segment definitions, the results would probably be
+; very bad.
+;
+; AUTHOR
+;      SM
+;      Copyright (C) 1991-94 Greenleaf Software Inc.  All rights reserved.
+;
+; MODIFICATIONS
+;
+;  December 1, 1994   5.10A :  Initial release.
+;
+
+;
+; The check for ??version is checking to see if we are running under
+; Turbo Assembler.
+;
+        ifdef ??version
+                mesg_defined = 1
+                mesg    macro   txt
+                        %out    txt
+                        endm
+        endif
+        ifdef ??Version
+                mesg_defined = 1
+                mesg    macro   txt
+                        %out    txt
+                        endm
+        endif
+        ifndef mesg_defined
+                mesg    macro   txt
+                        if1
+                                %out    txt
+                        endif
+                        endm
+        endif
+
+% GF_MODEL&_MODEL = 1
+
+        ifdef SMALL_MODEL
+                mesg <Small Memory Model>
+                _LCODE = 0
+                _LDATA = 0
+                _HUGE  = 0
+                GOOD_MODEL = 0
+                .MODEL  SMALL,C
+        endif
+
+        ifdef COMPACT_MODEL
+                mesg <Compact Memory Model>
+                _LCODE = 0
+                _LDATA = 1
+                _HUGE  = 0
+                GOOD_MODEL = 0
+                .MODEL  COMPACT,C
+        endif
+
+        ifdef MEDIUM_MODEL
+                mesg <Medium Memory Model>
+                _LCODE = 1
+                _LDATA = 0
+                _HUGE  = 0
+                GOOD_MODEL = 0
+                .MODEL  MEDIUM,C
+        endif
+
+        ifdef LARGE_MODEL
+                mesg <Large Memory Model>
+                _LCODE = 1
+                _LDATA = 1
+                _HUGE  = 0
+                GOOD_MODEL = 0
+                .MODEL  LARGE,C
+        endif
+
+        ifdef HUGE_MODEL
+                mesg <Huge Memory Model>
+                _LCODE = 1
+                _LDATA = 1
+                _HUGE  = 1
+                GOOD_MODEL = 0
+                .MODEL  HUGE,C
+        endif
+
+        ifdef OTHER_MODEL
+                mesg <Other Memory Model>
+                _LCODE = 1
+                _LDATA = 1
+                _HUGE  = 0
+                GOOD_MODEL = 0
+        endif
+
+        ifndef _LCODE
+        mesg   <In order to properly build the assembly files for this>
+        mesg   <library, you need to define GF_MODEL so the files can be>
+        mesg   <be built for the correct memory model.  The best way to>
+        mesg   <do this is to define it on the command line, like this:>
+        mesg   < >
+        mesg   <    MASM /DGF_MODEL=SMALL /Ml FILE.ASM ; >
+        mesg   < >
+        mesg   <Acceptable choices for GF_MODEL are SMALL, COMPACT, MEDIUM,>
+        mesg   <LARGE, and HUGE.  Note that the Greenleaf Installation programs>
+        mesg   <will do this automatically.>
+        mesg   < >
+        _LCODE = 0
+        _LDATA = 0
+        _HUGE = 0
+        endif
+
+        ifndef GOOD_MODEL
+        .ERR
+        endif
+
+;
+; Don't rearrange these segments.  I have them in this
+; order to ensure that everything that needs to get locked
+; in memory.  If I didn't put the kill segment in between
+; these two other guys it might not get properly locked.
+;
+PROT_ISR_CODE           SEGMENT BYTE PUBLIC 'CODE'
+PROT_ISR_CODE           ENDS
+KILL_CODE               SEGMENT BYTE PUBLIC 'CODE'
+KILL_CODE               ENDS
+DEBUG_ISR_CODE          SEGMENT BYTE PUBLIC 'CODE'
+DEBUG_ISR_CODE          ENDS
+;
+; I don't think it matters where these appear
+;
+REAL_ISR_DATA           SEGMENT WORD PUBLIC 'ISR'
+REAL_ISR_DATA           ENDS
+PROT_ISR_DATA           SEGMENT WORD PUBLIC 'DATA'
+PROT_ISR_DATA           ENDS
+

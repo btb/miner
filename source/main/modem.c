@@ -221,7 +221,7 @@ static char rcsid[] = "$Id: modem.c 2.13 1995/11/28 16:25:05 john Exp $";
 #include "netmisc.h"
 #include "fuelcen.h"
 #include "dpmi.h"
-#ifdef GREENLEAF
+#ifdef USE_COMMLIB
 #include "fast.h" // Commlib stuff //Don't have fast.h -KRB
 #include "commlib.h" //Don't have these either! -KRB
 #include "glfmodem.h" //Don't have these either! -KRB

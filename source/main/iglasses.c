@@ -72,7 +72,7 @@ static char rcsid[] = "$Id: iglasses.c 2.8 1995/03/30 16:36:31 mike Exp $";
 #include "text.h"
 #include "iglasses.h"
 #include "key.h"
-#ifdef GREENLEAF
+#ifdef USE_COMMLIB
 #include "commlib.h" //nien - These aren't included -KRB
 #include "fast.h"
 #else

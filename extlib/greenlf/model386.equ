@@ -1,0 +1,66 @@
+;
+; MODEL386.EQU      5.20A  June 8, 1995
+;
+; DESCRIPTION
+;
+; This is the header file used by assembly files to determine
+; model dependent information for 32 bit assembly code.  Note that
+; the segments are idiosyncratic to 32 bit flat model as supported
+; by our various DOS Extenders.
+;
+; MODIFICATIONS
+;
+;  December 1, 1994   5.10A :  Initial release.
+;
+                             .386
+                             .MODEL  SMALL,C
+;
+; The code segments are lined up in this order for a reason, don't
+; change them around.
+;
+REAL_RELOCATED_16            SEGMENT DWORD PUBLIC USE32 'CODE'
+REAL_RELOCATED_16            ENDS
+;
+; The new segment scheme dictates that everything in the
+; ISR goes into PISRCODE.  PISR_START and PISR_END are
+; just little marker segments.
+;
+;
+
+PISR_START                   SEGMENT BYTE PUBLIC USE32 'CODE'
+PISR_START                   ENDS
+PISRCODE                     SEGMENT BYTE PUBLIC USE32 'CODE'
+PISRCODE                     ENDS
+PISR_END                     SEGMENT BYTE PUBLIC USE32 'CODE'
+PISR_END                     ENDS
+;
+; I'm going to eliminate these and go to a new system
+;
+;KILLCODE                     SEGMENT BYTE PUBLIC USE32 'CODE'
+;KILLCODE                     ENDS
+;DEBUGCODE                    SEGMENT BYTE PUBLIC USE32 'CODE'
+;DEBUGCODE                    ENDS
+
+PISRDATA                     SEGMENT DWORD PUBLIC USE32 'DATA'
+PISRDATA                     ENDS
+;
+; I'm not sure if this DGROUP definition is necessary
+;
+; I think i need the cgroup definition so that I can do near
+; jumps to asi_kill_time
+
+;CGROUP                       GROUP REAL_RELOCATED_16,PISRCODE,KILLCODE,DEBUGCODE,_TEXT
+;
+; It turns out that I am really screwed under Watcom + DOS/4G if I use this
+; group definition.  If I can't build my masm without it, I need to
+; add _TEXT and BEGTEXT to the definition.  I am worried about what would happen
+; then if I added yet another group.
+;
+; This works, but I don't like it
+;
+;BEGTEXT                      SEGMENT BYTE PUBLIC USE32 'CODE'
+;BEGTEXT                      ENDS
+;CGROUP                       GROUP REAL_RELOCATED_16,PISRCODE,KILLCODE,DEBUGCODE,_TEXT,BEGTEXT
+
+DGROUP                       GROUP _DATA, PISRDATA
+
